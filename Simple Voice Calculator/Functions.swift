@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Speech
+import StoreKit
 
 func getSymbolColor(component: String) -> (foreground: Color, background: Color, strokeColor: Color)? {
     if component.starts(with: "+") {
@@ -153,6 +154,50 @@ class PermissionChecker: ObservableObject {
                 }
             }
         }
+    }
+}
+
+
+class PurchaseModel: ObservableObject {
+    let productIdentifiers = ["CoffeeTip1", "CoffeeTip5", "CoffeeTip10"]
+
+    @Published var products: [Product] = []
+    
+    func fetchProducts() async {
+        
+        
+        Task.init(priority: .background){
+            do {
+                let products = try await Product.products(for: productIdentifiers)
+                DispatchQueue.main.async {
+                    self.products = products
+                    print(products)
+                }
+            }
+            catch {
+                print(error)
+            }
+            
+        }
+        
+    }
+    
+    func purchase() {
+        
+        Task.init(priority: .background){
+            guard let product = products.first else { return }
+            do {
+                let result = try await product.purchase()
+                print(result)
+            }
+            catch {
+                print(error)
+            }
+            
+        }
+        
+        
+        
     }
 }
 

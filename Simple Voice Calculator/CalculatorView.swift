@@ -72,6 +72,7 @@ struct CalculatorView: View {
                                             .onTapGesture {
                                                 impactLight.impactOccurred()
                                                 selectedComponentIndex = index
+
                                                 selectComponentInTextField()
                                                 withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0)) {
                                                     scale = 1.15
@@ -259,25 +260,6 @@ struct CalculatorView: View {
         
     }
     
-    
-    
-    //OLD - FINDS FIRST OCCURANCE
-    //    private func selectComponentInTextField() {
-    //
-    //            guard let index = selectedComponentIndex else { return }
-    //            let components = getEquationComponents()
-    //            guard index < components.count else { return }
-    //
-    //            let selectedComponent = components[index]
-    //            print(index)
-    //            if let range = textFieldValue.range(of: selectedComponent) {
-    //                let nsRange = NSRange(range, in: textFieldValue)
-    //                let textField = findTextField(in: UIApplication.shared.windows.first!)
-    //                textField?.becomeFirstResponder()
-    //                textField?.selectedTextRange = textField?.textRange(from: textField!.position(from: textField!.beginningOfDocument, offset: nsRange.location)!, to: textField!.position(from: textField!.beginningOfDocument, offset: nsRange.location + nsRange.length)!)
-    //            }
-    //    }
-    
     private func findTextField(in view: UIView) -> UITextField? {
         for subview in view.subviews {
             if let textField = subview as? UITextField {
@@ -394,6 +376,10 @@ struct CalculatorView: View {
                 components.append(modifiedComponent)
             }
             
+        }
+        //removing first characters if they are invalid (in real time)
+        if let first = components.first, let firstChar = first.first, ["×", "÷", "+"].contains(firstChar) {
+            components[0] = String(first.dropFirst())
         }
         print("Active: \(components)")
         return components
@@ -545,9 +531,10 @@ struct CalculatorView: View {
         }
         
         let cleanedExpression = cleanedComponents.joined(separator: "")
-        //account for starting + sign
-        let trimmedExpression = cleanedExpression.trimmingCharacters(in: CharacterSet(charactersIn: "+"))
+        //remove these specific operators from start & end if needed
+        let trimmedExpression = cleanedExpression.trimmingCharacters(in: CharacterSet(charactersIn: "+*/"))
         print("Cleaned Expression: \(trimmedExpression)")
+        
         
         
         let expression = NSExpression(format: trimmedExpression)
