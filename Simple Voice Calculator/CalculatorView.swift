@@ -16,6 +16,10 @@ struct CalculatorView: View {
     @State private var scale: CGFloat = 1.0
     @StateObject private var permissionChecker = PermissionChecker()
     
+    
+    @FocusState private var isTextFieldFocused: Bool
+
+    
     //haptics
     let impactLight = UIImpactFeedbackGenerator(style: .light)
     let impactSoft = UIImpactFeedbackGenerator(style: .soft)
@@ -99,33 +103,40 @@ struct CalculatorView: View {
                                 }
                             }
                         }
-                        VStack {
-                            HStack (alignment: .center){
-                                Text("TOTAL:")
-                                    .font(.body)
-                                    .foregroundColor(.black)
-                                    .opacity(0.5)
-                                Spacer()
-                                Text("=")
-                                    .foregroundColor(.black)
-                                    .opacity(0.3)
-                                Text(totalValue)
-                                    .font(.system(.headline, design: .monospaced))
-                                    .bold()
-                                    .foregroundColor(.black)
+                        if !isTextFieldFocused{
+                            VStack {
+                                HStack (alignment: .center){
+                                    Text("TOTAL:")
+                                        .font(.body)
+                                        .foregroundColor(.black)
+                                        .opacity(0.5)
+                                    Spacer()
+                                    Text("=")
+                                        .foregroundColor(.black)
+                                        .opacity(0.3)
+                                    Text(totalValue)
+                                        .font(.system(.headline, design: .monospaced))
+                                        .bold()
+                                        .foregroundColor(.black)
+                                }
+                                .padding()
+                                .cornerRadius(10)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .strokeBorder(Color(red: 0.839, green: 0.839, blue: 0.839), lineWidth: 2)
+                                    
+                                ).background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color(red: 0.882, green: 0.882, blue: 0.882)) // #e1e1e1)
+                                        .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.01)), radius:5, x:0, y:3)
+                                )
+                                .padding(.horizontal)
                             }
-                            .padding()
-                            .cornerRadius(10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .strokeBorder(Color(red: 0.839, green: 0.839, blue: 0.839), lineWidth: 2)
-                                
-                            ).background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color(red: 0.882, green: 0.882, blue: 0.882)) // #e1e1e1)
-                                    .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.01)), radius:5, x:0, y:3)
-                            )
-                            .padding(.horizontal)
+                           
+
+
+
+                            
                         }
                         
                     }
@@ -139,9 +150,9 @@ struct CalculatorView: View {
             
             Group {
                 TextField("Enter equation", text: $textFieldValue)
+                    .focused($isTextFieldFocused)
                     .customTextFieldStyle(isRecording: isRecording)
                     .onChange(of: textFieldValue) { newValue in
-                        
                         textFieldValue = getEquationComponents().joined(separator: "")
                         if isValidExpression(newValue) {
                             calculateTotalValue()
@@ -157,6 +168,7 @@ struct CalculatorView: View {
                     }
                 HStack {
                     Button(action: {
+                        impactLight.impactOccurred()
                         insertText("(")
                     }) {
                         Text("(")
@@ -165,6 +177,7 @@ struct CalculatorView: View {
                     }
                     
                     Button(action: {
+                        impactLight.impactOccurred()
                         insertText(")")
                     }) {
                         Text(")")
@@ -175,22 +188,25 @@ struct CalculatorView: View {
                     
                     Menu {
                         Button(action: {
+                            impactLight.impactOccurred()
                             insertText("+")
                         }, label: {
                             Label("+ (Insert)", systemImage: "plus")
                         })
                         Button(action: {
-                            
+                            impactLight.impactOccurred()
                             insertText("-")
                         }, label: {
                             Label("- (Insert)", systemImage: "minus")
                         })
                         Button(action: {
+                            impactLight.impactOccurred()
                             insertText("×")
                         }, label: {
                             Label("× (Insert)", systemImage: "multiply")
                         })
                         Button(action: {
+                            impactLight.impactOccurred()
                             insertText("÷")
                         }, label: {
                             Label("÷ (Insert)", systemImage: "divide")
@@ -203,6 +219,7 @@ struct CalculatorView: View {
                         })
                     }
                     Button(action: {
+                        impactLight.impactOccurred()
                         clearTextField()
                     }) {
                         Text("Clear")
@@ -488,19 +505,27 @@ struct CalculatorView: View {
     private func insertText(_ text: String) {
         guard let windowScene = getWindowScene(),
               let textField = findTextField(in: windowScene.windows.first!) else { return }
-        
-        
+
         // If the cursor is at the start of the text field, move it to the end.
         if let startPosition = textField.selectedTextRange?.start, startPosition == textField.beginningOfDocument {
             textField.selectedTextRange = textField.textRange(from: textField.endOfDocument, to: textField.endOfDocument)
         }
+
+        // Save cursor position
+        let cursorPosition = textField.offset(from: textField.beginningOfDocument, to: textField.selectedTextRange!.start) + text.count
         
         // Insert the given text at the current cursor position.
         textField.replace(textField.selectedTextRange!, withText: text)
         
+        // Restore cursor position
+        if let newPosition = textField.position(from: textField.beginningOfDocument, offset: cursorPosition) {
+            textField.selectedTextRange = textField.textRange(from: newPosition, to: newPosition)
+        }
+
         // Update textFieldValue manually
         textFieldValue = textField.text ?? ""
     }
+
     
     
     
