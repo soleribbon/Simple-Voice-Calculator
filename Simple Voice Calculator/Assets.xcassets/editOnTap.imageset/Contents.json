@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "newlogo (1).png",
+      "filename" : "editOnTap.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "newlogo (1) 1.png",
+      "filename" : "editOnTap 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "newlogo (1) 2.png",
+      "filename" : "editOnTap 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

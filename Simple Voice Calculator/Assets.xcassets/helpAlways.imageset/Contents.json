@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "newlogo (1).png",
+      "filename" : "helpAlways.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "newlogo (1) 1.png",
+      "filename" : "helpAlways 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "newlogo (1) 2.png",
+      "filename" : "helpAlways 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

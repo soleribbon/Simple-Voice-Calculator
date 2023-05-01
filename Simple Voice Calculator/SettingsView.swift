@@ -59,6 +59,19 @@ struct SettingsView: View {
                             
                         }
                     }
+                    
+                    NavigationLink(destination: OnboardingContainerView())
+                    {
+                        HStack {
+                            Image(systemName: "restart.circle")
+                                .foregroundColor(.accentColor)
+                            Text("Introduction Tutorial")
+                            Spacer()
+                        }
+                        
+                        
+                        
+                    }
                 }
                 
                 

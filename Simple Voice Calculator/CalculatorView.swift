@@ -14,11 +14,13 @@ struct CalculatorView: View {
     @State private var totalValue: String = ""
     @State private var isSettingsModalPresented = false
     @State private var scale: CGFloat = 1.0
+    @State private var recordScale: CGFloat = 1.0
+    
     @StateObject private var permissionChecker = PermissionChecker()
     
     
     @FocusState private var isTextFieldFocused: Bool
-
+    
     
     //haptics
     let impactLight = UIImpactFeedbackGenerator(style: .light)
@@ -76,7 +78,7 @@ struct CalculatorView: View {
                                             .onTapGesture {
                                                 impactLight.impactOccurred()
                                                 selectedComponentIndex = index
-
+                                                
                                                 selectComponentInTextField()
                                                 withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0)) {
                                                     scale = 1.15
@@ -132,10 +134,10 @@ struct CalculatorView: View {
                                 )
                                 .padding(.horizontal)
                             }
-                           
-
-
-
+                            
+                            
+                            
+                            
                             
                         }
                         
@@ -240,6 +242,16 @@ struct CalculatorView: View {
                 Button(action: {
                     impactRecord.impactOccurred()
                     
+                    
+                    withAnimation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0.5)) {
+                        recordScale = 1.1
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        withAnimation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0.5)) {
+                            recordScale = 1.0
+                        }
+                    }
+                    
                     if isRecording {
                         stopRecording(completion: {})//add completion handler if necessary
                     } else {
@@ -252,9 +264,11 @@ struct CalculatorView: View {
                         .padding()
                         .background(isRecording ? Color.red : Color.blue)
                         .cornerRadius(10)
-                }
+                }.scaleEffect(recordScale)
             }
             .padding()
+            
+            
         }
         .onTapGesture {
             hideKeyboard()
@@ -448,6 +462,11 @@ struct CalculatorView: View {
         
         let inputNode = audioEngine.inputNode
         
+        if(inputNode.inputFormat(forBus: 0).channelCount == 0){
+            NSLog("Not enough available inputs!")
+            return
+        }
+        
         recognitionRequest.shouldReportPartialResults = true
         
         recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
@@ -505,12 +524,12 @@ struct CalculatorView: View {
     private func insertText(_ text: String) {
         guard let windowScene = getWindowScene(),
               let textField = findTextField(in: windowScene.windows.first!) else { return }
-
+        
         // If the cursor is at the start of the text field, move it to the end.
         if let startPosition = textField.selectedTextRange?.start, startPosition == textField.beginningOfDocument {
             textField.selectedTextRange = textField.textRange(from: textField.endOfDocument, to: textField.endOfDocument)
         }
-
+        
         // Save cursor position
         let cursorPosition = textField.offset(from: textField.beginningOfDocument, to: textField.selectedTextRange!.start) + text.count
         
@@ -521,11 +540,11 @@ struct CalculatorView: View {
         if let newPosition = textField.position(from: textField.beginningOfDocument, offset: cursorPosition) {
             textField.selectedTextRange = textField.textRange(from: newPosition, to: newPosition)
         }
-
+        
         // Update textFieldValue manually
         textFieldValue = textField.text ?? ""
     }
-
+    
     
     
     

@@ -16,6 +16,8 @@
 		413C1B7229FABA0F0071DD19 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C1B7129FABA0F0071DD19 /* AboutView.swift */; };
 		413C1B7729FC34E30071DD19 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 413C1B7629FC34E30071DD19 /* StoreKit.framework */; };
 		413C1B7929FC3C1B0071DD19 /* StoreKitConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 413C1B7829FC3C1B0071DD19 /* StoreKitConfiguration.storekit */; };
+		413C1B7D29FFD5AF0071DD19 /* OnboardingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C1B7C29FFD5AF0071DD19 /* OnboardingContainerView.swift */; };
+		413C1B7F29FFD5C20071DD19 /* OnboardingContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C1B7E29FFD5C20071DD19 /* OnboardingContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		413C1B7129FABA0F0071DD19 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		413C1B7629FC34E30071DD19 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		413C1B7829FC3C1B0071DD19 /* StoreKitConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = StoreKitConfiguration.storekit; path = "Simple Voice Calculator/StoreKitConfiguration.storekit"; sourceTree = "<group>"; };
+		413C1B7C29FFD5AF0071DD19 /* OnboardingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerView.swift; sourceTree = "<group>"; };
+		413C1B7E29FFD5C20071DD19 /* OnboardingContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +71,7 @@
 				4111E81B29F455E7003FA99C /* Simple_Voice_CalculatorApp.swift */,
 				413C1B6D29F734AF0071DD19 /* Functions.swift */,
 				413C1B6B29F6DEBB0071DD19 /* CalculatorView.swift */,
+				413C1B822A00339F0071DD19 /* Onboarding */,
 				413C1B6F29F9BB390071DD19 /* SettingsView.swift */,
 				413C1B7129FABA0F0071DD19 /* AboutView.swift */,
 				4111E81F29F455E8003FA99C /* Assets.xcassets */,
@@ -89,6 +94,15 @@
 				413C1B7629FC34E30071DD19 /* StoreKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		413C1B822A00339F0071DD19 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				413C1B7E29FFD5C20071DD19 /* OnboardingContentView.swift */,
+				413C1B7C29FFD5AF0071DD19 /* OnboardingContainerView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,8 +179,10 @@
 				413C1B7029F9BB390071DD19 /* SettingsView.swift in Sources */,
 				413C1B6C29F6DEBB0071DD19 /* CalculatorView.swift in Sources */,
 				4111E81C29F455E7003FA99C /* Simple_Voice_CalculatorApp.swift in Sources */,
+				413C1B7F29FFD5C20071DD19 /* OnboardingContentView.swift in Sources */,
 				413C1B6E29F734AF0071DD19 /* Functions.swift in Sources */,
 				413C1B7229FABA0F0071DD19 /* AboutView.swift in Sources */,
+				413C1B7D29FFD5AF0071DD19 /* OnboardingContainerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

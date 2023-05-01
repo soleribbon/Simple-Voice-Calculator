@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "newlogo (1).png",
+      "filename" : "invalidEquation.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "newlogo (1) 1.png",
+      "filename" : "invalidEquation 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "newlogo (1) 2.png",
+      "filename" : "invalidEquation 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
