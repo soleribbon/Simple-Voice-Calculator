@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "royal.png",
+      "filename" : "OffLogo.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "royal 1.png",
+      "filename" : "OffLogo 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "royal 2.png",
+      "filename" : "OffLogo 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

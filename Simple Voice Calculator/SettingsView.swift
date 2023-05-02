@@ -12,6 +12,7 @@ struct SettingsView: View {
     
     @State private var introCoverShowing: Bool = false
     
+    @State private var versionNumber: String = "1.1.1"
     
     var body: some View {
         NavigationView {
@@ -195,7 +196,7 @@ struct SettingsView: View {
                         Text("Version")
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        Text("1.0.9")
+                        Text(versionNumber)
                             .font(.body)
                             .opacity(0.6)
                     }
