@@ -52,6 +52,8 @@ struct CalculatorView: View {
                     ScrollViewReader { scrollViewProxy in
                         ScrollView(.vertical) {
                             VStack(alignment: .trailing, spacing: 4) {
+                                
+                                //main component styling
                                 ForEach(getEquationComponents().indices, id: \.self) { index in
                                     let component = getEquationComponents()[index]
                                     let symbolColor = getSymbolColor(component: component)
@@ -146,7 +148,9 @@ struct CalculatorView: View {
                 }
                 
             } label: {
-                Text("Equation Components").opacity(0.3)
+                Text("Equation Components")
+                    .opacity(0.3)
+                
             }
             .padding(.horizontal)
             
@@ -215,8 +219,12 @@ struct CalculatorView: View {
                         })
                     } label: {
                         Button(action: {}, label: {
+                            
                             Text("Sym")
                                 .ActionButtons(isRecording: isRecording, bgColor: Color(red: 0.608, green: 0.318, blue: 0.878))
+                            
+                            
+                            
                             
                         })
                     }

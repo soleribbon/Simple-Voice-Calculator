@@ -129,89 +129,91 @@ struct OnboardingContentView: View {
             } else {
                 //last ending view
                 VStack{
-                    VStack{
-                        HStack{
-                            Spacer()
-                            Text("Important Notes")
-                                .bold()
-                                .font(.title)
-                                .foregroundColor(.white)
+                    ScrollView {
+                        VStack{
+                            HStack{
+                                Spacer()
+                                Text("Important Notes")
+                                    .bold()
+                                    .font(.title)
+                                    .foregroundColor(.white)
+                                
+                                Spacer()
+                            }.padding()
+                            VStack (alignment: .center){
+                                Text("Only **+ - × ÷**  are supported")
+                                    .multilineTextAlignment(.center)
+                                    .font(.body)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.10000000149011612)))
+                                    )
+                                //end of one
+                                Text("After pressing 'Stop Talking' your dictated equation will be automatically appended to the end of the input field.")
+                                    .font(.body)
+                                    .multilineTextAlignment(.center)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.10000000149011612)))
+                                    )
+                                //end of one
+                                Text("While voice dictation is enabled, you are unable to manually edit the input field.")
+                                    .font(.body)
+                                    .foregroundColor(.white)
+                                    .multilineTextAlignment(.center)
+                                    .padding()
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.10000000149011612)))
+                                    )
+                                //end of one
+                                
+                                Text("Ensure no alphabetical letters are included in your input.")
+                                    .font(.body)
+                                    .foregroundColor(.white)
+                                    .multilineTextAlignment(.center)
+                                    .padding()
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.10000000149011612)))
+                                    )
+                                //end of one
+                                Spacer()
+                                Text("...and finished 🎉")
+                                    .bold()
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                Text(feature.title)
+                                    .bold()
+                                    .font(.title)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .multilineTextAlignment(.center)
+                                Spacer()
+                                Button(action: {
+                                    isOnboarding = false
+                                }, label: {
+                                    HStack{
+                                        Text(feature.buttonText)
+                                    }
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(.blue)
+                                    .cornerRadius(10)
+                                })
+                                
+                            }.padding()
                             
-                            Spacer()
-                        }.padding()
-                        VStack (alignment: .center){
-                            Text("Only **+ - × ÷**  are supported")
-                                .multilineTextAlignment(.center)
-                                .font(.body)
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.10000000149011612)))
-                                )
-                            //end of one
-                            Text("After pressing 'Stop Talking' your dictated equation will be automatically appended to the end of the input field.")
-                                .font(.body)
-                                .multilineTextAlignment(.center)
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.10000000149011612)))
-                                )
-                            //end of one
-                            Text("While voice dictation is enabled, you are unable to manually edit the input field.")
-                                .font(.body)
-                                .foregroundColor(.white)
-                                .multilineTextAlignment(.center)
-                                .padding()
-                                .background(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.10000000149011612)))
-                                )
-                            //end of one
                             
-                            Text("Ensure no alphabetical letters are included in your input.")
-                                .font(.body)
-                                .foregroundColor(.white)
-                                .multilineTextAlignment(.center)
-                                .padding()
-                                .background(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.10000000149011612)))
-                                )
-                            //end of one
-                            Spacer()
-                            Text("...and finished 🎉")
-                                .bold()
-                                .font(.title2)
-                                .foregroundColor(.white)
-                            Text(feature.title)
-                                .bold()
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .padding()
-                                .multilineTextAlignment(.center)
-                            Spacer()
-                            Button(action: {
-                                isOnboarding = false
-                            }, label: {
-                                HStack{
-                                    Text(feature.buttonText)
-                                }
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(.blue)
-                                .cornerRadius(10)
-                            })
                             
-                        }.padding()
-                        
-                        
-                        
-                        
-                        
+                            
+                            
+                        }
                     }
                     
                 }

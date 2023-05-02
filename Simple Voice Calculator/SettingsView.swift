@@ -10,6 +10,7 @@ struct SettingsView: View {
     
     @ObservedObject var storeManager = StoreManager()
     
+    @State private var introCoverShowing: Bool = false
     
     
     var body: some View {
@@ -69,18 +70,23 @@ struct SettingsView: View {
                         }
                     }
                     
-                    NavigationLink(destination: OnboardingContainerView())
-                    {
+                    Button(action: {
+                        introCoverShowing = true
+                        
+                    }, label: {
+                        
                         HStack {
-                            Image(systemName: "restart.circle")
+                            Image(systemName: "pencil.and.outline")
                                 .foregroundColor(.accentColor)
                             Text("Introduction Tutorial")
                             Spacer()
                         }
-                        
-                        
-                        
-                    }
+                    })
+                    
+                    
+                    
+                    
+                    
                 }
                 
                 
@@ -122,6 +128,8 @@ struct SettingsView: View {
                                         .padding()
                                         .background(.green)
                                         .cornerRadius(10)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.4)
                                 }
                                 Button(action: {
                                     storeManager.purchaseProduct(withIdentifier: "CoffeeTip5")
@@ -133,6 +141,8 @@ struct SettingsView: View {
                                         .padding()
                                         .background(.teal)
                                         .cornerRadius(10)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.4)
                                 }
                                 Button(action: {
                                     storeManager.purchaseProduct(withIdentifier: "CoffeeTip10")
@@ -144,18 +154,24 @@ struct SettingsView: View {
                                         .padding()
                                         .background(.blue)
                                         .cornerRadius(10)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.4)
                                 }
                             }
                             
                             Text("Simple Voice Calculator was made by students.")
                                 .font(.caption2)
                                 .opacity(0.4)
+                                .minimumScaleFactor(0.4)
+                            
                         }
                     } label: {
                         HStack {
                             Text("☕️")
                                 .foregroundColor(.accentColor)
                             Text("Tip developer a coffee")
+                                .minimumScaleFactor(0.4)
+                            
                         }
                     }
                 }
@@ -179,7 +195,7 @@ struct SettingsView: View {
                         Text("Version")
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        Text("1.0.8")
+                        Text("1.0.9")
                             .font(.body)
                             .opacity(0.6)
                     }
@@ -191,6 +207,31 @@ struct SettingsView: View {
             .alert(isPresented: $storeManager.showAlert) {
                 Alert(title: Text(storeManager.alertMessage))
             }
+            .fullScreenCover(isPresented: $introCoverShowing, content: {
+                ZStack{
+                    OnboardingContainerView()
+                    VStack {
+                        HStack{
+                            Spacer()
+                            
+                            Button(action: {
+                                introCoverShowing = false
+                            }, label:  {
+                                Image(systemName: "xmark")
+                                    .font(.title)
+                                    .foregroundColor(.white)
+                                
+                            })
+                            .padding()
+                        }.padding(.horizontal)
+                        Spacer()
+                    }
+                    
+                }
+                
+                
+                
+            })
             .listStyle(InsetGroupedListStyle())
             .navigationTitle("Settings")
             .toolbar {
@@ -200,6 +241,7 @@ struct SettingsView: View {
                     }) {
                         Image(systemName: "xmark")
                             .foregroundColor(.primary)
+                            .font(.body)
                     }
                 }
             }

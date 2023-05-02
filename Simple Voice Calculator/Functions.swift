@@ -88,6 +88,9 @@ struct actionButtons: ViewModifier {
             .cornerRadius(10)
             .foregroundColor(.white)
             .opacity(isRecording ? 0.4 : 1)
+            .lineLimit(1)
+            .minimumScaleFactor(0.4)
+
     }
 }
 
