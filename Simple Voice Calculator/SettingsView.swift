@@ -39,13 +39,22 @@ struct SettingsView: View {
                                 .padding(.bottom)
                             
                         }
+                        VStack(alignment: .leading) {
+                            Text("**What does the 'Sym' button do?**")
+                                .font(.body)
+                                .padding(.vertical)
+                            Text("The Sym button can be used to insert a desired math symbol where your cursor is placed in the textfield.")
+                                .font(.body)
+                                .padding(.bottom)
+                            
+                        }
                         
                         
                         VStack(alignment: .leading) {
                             Text("**How do I edit my voice input?**")
                                 .font(.body)
                                 .padding(.vertical)
-                            Text("Stop voice input. Then, you can edit any component of your equation in the 'Equation Components' section. Just tap you desired components and it will be selected in your textfield.")
+                            Text("You can edit any component of your equation in the 'Equation Components' section. Just tap you desired components and it will be selected in your textfield. Make sure you do not have voice input enabled (button should say 'Start Talking').")
                                 .font(.body)
                                 .padding(.bottom)
                             
@@ -170,7 +179,7 @@ struct SettingsView: View {
                         Text("Version")
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        Text("1.0.7")
+                        Text("1.0.8")
                             .font(.body)
                             .opacity(0.6)
                     }
