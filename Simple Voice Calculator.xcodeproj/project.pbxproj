@@ -18,7 +18,39 @@
 		413C1B7929FC3C1B0071DD19 /* StoreKitConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 413C1B7829FC3C1B0071DD19 /* StoreKitConfiguration.storekit */; };
 		413C1B7D29FFD5AF0071DD19 /* OnboardingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C1B7C29FFD5AF0071DD19 /* OnboardingContainerView.swift */; };
 		413C1B7F29FFD5C20071DD19 /* OnboardingContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C1B7E29FFD5C20071DD19 /* OnboardingContentView.swift */; };
+		41B78AAC2A0820DC0057D9F9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B78AAB2A0820DC0057D9F9 /* WidgetKit.framework */; };
+		41B78AAE2A0820DC0057D9F9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B78AAD2A0820DC0057D9F9 /* SwiftUI.framework */; };
+		41B78AB12A0820DD0057D9F9 /* Voice_Calculator_WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B78AB02A0820DC0057D9F9 /* Voice_Calculator_WidgetBundle.swift */; };
+		41B78AB52A0820DD0057D9F9 /* Voice_Calculator_Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B78AB42A0820DD0057D9F9 /* Voice_Calculator_Widget.swift */; };
+		41B78AB82A0820DE0057D9F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41B78AB72A0820DE0057D9F9 /* Assets.xcassets */; };
+		41B78ABA2A0820DE0057D9F9 /* Voice_Calculator_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 41B78AB62A0820DD0057D9F9 /* Voice_Calculator_Widget.intentdefinition */; };
+		41B78ABB2A0820DE0057D9F9 /* Voice_Calculator_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 41B78AB62A0820DD0057D9F9 /* Voice_Calculator_Widget.intentdefinition */; };
+		41B78ABE2A0820DE0057D9F9 /* Voice Calculator WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 41B78AAA2A0820DC0057D9F9 /* Voice Calculator WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		41B78ABC2A0820DE0057D9F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4111E81029F455E7003FA99C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 41B78AA92A0820DC0057D9F9;
+			remoteInfo = "Voice Calculator WidgetExtension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		41B78ABF2A0820DE0057D9F9 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				41B78ABE2A0820DE0057D9F9 /* Voice Calculator WidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4111E81829F455E7003FA99C /* Simple Voice Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Voice Calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,6 +65,14 @@
 		413C1B7829FC3C1B0071DD19 /* StoreKitConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = StoreKitConfiguration.storekit; path = "Simple Voice Calculator/StoreKitConfiguration.storekit"; sourceTree = "<group>"; };
 		413C1B7C29FFD5AF0071DD19 /* OnboardingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerView.swift; sourceTree = "<group>"; };
 		413C1B7E29FFD5C20071DD19 /* OnboardingContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentView.swift; sourceTree = "<group>"; };
+		41B78AAA2A0820DC0057D9F9 /* Voice Calculator WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Voice Calculator WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		41B78AAB2A0820DC0057D9F9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		41B78AAD2A0820DC0057D9F9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		41B78AB02A0820DC0057D9F9 /* Voice_Calculator_WidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voice_Calculator_WidgetBundle.swift; sourceTree = "<group>"; };
+		41B78AB42A0820DD0057D9F9 /* Voice_Calculator_Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voice_Calculator_Widget.swift; sourceTree = "<group>"; };
+		41B78AB62A0820DD0057D9F9 /* Voice_Calculator_Widget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Voice_Calculator_Widget.intentdefinition; sourceTree = "<group>"; };
+		41B78AB72A0820DE0057D9F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		41B78AB92A0820DE0057D9F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +84,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		41B78AA72A0820DC0057D9F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				41B78AAE2A0820DC0057D9F9 /* SwiftUI.framework in Frameworks */,
+				41B78AAC2A0820DC0057D9F9 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -52,6 +101,7 @@
 			children = (
 				413C1B7829FC3C1B0071DD19 /* StoreKitConfiguration.storekit */,
 				4111E81A29F455E7003FA99C /* Simple Voice Calculator */,
+				41B78AAF2A0820DC0057D9F9 /* Voice Calculator Widget */,
 				4111E81929F455E7003FA99C /* Products */,
 				413C1B7529FC34E30071DD19 /* Frameworks */,
 			);
@@ -61,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				4111E81829F455E7003FA99C /* Simple Voice Calculator.app */,
+				41B78AAA2A0820DC0057D9F9 /* Voice Calculator WidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -92,6 +143,8 @@
 			isa = PBXGroup;
 			children = (
 				413C1B7629FC34E30071DD19 /* StoreKit.framework */,
+				41B78AAB2A0820DC0057D9F9 /* WidgetKit.framework */,
+				41B78AAD2A0820DC0057D9F9 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -105,6 +158,18 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		41B78AAF2A0820DC0057D9F9 /* Voice Calculator Widget */ = {
+			isa = PBXGroup;
+			children = (
+				41B78AB02A0820DC0057D9F9 /* Voice_Calculator_WidgetBundle.swift */,
+				41B78AB42A0820DD0057D9F9 /* Voice_Calculator_Widget.swift */,
+				41B78AB62A0820DD0057D9F9 /* Voice_Calculator_Widget.intentdefinition */,
+				41B78AB72A0820DE0057D9F9 /* Assets.xcassets */,
+				41B78AB92A0820DE0057D9F9 /* Info.plist */,
+			);
+			path = "Voice Calculator Widget";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -115,15 +180,34 @@
 				4111E81429F455E7003FA99C /* Sources */,
 				4111E81529F455E7003FA99C /* Frameworks */,
 				4111E81629F455E7003FA99C /* Resources */,
+				41B78ABF2A0820DE0057D9F9 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				41B78ABD2A0820DE0057D9F9 /* PBXTargetDependency */,
 			);
 			name = "Simple Voice Calculator";
 			productName = "Simple Voice Calculator";
 			productReference = 4111E81829F455E7003FA99C /* Simple Voice Calculator.app */;
 			productType = "com.apple.product-type.application";
+		};
+		41B78AA92A0820DC0057D9F9 /* Voice Calculator WidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 41B78AC22A0820DE0057D9F9 /* Build configuration list for PBXNativeTarget "Voice Calculator WidgetExtension" */;
+			buildPhases = (
+				41B78AA62A0820DC0057D9F9 /* Sources */,
+				41B78AA72A0820DC0057D9F9 /* Frameworks */,
+				41B78AA82A0820DC0057D9F9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Voice Calculator WidgetExtension";
+			productName = "Voice Calculator WidgetExtension";
+			productReference = 41B78AAA2A0820DC0057D9F9 /* Voice Calculator WidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -136,6 +220,9 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					4111E81729F455E7003FA99C = {
+						CreatedOnToolsVersion = 14.3;
+					};
+					41B78AA92A0820DC0057D9F9 = {
 						CreatedOnToolsVersion = 14.3;
 					};
 				};
@@ -154,6 +241,7 @@
 			projectRoot = "";
 			targets = (
 				4111E81729F455E7003FA99C /* Simple Voice Calculator */,
+				41B78AA92A0820DC0057D9F9 /* Voice Calculator WidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -169,6 +257,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		41B78AA82A0820DC0057D9F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				41B78AB82A0820DE0057D9F9 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -179,6 +275,7 @@
 				413C1B7029F9BB390071DD19 /* SettingsView.swift in Sources */,
 				413C1B6C29F6DEBB0071DD19 /* CalculatorView.swift in Sources */,
 				4111E81C29F455E7003FA99C /* Simple_Voice_CalculatorApp.swift in Sources */,
+				41B78ABB2A0820DE0057D9F9 /* Voice_Calculator_Widget.intentdefinition in Sources */,
 				413C1B7F29FFD5C20071DD19 /* OnboardingContentView.swift in Sources */,
 				413C1B6E29F734AF0071DD19 /* Functions.swift in Sources */,
 				413C1B7229FABA0F0071DD19 /* AboutView.swift in Sources */,
@@ -186,7 +283,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		41B78AA62A0820DC0057D9F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				41B78AB12A0820DD0057D9F9 /* Voice_Calculator_WidgetBundle.swift in Sources */,
+				41B78AB52A0820DD0057D9F9 /* Voice_Calculator_Widget.swift in Sources */,
+				41B78ABA2A0820DE0057D9F9 /* Voice_Calculator_Widget.intentdefinition in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		41B78ABD2A0820DE0057D9F9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 41B78AA92A0820DC0057D9F9 /* Voice Calculator WidgetExtension */;
+			targetProxy = 41B78ABC2A0820DE0057D9F9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		4111E82429F455E8003FA99C /* Debug */ = {
@@ -306,10 +421,11 @@
 		4111E82729F455E8003FA99C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Simple Voice Calculator/Preview Content\"";
 				DEVELOPMENT_TEAM = JPXSGQNS89;
 				ENABLE_PREVIEWS = YES;
@@ -339,10 +455,11 @@
 		4111E82829F455E8003FA99C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Simple Voice Calculator/Preview Content\"";
 				DEVELOPMENT_TEAM = JPXSGQNS89;
 				ENABLE_PREVIEWS = YES;
@@ -369,6 +486,60 @@
 			};
 			name = Release;
 		};
+		41B78AC02A0820DE0057D9F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JPXSGQNS89;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Voice Calculator Widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Voice Calculator Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator.Voice-Calculator-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		41B78AC12A0820DE0057D9F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JPXSGQNS89;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Voice Calculator Widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Voice Calculator Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator.Voice-Calculator-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -386,6 +557,15 @@
 			buildConfigurations = (
 				4111E82729F455E8003FA99C /* Debug */,
 				4111E82829F455E8003FA99C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		41B78AC22A0820DE0057D9F9 /* Build configuration list for PBXNativeTarget "Voice Calculator WidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				41B78AC02A0820DE0057D9F9 /* Debug */,
+				41B78AC12A0820DE0057D9F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

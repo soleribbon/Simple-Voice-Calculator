@@ -20,6 +20,9 @@ struct CalculatorView: View {
     @FocusState private var isTextFieldFocused: Bool
     
     
+    @State var recordLink: Bool = false
+    @State var inputLink: Bool = false
+    
     //haptics
     let impactLight = UIImpactFeedbackGenerator(style: .light)
     let impactSoft = UIImpactFeedbackGenerator(style: .soft)
@@ -290,7 +293,7 @@ struct CalculatorView: View {
                         startRecording()
                     }
                 }) {
-                    Label(isRecording ? "Stop Talking" : "Start Talking", systemImage: isRecording ? "waveform" : "mic")
+                    Label(isRecording ? "Stop Talking" : "Start Talking", systemImage: isRecording ? "waveform" : "mic.fill")
                         .fontWeight(.bold)
                         .foregroundColor(.white)
                         .padding()
@@ -302,6 +305,15 @@ struct CalculatorView: View {
             
             
         }
+        .onOpenURL { url in
+            // Handle this deep link URL
+            handleWidgetDeepLink(url)
+        }
+        //        .onOpenURL(perform: { (url) in
+        //                        self.recordLink = url == URL(string: "calculator:///recordLink")!
+        //                        self.inputLink = url == URL(string: "calculator:///inputLink")!
+        //         })
+        
         .onTapGesture {
             hideKeyboard()
         }
@@ -322,6 +334,22 @@ struct CalculatorView: View {
         }
         
     } //end body
+    
+    
+    
+    func handleWidgetDeepLink(_ url: URL) {
+        
+        if url.absoluteString == "calculator:///recordLink"{
+            startRecording()
+        }else{
+            //FOCUS ON TEXTFIELD
+            if let windowScene = getWindowScene(),
+               let textField = findTextField(in: windowScene.windows.first!) {
+                textField.becomeFirstResponder()
+            }
+            
+        }
+    }
     
     func deleteComponent(at index: Int) {
         var components = getEquationComponents()
