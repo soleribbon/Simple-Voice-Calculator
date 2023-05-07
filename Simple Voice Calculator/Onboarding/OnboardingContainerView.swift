@@ -22,6 +22,7 @@ struct IndexedFeature: Identifiable {
 struct OnboardingContainerView: View {
     @State private var currentPage = 0
     
+    var isActualIntro: Bool
     private var indexedFeatures: [IndexedFeature] {
         features.enumerated().map { index, feature in
             IndexedFeature(index: index, feature: feature)
@@ -31,7 +32,7 @@ struct OnboardingContainerView: View {
     var body: some View {
         TabView(selection: $currentPage){
             ForEach(indexedFeatures) { indexedFeature in
-                OnboardingContentView(feature: indexedFeature.feature, currentPage: $currentPage, featureIndex: indexedFeature.index)
+                OnboardingContentView(feature: indexedFeature.feature, currentPage: $currentPage, actualIntro: isActualIntro, featureIndex: indexedFeature.index)
                     .tag(indexedFeature.index)
             }
         }.tabViewStyle(PageTabViewStyle())
@@ -39,8 +40,3 @@ struct OnboardingContainerView: View {
     }
 }
 
-struct OnboardingContainerView_Previews: PreviewProvider {
-    static var previews: some View {
-        OnboardingContainerView()
-    }
-}

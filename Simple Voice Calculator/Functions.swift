@@ -9,6 +9,38 @@ import SwiftUI
 import Speech
 import StoreKit
 
+
+func replaceNumberWords(_ component: String) -> String {
+    
+    //for transforming word inputs
+    let numberWordMapping: [String: String] = [
+        "zero": "0",
+        "one": "1",
+        "two": "2",
+        "three": "3",
+        "four": "4",
+        "five": "5",
+        "six": "6",
+        "seven": "7",
+        "eight": "8",
+        "nine": "9",
+        "and": ""
+    ]
+    
+    var modifiedComponent = component
+    for (word, number) in numberWordMapping {
+        
+        if modifiedComponent.contains(word) {
+            print("Found: \(word) in \(modifiedComponent) - deleted/replaced")
+            
+            modifiedComponent = modifiedComponent.replacingOccurrences(of: word, with: number)
+        }
+    }
+    return modifiedComponent
+}
+
+
+
 func getSymbolColor(component: String) -> (foreground: Color, background: Color, strokeColor: Color)? {
     if component.starts(with: "+") {
         return (foreground: .green, background: Color.green.opacity(0.1), strokeColor: Color.green.opacity(0.3))
@@ -24,21 +56,27 @@ func getSymbolColor(component: String) -> (foreground: Color, background: Color,
 }
 
 
+
+
 func isValidExpression(_ expression: String) -> Bool {
     if expression.isEmpty {
         return false
     }
-
-    let allowedCharacters = CharacterSet(charactersIn: "0123456789.+-÷*×/(),")
+    
+    // Check if the first character is a percent sign
+    if expression.first == "%" {
+        return false
+    }
+    let allowedCharacters = CharacterSet(charactersIn: "0123456789.+-÷*×/(),%")
     let unwantedCharacters = expression.unicodeScalars.filter { !allowedCharacters.contains($0) }
-
+    
     if !unwantedCharacters.isEmpty {
         return false
     }
-
+    
     var openParenthesesCount = 0
     var closeParenthesesCount = 0
-
+    
     for i in 0..<expression.count {
         let char = expression[expression.index(expression.startIndex, offsetBy: i)]
         if char == "(" {
@@ -50,7 +88,7 @@ func isValidExpression(_ expression: String) -> Bool {
         if i < expression.count - 1 {
             let nextChar = expression[expression.index(expression.startIndex, offsetBy: i + 1)]
             
-            if "+-÷*×/".contains(char) && "+-÷*×/".contains(nextChar) {
+            if "+-÷*×/%".contains(char) && "+-÷*×/%".contains(nextChar) {
                 return false
             }
             
@@ -63,17 +101,18 @@ func isValidExpression(_ expression: String) -> Bool {
             }
         }
     }
-
+    
     if openParenthesesCount != closeParenthesesCount {
         return false
     }
-
+    
     if let lastChar = expression.last, "+-÷*×/(.".contains(lastChar) {
         return false
     }
-
+    
     return true
 }
+
 
 
 struct actionButtons: ViewModifier {
@@ -90,7 +129,7 @@ struct actionButtons: ViewModifier {
             .opacity(isRecording ? 0.4 : 1)
             .lineLimit(1)
             .minimumScaleFactor(0.4)
-
+        
     }
 }
 
@@ -136,7 +175,7 @@ class PermissionChecker: ObservableObject {
     @Published var showAlert = false
     @Published var alertTitle = ""
     @Published var alertMessage = ""
-
+    
     func checkPermissions() {
         SFSpeechRecognizer.requestAuthorization { (status) in
             if status != .authorized {
@@ -161,9 +200,15 @@ class PermissionChecker: ObservableObject {
 }
 
 
+
+
+
+
+
+
 class PurchaseModel: ObservableObject {
     let productIdentifiers = ["CoffeeTip1", "CoffeeTip5", "CoffeeTip10"]
-
+    
     @Published var products: [Product] = []
     
     func fetchProducts() async {
@@ -205,7 +250,28 @@ class PurchaseModel: ObservableObject {
 }
 
 
-
+func processPercentSigns(in component: String) -> String {
+    var result = component
+    let regexPattern = "([0-9.]+)%"
+    
+    do {
+        let regex = try NSRegularExpression(pattern: regexPattern, options: [])
+        let matches = regex.matches(in: component, options: [], range: NSRange(location: 0, length: component.count))
+        
+        for match in matches.reversed() {
+            let percentValueRange = match.range(at: 1)
+            let percentValue = NSString(string: component).substring(with: percentValueRange)
+            if let number = Double(percentValue) {
+                let newValue = number / 100
+                result = (result as NSString).replacingCharacters(in: match.range, with: String(newValue))
+            }
+        }
+    } catch {
+        print("Error processing percent signs: \(error.localizedDescription)")
+    }
+    
+    return result
+}
 
 //let conversionTable: [String: String] = [
 //    "plus": "+",

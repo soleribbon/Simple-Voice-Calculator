@@ -12,7 +12,7 @@ struct SettingsView: View {
     
     @State private var introCoverShowing: Bool = false
     
-    @State private var versionNumber: String = "1.1.1"
+    @State private var versionNumber: String = "1.2.0"
     
     var body: some View {
         NavigationView {
@@ -210,7 +210,7 @@ struct SettingsView: View {
             }
             .fullScreenCover(isPresented: $introCoverShowing, content: {
                 ZStack{
-                    OnboardingContainerView()
+                    OnboardingContainerView(isActualIntro: false)
                     VStack {
                         HStack{
                             Spacer()

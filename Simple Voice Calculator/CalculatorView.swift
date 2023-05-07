@@ -17,8 +17,6 @@ struct CalculatorView: View {
     @State private var recordScale: CGFloat = 1.0
     
     @StateObject private var permissionChecker = PermissionChecker()
-    
-    
     @FocusState private var isTextFieldFocused: Bool
     
     
@@ -26,6 +24,7 @@ struct CalculatorView: View {
     let impactLight = UIImpactFeedbackGenerator(style: .light)
     let impactSoft = UIImpactFeedbackGenerator(style: .soft)
     let impactRecord = UIImpactFeedbackGenerator(style: .medium)
+    
     
     var body: some View {
         VStack {
@@ -55,42 +54,70 @@ struct CalculatorView: View {
                                 
                                 //main component styling
                                 ForEach(getEquationComponents().indices, id: \.self) { index in
+                                    
+                                    
+                                    
+                                    
                                     let component = getEquationComponents()[index]
                                     let symbolColor = getSymbolColor(component: component)
                                     
                                     HStack {
                                         Spacer()
-                                        Text(component)
-                                            .bold()
-                                            .foregroundColor(symbolColor?.foreground ?? .black)
-                                            .padding()
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .strokeBorder(symbolColor?.strokeColor ?? .clear, lineWidth: 2)
-                                                
-                                            )
-                                            .background(
-                                                Rectangle()
-                                                    .fill(symbolColor?.background ?? Color.white)
-                                                    .cornerRadius(10)
-                                                    .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)), radius:4, x:0, y:2)
-                                            )
-                                            .scaleEffect(scale)
-                                        
-                                            .onTapGesture {
-                                                impactLight.impactOccurred()
-                                                selectedComponentIndex = index
-                                                
-                                                selectComponentInTextField()
-                                                withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0)) {
-                                                    scale = 1.15
-                                                }
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0)) {
-                                                        scale = 1.0
-                                                    }
+                                        Menu {
+                                            Section {
+                                                Button(action: {
+                                                    
+                                                    impactLight.impactOccurred()
+                                                    selectedComponentIndex = index
+                                                    
+                                                    selectComponentInTextField()
+                                                    
+                                                    
+                                                }) {
+                                                    Label("Edit", systemImage: "pencil")
                                                 }
                                             }
+                                            Section {
+                                                Button(role: .destructive, action: {
+                                                    impactLight.impactOccurred()
+                                                    selectedComponentIndex = index
+                                                    withAnimation(.spring(response: 0.2, dampingFraction: 0.8, blendDuration: 0.5)) {
+                                                        scale = 1.15
+                                                    }
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                                        withAnimation(.spring(response: 0.2, dampingFraction: 0.8, blendDuration: 0.5)) {
+                                                            scale = 1.0
+                                                        }
+                                                    }
+                                                    deleteComponent(at: index)
+                                                    
+                                                    
+                                                }) {
+                                                    Label("Delete", systemImage: "trash")
+                                                }
+                                            }
+                                        } label: {
+                                            
+                                            Text(component)
+                                                .bold()
+                                                .foregroundColor(symbolColor?.foreground ?? .black)
+                                                .padding()
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 10)
+                                                        .strokeBorder(symbolColor?.strokeColor ?? .clear, lineWidth: 2)
+                                                )
+                                                .background(
+                                                    Rectangle()
+                                                        .fill(symbolColor?.background ?? Color.white)
+                                                        .cornerRadius(10)
+                                                        .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)), radius: 4, x: 0, y: 2)
+                                                )
+                                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+                                                .scaleEffect(scale)
+                                            
+                                            
+                                        }
+                                        
                                     }
                                     .padding(.horizontal)
                                 }//end of FOR EACH
@@ -223,9 +250,6 @@ struct CalculatorView: View {
                             Text("Sym")
                                 .ActionButtons(isRecording: isRecording, bgColor: Color(red: 0.608, green: 0.318, blue: 0.878))
                             
-                            
-                            
-                            
                         })
                     }
                     Button(action: {
@@ -297,7 +321,27 @@ struct CalculatorView: View {
             )
         }
         
+    } //end body
+    
+    func deleteComponent(at index: Int) {
+        var components = getEquationComponents()
+        if components.indices.contains(index) {
+            components.remove(at: index)
+            textFieldValue = components.joined(separator: "")
+            if isValidExpression(textFieldValue) {
+                calculateTotalValue()
+            } else {
+                print("NOT Valid: \(textFieldValue)")
+                if textFieldValue == ""{
+                    totalValue = ""
+                    
+                }else{
+                    totalValue = "Invalid Equation"
+                }
+            }
+        }
     }
+    
     
     private func findTextField(in view: UIView) -> UITextField? {
         for subview in view.subviews {
@@ -348,7 +392,7 @@ struct CalculatorView: View {
     
     
     
-    private func getEquationComponents() -> [String] {
+    func getEquationComponents() -> [String] {
         let inputValue = textFieldValue
         let equation = inputValue.lowercased()
         var components = [String]()
@@ -408,7 +452,9 @@ struct CalculatorView: View {
         }
         
         if !currentComponent.isEmpty {
-            let modifiedComponent = replaceNumberWords(currentComponent.filter { !$0.isWhitespace })
+            let replacedComponent = replaceNumberWords(currentComponent.filter { !$0.isWhitespace })
+            let modifiedComponent = processPercentSigns(in: replacedComponent)
+            
             if previousComponentWasSymbol {
                 components[components.count - 1].append(contentsOf: modifiedComponent)
             } else {
@@ -417,44 +463,13 @@ struct CalculatorView: View {
             
         }
         //removing first characters if they are invalid (in real time)
-        if let first = components.first, let firstChar = first.first, ["×", "÷", "+"].contains(firstChar) {
+        if let first = components.first, let firstChar = first.first, ["×", "÷", "+", "%"].contains(firstChar) {
             components[0] = String(first.dropFirst())
         }
         print("Active: \(components)")
         return components
     }
-    
-    func replaceNumberWords(_ component: String) -> String {
-        
-        //for transforming word inputs
-        let numberWordMapping: [String: String] = [
-            "zero": "0",
-            "one": "1",
-            "two": "2",
-            "three": "3",
-            "four": "4",
-            "five": "5",
-            "six": "6",
-            "seven": "7",
-            "eight": "8",
-            "nine": "9",
-            "and": ""
-        ]
-        
-        var modifiedComponent = component
-        for (word, number) in numberWordMapping {
-            
-            if modifiedComponent.contains(word) {
-                print("Found: \(word) in \(modifiedComponent) - deleted/replaced")
-                
-                modifiedComponent = modifiedComponent.replacingOccurrences(of: word, with: number)
-            }
-        }
-        return modifiedComponent
-    }
-    
-    
-    private func startRecording() {
+    func startRecording() {
         if recognitionTask != nil {
             recognitionTask?.cancel()
             recognitionTask = nil
@@ -552,18 +567,13 @@ struct CalculatorView: View {
         // Update textFieldValue manually
         textFieldValue = textField.text ?? ""
     }
-    
-    
-    
-    
-    
     private func calculateTotalValue() {
         let components = getEquationComponents()
         print(components)
         var cleanedComponents: [String] = []
         
         
-        let allowedCharacters = CharacterSet(charactersIn: "0123456789.+-÷*×/()")
+        let allowedCharacters = CharacterSet(charactersIn: "0123456789.+-÷*×/()%")
         
         for component in components {
             //Filtering out some bad bits
@@ -600,3 +610,4 @@ struct CalculatorView: View {
     }
     
 }
+

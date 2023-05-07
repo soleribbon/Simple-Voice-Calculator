@@ -10,13 +10,12 @@ import SwiftUI
 @main
 struct Simple_Voice_CalculatorApp: App {
     @AppStorage("isOnboarding") var isOnboarding = true
-    
     var body: some Scene {
         
         
         WindowGroup {
             if isOnboarding {
-                OnboardingContainerView()
+                OnboardingContainerView(isActualIntro: true)
             } else {
                 CalculatorView()
                 

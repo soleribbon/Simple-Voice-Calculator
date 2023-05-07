@@ -28,7 +28,11 @@ struct OnboardingContentView: View {
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     var feature: Feature
     @Binding var currentPage: Int
+    
+    var actualIntro: Bool
+
     var featureIndex: Int
+    
     
     var isLastFeature: Bool {
         feature.id == features.last?.id
@@ -65,6 +69,7 @@ struct OnboardingContentView: View {
                             .foregroundColor(.white)
                             .padding()
                             .multilineTextAlignment(.center)
+                            .minimumScaleFactor(0.4)
                         Spacer()
                     }
                     .overlay(
@@ -100,21 +105,29 @@ struct OnboardingContentView: View {
                             .background(.blue)
                             .cornerRadius(10)
                         })
-                        Text("or")
-                            .bold()
-                            .font(.body)
-                            .foregroundColor(.white)
-                            .opacity(0.5)
                         
-                        
-                        Button(action: {
-                            isOnboarding = false
-                        }, label: {
-                            Text("Skip Introduction")
+                        //IF NOT DISPLAYED FROM SETTINGS, SHOW SKIP
+                        if actualIntro {
+                            
+                            Text("or")
                                 .bold()
-                                .underline()
+                                .font(.body)
                                 .foregroundColor(.white)
-                        })
+                                .opacity(0.5)
+                            
+                            
+                            Button(action: {
+                                isOnboarding = false
+                            }, label: {
+                                Text("Skip Introduction")
+                                    .bold()
+                                    .underline()
+                                    .foregroundColor(.white)
+                                    .opacity(0.75)
+                            })
+                            
+                        }
+                        
                         
                         
                         Spacer().frame(height: 10)
@@ -127,7 +140,7 @@ struct OnboardingContentView: View {
                     
                 }
             } else {
-                //last ending view
+                //LAST ENDING VIEW
                 VStack{
                     ScrollView {
                         VStack{
@@ -151,7 +164,7 @@ struct OnboardingContentView: View {
                                             .fill(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.10000000149011612)))
                                     )
                                 //end of one
-                                Text("After pressing 'Stop Talking' your dictated equation will be automatically appended to the end of the input field.")
+                                Text("After pressing 'Stop Talking', your dictated equation will be added to the end of the input field.")
                                     .font(.body)
                                     .multilineTextAlignment(.center)
                                     .foregroundColor(.white)
@@ -183,10 +196,6 @@ struct OnboardingContentView: View {
                                     )
                                 //end of one
                                 Spacer()
-                                Text("...and finished 🎉")
-                                    .bold()
-                                    .font(.title2)
-                                    .foregroundColor(.white)
                                 Text(feature.title)
                                     .bold()
                                     .font(.title)
