@@ -10,6 +10,8 @@
 		4111E81C29F455E7003FA99C /* Simple_Voice_CalculatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4111E81B29F455E7003FA99C /* Simple_Voice_CalculatorApp.swift */; };
 		4111E82029F455E8003FA99C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4111E81F29F455E8003FA99C /* Assets.xcassets */; };
 		4111E82329F455E8003FA99C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4111E82229F455E8003FA99C /* Preview Assets.xcassets */; };
+		411F18EF2A098A2F00086755 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 411F18F12A098A2F00086755 /* Localizable.strings */; };
+		411F18F62A09A13D00086755 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 411F18F12A098A2F00086755 /* Localizable.strings */; };
 		413C1B6C29F6DEBB0071DD19 /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C1B6B29F6DEBB0071DD19 /* CalculatorView.swift */; };
 		413C1B6E29F734AF0071DD19 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C1B6D29F734AF0071DD19 /* Functions.swift */; };
 		413C1B7029F9BB390071DD19 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C1B6F29F9BB390071DD19 /* SettingsView.swift */; };
@@ -57,6 +59,12 @@
 		4111E81B29F455E7003FA99C /* Simple_Voice_CalculatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simple_Voice_CalculatorApp.swift; sourceTree = "<group>"; };
 		4111E81F29F455E8003FA99C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4111E82229F455E8003FA99C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		411F18EC2A09895800086755 /* Simple-Voice-Calculator-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Simple-Voice-Calculator-Info.plist"; sourceTree = SOURCE_ROOT; };
+		411F18F02A098A2F00086755 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		411F18F22A098A3300086755 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		411F18F32A098A3400086755 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		411F18F42A0997CC00086755 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		411F18F52A09984900086755 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		413C1B6B29F6DEBB0071DD19 /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
 		413C1B6D29F734AF0071DD19 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		413C1B6F29F9BB390071DD19 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -99,6 +107,7 @@
 		4111E80F29F455E7003FA99C = {
 			isa = PBXGroup;
 			children = (
+				411F18F12A098A2F00086755 /* Localizable.strings */,
 				413C1B7829FC3C1B0071DD19 /* StoreKitConfiguration.storekit */,
 				4111E81A29F455E7003FA99C /* Simple Voice Calculator */,
 				41B78AAF2A0820DC0057D9F9 /* Voice Calculator Widget */,
@@ -119,6 +128,7 @@
 		4111E81A29F455E7003FA99C /* Simple Voice Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				411F18EC2A09895800086755 /* Simple-Voice-Calculator-Info.plist */,
 				4111E81B29F455E7003FA99C /* Simple_Voice_CalculatorApp.swift */,
 				413C1B6D29F734AF0071DD19 /* Functions.swift */,
 				413C1B6B29F6DEBB0071DD19 /* CalculatorView.swift */,
@@ -234,6 +244,10 @@
 			knownRegions = (
 				en,
 				Base,
+				it,
+				de,
+				"es-419",
+				es,
 			);
 			mainGroup = 4111E80F29F455E7003FA99C;
 			productRefGroup = 4111E81929F455E7003FA99C /* Products */;
@@ -252,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				413C1B7929FC3C1B0071DD19 /* StoreKitConfiguration.storekit in Resources */,
+				411F18EF2A098A2F00086755 /* Localizable.strings in Resources */,
 				4111E82329F455E8003FA99C /* Preview Assets.xcassets in Resources */,
 				4111E82029F455E8003FA99C /* Assets.xcassets in Resources */,
 			);
@@ -262,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				41B78AB82A0820DE0057D9F9 /* Assets.xcassets in Resources */,
+				411F18F62A09A13D00086755 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +318,21 @@
 			targetProxy = 41B78ABC2A0820DE0057D9F9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		411F18F12A098A2F00086755 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				411F18F02A098A2F00086755 /* en */,
+				411F18F22A098A3300086755 /* de */,
+				411F18F32A098A3400086755 /* it */,
+				411F18F42A0997CC00086755 /* es-419 */,
+				411F18F52A09984900086755 /* es */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		4111E82429F455E8003FA99C /* Debug */ = {
@@ -430,6 +461,7 @@
 				DEVELOPMENT_TEAM = JPXSGQNS89;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Simple-Voice-Calculator-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Voice Calculator";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses your microphone to process audio into text.";
@@ -464,6 +496,7 @@
 				DEVELOPMENT_TEAM = JPXSGQNS89;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Simple-Voice-Calculator-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Voice Calculator";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses your microphone to process audio into text.";

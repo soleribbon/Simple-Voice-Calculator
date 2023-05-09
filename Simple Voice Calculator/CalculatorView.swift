@@ -6,7 +6,10 @@ struct CalculatorView: View {
     @State private var isRecording = false
     @State private var previousText = ""
     @State private var audioEngine = AVAudioEngine()
-    @State private var speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
+    
+    let supportedLanguages = ["en-US", "de-DE", "es-ES", "es-MX", "it-IT"]
+    @State var currentLanguage = Locale.current.identifier.replacingOccurrences(of: "_", with: "-")
+    @State private var speechRecognizer: SFSpeechRecognizer!
     @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     @State private var recognitionTask: SFSpeechRecognitionTask?
     @State private var selectedComponentIndex: Int?
@@ -227,25 +230,25 @@ struct CalculatorView: View {
                             impactLight.impactOccurred()
                             insertText("+")
                         }, label: {
-                            Label("+ (Insert)", systemImage: "plus")
+                            Label("+ Insert", systemImage: "plus")
                         })
                         Button(action: {
                             impactLight.impactOccurred()
                             insertText("-")
                         }, label: {
-                            Label("- (Insert)", systemImage: "minus")
+                            Label("- Insert", systemImage: "minus")
                         })
                         Button(action: {
                             impactLight.impactOccurred()
                             insertText("×")
                         }, label: {
-                            Label("× (Insert)", systemImage: "multiply")
+                            Label("× Insert", systemImage: "multiply")
                         })
                         Button(action: {
                             impactLight.impactOccurred()
                             insertText("÷")
                         }, label: {
-                            Label("÷ (Insert)", systemImage: "divide")
+                            Label("÷ Insert", systemImage: "divide")
                         })
                     } label: {
                         Button(action: {}, label: {
@@ -322,7 +325,25 @@ struct CalculatorView: View {
             SettingsView()
         })
         .onAppear(perform: {
+            //            print(SFSpeechRecognizer.supportedLocales())
             permissionChecker.checkPermissions()
+            
+            if (currentLanguage == "de-US"){
+                currentLanguage = "de-DE"
+            }else if (currentLanguage == "it-US"){
+                currentLanguage = "it-IT"
+            }else if (currentLanguage == "es-US"){
+                currentLanguage = "es-ES"
+            }else if (currentLanguage == "mx-US"){
+                currentLanguage = "es-MX"
+            }
+            
+            
+            
+            speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: supportedLanguages.contains(currentLanguage) ? currentLanguage : "en-US"))
+            
+            print(currentLanguage)
+            
             
         })
         .alert(isPresented: $permissionChecker.showAlert) {

@@ -73,7 +73,6 @@ func isValidExpression(_ expression: String) -> Bool {
     if !unwantedCharacters.isEmpty {
         return false
     }
-    
     var openParenthesesCount = 0
     var closeParenthesesCount = 0
     

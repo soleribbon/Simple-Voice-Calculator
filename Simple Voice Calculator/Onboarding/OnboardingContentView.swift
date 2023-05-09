@@ -63,7 +63,7 @@ struct OnboardingContentView: View {
                             Spacer()
                         }
                         Spacer()
-                        Text(feature.title)
+                        Text(LocalizedStringKey(feature.title))
                             .bold()
                             .font(.title)
                             .foregroundColor(.white)
@@ -96,8 +96,9 @@ struct OnboardingContentView: View {
                             
                         }, label: {
                             HStack{
-                                Text(feature.buttonText)
+                                Text(LocalizedStringKey(feature.buttonText))
                                 Image(systemName: "arrow.right")
+                                
                             }
                             .fontWeight(.bold)
                             .foregroundColor(.white)
@@ -154,7 +155,7 @@ struct OnboardingContentView: View {
                                 Spacer()
                             }.padding()
                             VStack (alignment: .center){
-                                Text("Only **+ - × ÷**  are supported")
+                                Text(LocalizedStringKey("Only **+ - × ÷**  are supported"))
                                     .multilineTextAlignment(.center)
                                     .font(.body)
                                     .foregroundColor(.white)
@@ -196,7 +197,7 @@ struct OnboardingContentView: View {
                                     )
                                 //end of one
                                 Spacer()
-                                Text(feature.title)
+                                Text(LocalizedStringKey(feature.title))
                                     .bold()
                                     .font(.title)
                                     .foregroundColor(.white)
@@ -207,7 +208,7 @@ struct OnboardingContentView: View {
                                     isOnboarding = false
                                 }, label: {
                                     HStack{
-                                        Text(feature.buttonText)
+                                        Text(LocalizedStringKey(feature.buttonText))
                                     }
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)

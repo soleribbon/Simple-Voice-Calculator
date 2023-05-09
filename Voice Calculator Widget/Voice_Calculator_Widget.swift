@@ -211,6 +211,7 @@ struct Voice_Calculator_WidgetEntryView : View {
                                 .opacity(0.75)
                             
                             Text("Voice Input")
+                                .minimumScaleFactor(0.4)
                                 .bold()
                                 .font(.title2)
                                 .foregroundColor(.white)
