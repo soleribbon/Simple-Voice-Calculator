@@ -12,7 +12,7 @@ struct SettingsView: View {
     
     @State private var introCoverShowing: Bool = false
     
-    @State private var versionNumber: String = "1.2.0"
+    @State private var versionNumber: String = "1.2.1"
     
     var body: some View {
         NavigationView {

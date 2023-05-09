@@ -242,7 +242,10 @@ struct Voice_Calculator_WidgetEntryView : View {
                 }.padding()
                 
                 
-            @unknown default:
+                
+                
+                
+            default:
                 VStack {
                     Link(destination: URL(string: "calculator:///inputLink")!, label: {
                         Text("Input Equation")
