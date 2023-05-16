@@ -16,10 +16,12 @@
 		413C1B6E29F734AF0071DD19 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C1B6D29F734AF0071DD19 /* Functions.swift */; };
 		413C1B7029F9BB390071DD19 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C1B6F29F9BB390071DD19 /* SettingsView.swift */; };
 		413C1B7229FABA0F0071DD19 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C1B7129FABA0F0071DD19 /* AboutView.swift */; };
-		413C1B7729FC34E30071DD19 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 413C1B7629FC34E30071DD19 /* StoreKit.framework */; };
 		413C1B7929FC3C1B0071DD19 /* StoreKitConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 413C1B7829FC3C1B0071DD19 /* StoreKitConfiguration.storekit */; };
 		413C1B7D29FFD5AF0071DD19 /* OnboardingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C1B7C29FFD5AF0071DD19 /* OnboardingContainerView.swift */; };
 		413C1B7F29FFD5C20071DD19 /* OnboardingContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C1B7E29FFD5C20071DD19 /* OnboardingContentView.swift */; };
+		4183E80F2A1434D300AEEF40 /* Simple-Voice-Calculator-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 411F18EC2A09895800086755 /* Simple-Voice-Calculator-Info.plist */; };
+		4183E8102A1434D400AEEF40 /* Simple-Voice-Calculator-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 411F18EC2A09895800086755 /* Simple-Voice-Calculator-Info.plist */; };
+		4183E8112A14357800AEEF40 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 413C1B7629FC34E30071DD19 /* StoreKit.framework */; };
 		41B78AAC2A0820DC0057D9F9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B78AAB2A0820DC0057D9F9 /* WidgetKit.framework */; };
 		41B78AAE2A0820DC0057D9F9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B78AAD2A0820DC0057D9F9 /* SwiftUI.framework */; };
 		41B78AB12A0820DD0057D9F9 /* Voice_Calculator_WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B78AB02A0820DC0057D9F9 /* Voice_Calculator_WidgetBundle.swift */; };
@@ -88,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				413C1B7729FC34E30071DD19 /* StoreKit.framework in Frameworks */,
+				4183E8112A14357800AEEF40 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +271,7 @@
 				411F18EF2A098A2F00086755 /* Localizable.strings in Resources */,
 				4111E82329F455E8003FA99C /* Preview Assets.xcassets in Resources */,
 				4111E82029F455E8003FA99C /* Assets.xcassets in Resources */,
+				4183E80F2A1434D300AEEF40 /* Simple-Voice-Calculator-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +279,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4183E8102A1434D400AEEF40 /* Simple-Voice-Calculator-Info.plist in Resources */,
 				41B78AB82A0820DE0057D9F9 /* Assets.xcassets in Resources */,
 				411F18F62A09A13D00086755 /* Localizable.strings in Resources */,
 			);
@@ -456,7 +460,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_ASSET_PATHS = "\"Simple Voice Calculator/Preview Content\"";
 				DEVELOPMENT_TEAM = JPXSGQNS89;
 				ENABLE_PREVIEWS = YES;
@@ -471,11 +475,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -491,7 +496,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_ASSET_PATHS = "\"Simple Voice Calculator/Preview Content\"";
 				DEVELOPMENT_TEAM = JPXSGQNS89;
 				ENABLE_PREVIEWS = YES;
@@ -506,11 +511,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
