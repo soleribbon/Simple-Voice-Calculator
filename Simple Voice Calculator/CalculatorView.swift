@@ -297,7 +297,7 @@ struct CalculatorView: View {
                     }
                 }) {
                     Label(isRecording ? "Stop Talking" : "Start Talking", systemImage: isRecording ? "waveform" : "mic.fill")
-                        .fontWeight(.bold)
+                        .bold()
                         .foregroundColor(.white)
                         .padding()
                         .background(isRecording ? Color.red : Color.blue)

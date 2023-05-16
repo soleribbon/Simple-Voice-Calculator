@@ -100,7 +100,7 @@ struct OnboardingContentView: View {
                                 Image(systemName: "arrow.right")
                                 
                             }
-                            .fontWeight(.bold)
+                            .bold()
                             .foregroundColor(.white)
                             .padding()
                             .background(.blue)
@@ -210,7 +210,7 @@ struct OnboardingContentView: View {
                                     HStack{
                                         Text(LocalizedStringKey(feature.buttonText))
                                     }
-                                    .fontWeight(.bold)
+                                    .bold()
                                     .foregroundColor(.white)
                                     .padding()
                                     .background(.blue)

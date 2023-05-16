@@ -25,9 +25,8 @@ struct AboutView: View {
                             .padding(.horizontal, 6)
                         VStack (alignment: .leading) {
                             Text("About Simple Voice Calculator")
-                                .font(.title2)
+                                .font(.title2.weight(.bold))
                                 .padding(.vertical, 6)
-                            .bold()
                         }
                         Spacer()
                         
