@@ -120,7 +120,7 @@ struct actionButtons: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .fontWeight(.bold)
+            .bold()
             .padding()
             .background(bgColor)
             .cornerRadius(10)
