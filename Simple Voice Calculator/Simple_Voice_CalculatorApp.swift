@@ -18,7 +18,7 @@ struct Simple_Voice_CalculatorApp: App {
                 OnboardingContainerView(isActualIntro: true)
             } else {
                 CalculatorView()
-//                    .environment(\.locale, .init(identifier: "it"))
+//                    .environment(\.locale, .init(identifier: "hi"))
 
                 
             }

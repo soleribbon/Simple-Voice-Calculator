@@ -2,12 +2,14 @@ import SwiftUI
 import Speech
 
 struct CalculatorView: View {
+
+    
     @State private var textFieldValue = ""
     @State private var isRecording = false
     @State private var previousText = ""
     @State private var audioEngine = AVAudioEngine()
     
-    let supportedLanguages = ["en-US", "de-DE", "es-ES", "es-MX", "it-IT"]
+    let supportedLanguages = ["en-US", "de-DE", "es-ES", "es-MX", "it-IT", "ko-KR", "hi-IN"]
     @State var currentLanguage = Locale.current.identifier.replacingOccurrences(of: "_", with: "-")
     @State private var speechRecognizer: SFSpeechRecognizer!
     @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
@@ -39,6 +41,7 @@ struct CalculatorView: View {
                 Text("Simple Voice Calculator")
                     .font(.title2)
                     .bold()
+                    .accessibilityLabel("Simple Voice Calculator")
                 Spacer()
                 Button(action: {
                     impactSoft.impactOccurred()
@@ -49,7 +52,7 @@ struct CalculatorView: View {
                         .font(.title2)
                         .foregroundColor(.primary)
                     
-                })
+                }).accessibilityLabel("Settings")
             }.padding(.horizontal)
             
             GroupBox {
@@ -60,9 +63,6 @@ struct CalculatorView: View {
                                 
                                 //main component styling
                                 ForEach(getEquationComponents().indices, id: \.self) { index in
-                                    
-                                    
-                                    
                                     
                                     let component = getEquationComponents()[index]
                                     let symbolColor = getSymbolColor(component: component)
@@ -80,7 +80,7 @@ struct CalculatorView: View {
                                                     
                                                     
                                                 }) {
-                                                    Label("Edit", systemImage: "pencil")
+                                                    Label("Edit", systemImage: "pencil").accessibilityLabel("Edit")
                                                 }
                                             }
                                             Section {
@@ -108,6 +108,7 @@ struct CalculatorView: View {
                                                 .bold()
                                                 .foregroundColor(symbolColor?.foreground ?? .black)
                                                 .padding()
+                                                .accessibilityLabel(component)
                                                 .overlay(
                                                     RoundedRectangle(cornerRadius: 10)
                                                         .strokeBorder(symbolColor?.strokeColor ?? .clear, lineWidth: 2)
@@ -150,6 +151,7 @@ struct CalculatorView: View {
                                     Spacer()
                                     Text("=")
                                         .foregroundColor(.black)
+                                        .accessibilityLabel("=")
                                         .opacity(0.3)
                                     Text(totalValue)
                                         .font(.system(.headline, design: .monospaced))
@@ -161,6 +163,8 @@ struct CalculatorView: View {
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10)
                                         .strokeBorder(Color(red: 0.839, green: 0.839, blue: 0.839), lineWidth: 2)
+                                        .accessibilityLabel("TOTAL: \(totalValue)")
+                                    
                                     
                                 ).background(
                                     RoundedRectangle(cornerRadius: 10)
@@ -182,6 +186,7 @@ struct CalculatorView: View {
                 
             } label: {
                 Text("Equation Components")
+                    .accessibilityLabel("Equation Components")
                     .opacity(0.3)
                 
             }
@@ -189,6 +194,7 @@ struct CalculatorView: View {
             
             Group {
                 TextField("Enter equation", text: $textFieldValue)
+                    .accessibilityLabel("Enter equation")
                     .focused($isTextFieldFocused)
                     .customTextFieldStyle(isRecording: isRecording)
                     .onChange(of: textFieldValue) { newValue in
@@ -214,6 +220,8 @@ struct CalculatorView: View {
                             .padding(.horizontal, 10)
                             .ActionButtons(isRecording: isRecording, bgColor: Color(white: 0.235))
                     }
+                    .accessibilityLabel("(")
+                    
                     
                     Button(action: {
                         impactLight.impactOccurred()
@@ -224,6 +232,8 @@ struct CalculatorView: View {
                             .ActionButtons(isRecording: isRecording, bgColor: Color(white: 0.235))
                         
                     }
+                    .accessibilityLabel(")")
+                    
                     
                     Menu {
                         Button(action: {
@@ -232,12 +242,15 @@ struct CalculatorView: View {
                         }, label: {
                             Label("+ Insert", systemImage: "plus")
                         })
+                        
                         Button(action: {
                             impactLight.impactOccurred()
                             insertText("-")
                         }, label: {
                             Label("- Insert", systemImage: "minus")
-                        })
+                            
+                            
+                        }).accessibilityLabel("Minus Insert")
                         Button(action: {
                             impactLight.impactOccurred()
                             insertText("×")
@@ -325,20 +338,24 @@ struct CalculatorView: View {
             SettingsView()
         })
         .onAppear(perform: {
-            //            print(SFSpeechRecognizer.supportedLocales())
+//            print(SFSpeechRecognizer.supportedLocales())
             permissionChecker.checkPermissions()
             
+            
+            //TRANSLATING SYSTEM LANGUAGE TO SF SPEECH LANGUAGE
             if (currentLanguage == "de-US"){
                 currentLanguage = "de-DE"
-            }else if (currentLanguage == "it-US"){
+            } else if (currentLanguage == "it-US"){
                 currentLanguage = "it-IT"
-            }else if (currentLanguage == "es-US"){
+            } else if (currentLanguage == "es-US"){
                 currentLanguage = "es-ES"
-            }else if (currentLanguage == "mx-US"){
+            } else if (currentLanguage == "mx-US"){
                 currentLanguage = "es-MX"
+            } else if (currentLanguage == "ko-US"){
+                currentLanguage = "ko-KR"
+            } else if (currentLanguage == "hi-US"){
+                currentLanguage = "hi-IN"
             }
-            
-            
             
             speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: supportedLanguages.contains(currentLanguage) ? currentLanguage : "en-US"))
             
@@ -514,8 +531,9 @@ struct CalculatorView: View {
         //removing first characters if they are invalid (in real time)
         if let first = components.first, let firstChar = first.first, ["×", "÷", "+", "%"].contains(firstChar) {
             components[0] = String(first.dropFirst())
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
-        print("Active: \(components)")
+        //        print("Active: \(components)")
         return components
     }
     func startRecording() {
@@ -583,6 +601,7 @@ struct CalculatorView: View {
     }
     
     private func clearTextField() {
+        testExpressionEvaluation()
         textFieldValue = ""
         previousText = ""
     }
@@ -616,9 +635,11 @@ struct CalculatorView: View {
         // Update textFieldValue manually
         textFieldValue = textField.text ?? ""
     }
+    
     private func calculateTotalValue() {
+        
         let components = getEquationComponents()
-        print(components)
+        //        print(components)
         var cleanedComponents: [String] = []
         
         
@@ -632,31 +653,93 @@ struct CalculatorView: View {
                 .replacingOccurrences(of: "=", with: "")
                 .replacingOccurrences(of: " ", with: "")
             
+            
             // Remove unwanted characters
             let filteredComponent = cleanedComponent.components(separatedBy: allowedCharacters.inverted).joined()
             
-            print("Cleaned Component: \(filteredComponent)")
+            //            print("Cleaned Component: \(filteredComponent)")
             
-            cleanedComponents.append(filteredComponent)
+            
+            
+            let doubleComponent = (filteredComponent.rangeOfCharacter(from: CharacterSet(charactersIn: ".+-*/")) == nil) ? filteredComponent + ".0" : filteredComponent
+            cleanedComponents.append(doubleComponent)
+            
+            //            cleanedComponents.append(filteredComponent)
             
         }
         
         let cleanedExpression = cleanedComponents.joined(separator: "")
         //remove these specific operators from start & end if needed
         let trimmedExpression = cleanedExpression.trimmingCharacters(in: CharacterSet(charactersIn: "+*/"))
-        print("Cleaned Expression: \(trimmedExpression)")
+        //        print("Cleaned Expression: \(trimmedExpression)")
         
         
         
         let expression = NSExpression(format: trimmedExpression)
         
         if let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
-            totalValue = result.stringValue
+            
+            //            print("Total Expression: \(expression)")
+            
+            if floor(result.doubleValue) == result.doubleValue {
+                // If the result is an integer, just convert to Int and then to String.
+                totalValue = "\(Int(result.doubleValue))"
+                
+            }
+            else {
+                // Otherwise, limit the number of decimal places to 3.
+                totalValue = String(format: "%.3f", result.doubleValue)
+                
+            }
+            
         } else {
             totalValue = "Error"
         }
         
     }
+    
+    
+    
+    
+    
+    
+    func testExpressionEvaluation() {
+        let testCases = [
+            ("1+2", "3"),
+            ("3-1", "2"),
+            ("(4+5)*2", "18"),
+            ("(6/3)+(2*3)", "8"),
+            ("((3+2)-1)*(4/2)", "8"),
+            ("(3+2)*4/(2+1)", "6.667"),
+            ("3*(4+(5/2))-1", "14.5"),
+            ("4/75", "0.053"),
+            ("(7+3)*(4+2)/3", "20"), // Multiple Parentheses
+            ("9/(3+1)-2", "0.250"),     // Parentheses and Post-DivisionSubtraction
+            ("12.5+7.5", "20"),     // Decimal Addition
+            ("(4*2.5)+(1.5*2)", "13"), // Multiple Decimal Multiplication
+            ("(3.6+1.4)/5", "1"),   // Decimal Addition and Division
+            ("5+((1+2)*4)-3", "14"),    // Nested Parentheses
+            ("0.5*4+2", "4"),       // Decimal Multiplication and Addition
+            ("6/3/2", "1"),         // Sequential Division
+            ("10-(8/4)", "8"),      // Parentheses Implied
+            ("10/10/10", "0.100"),
+
+        ]
+        
+        
+        for (expression, expected) in testCases {
+            textFieldValue = expression
+            print("Testing expression: \(expression)")
+            calculateTotalValue()
+            
+            if totalValue == expected {
+                print("✔️ passed for expression \(expression)")
+            } else {
+                print("❌ FAILED for expression \(expression). Got \(totalValue), expected \(expected)")
+            }
+        }
+    }
+    
     
 }
 

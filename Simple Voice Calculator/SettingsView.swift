@@ -12,12 +12,16 @@ struct SettingsView: View {
     
     @State private var introCoverShowing: Bool = false
     
-    @State private var versionNumber: String = "1.4.0"
+    @State private var versionNumber: String = "1.6.0"
     
+    
+    @Environment(\.requestReview) var requestReview
+
     var body: some View {
         NavigationView {
             List {
                 Section(header: Text("Quick Help")) {
+                    
                     DisclosureGroup(isExpanded: $helpExpanded) {
                         
                         VStack(alignment: .leading) {
@@ -103,14 +107,14 @@ struct SettingsView: View {
                         
                         
                         
-                    }
+                    }.accessibilityLabel("About Simple Voice Calculator")
                     Link(destination: URL(string: "https://www.raviheyne.com")!, label: {
                         HStack {
                             Text("💌")
                                 .foregroundColor(.accentColor)
                             Text("Contact Developer").foregroundColor(.blue)
                         }
-                    })
+                    }).accessibilityLabel("Contact Developer")
                     
                     
                     GroupBox {
@@ -173,15 +177,32 @@ struct SettingsView: View {
                             Text("Tip developer a coffee")
                                 .minimumScaleFactor(0.4)
                             
-                        }
+                        }.accessibilityLabel("Tip developer a coffee")
+
                     }
                 }
+                
+                Button(action: {
+                    requestReview()
+                }, label: {
+                    
+                    
+                    HStack{
+                        Image(systemName: "star")
+                            .foregroundColor(.accentColor)
+                        Text("Leave Review")
+                        .foregroundColor(.blue)
+                    }
+
+                })
+                
                 Section(header: Text("Privacy")) {
                     DisclosureGroup(isExpanded: $privacyExpanded) {
                         Text("We take privacy so seriously, we do not collect any information at all! Once a calculation is cleared, it is gone forever.")
                         Text("*Speech data is sent to Apple to ensure transcription accuracy")
                             .font(.caption2)
                             .opacity(0.4)
+                        
                     } label: {
                         HStack {
                             Image(systemName: "shield")
@@ -190,6 +211,7 @@ struct SettingsView: View {
                         }
                     }
                 }
+               
                 
                 Section {
                     VStack(alignment: .leading, spacing: 2) {
@@ -199,6 +221,7 @@ struct SettingsView: View {
                         Text(versionNumber)
                             .font(.body)
                             .opacity(0.6)
+                        
                     }
                 }
             }
@@ -221,11 +244,17 @@ struct SettingsView: View {
                                 Image(systemName: "xmark")
                                     .font(.title)
                                     .foregroundColor(.white)
+                                    .padding(8)
                                 
                             })
+                            .background(
+                                Circle()
+                                    .fill(Color.white.opacity(0.3))
+                            )
                             .padding()
                         }.padding(.horizontal)
                         Spacer()
+                        
                     }
                     
                 }
