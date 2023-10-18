@@ -1,3 +1,4 @@
+
 import SwiftUI
 import StoreKit
 
@@ -12,11 +13,11 @@ struct SettingsView: View {
     
     @State private var introCoverShowing: Bool = false
     
-    @State private var versionNumber: String = "1.6.0"
+    @State private var versionNumber: String = "1.8.0"
     
     
-    @Environment(\.requestReview) var requestReview
-
+    //    @Environment(\.requestReview) var requestReview
+    
     var body: some View {
         NavigationView {
             List {
@@ -116,6 +117,21 @@ struct SettingsView: View {
                         }
                     }).accessibilityLabel("Contact Developer")
                     
+                    //BUTTON TO REQUEST REVIEW - MIGHT DO NOTHING AT ALL DEPENDS ON APPLE ALWAYS
+                    //                    Button(action: {
+                    //                        requestReview()
+                    //                    }, label: {
+                    //
+                    //
+                    //                        HStack{
+                    //                            Text("⭐️")
+                    //                                .foregroundColor(.accentColor)
+                    //                            Text("Leave Review")
+                    //                            .foregroundColor(.primary)
+                    //                        }
+                    //
+                    //                    })
+                    //
                     
                     GroupBox {
                         
@@ -178,23 +194,11 @@ struct SettingsView: View {
                                 .minimumScaleFactor(0.4)
                             
                         }.accessibilityLabel("Tip developer a coffee")
-
+                        
                     }
                 }
                 
-                Button(action: {
-                    requestReview()
-                }, label: {
-                    
-                    
-                    HStack{
-                        Image(systemName: "star")
-                            .foregroundColor(.accentColor)
-                        Text("Leave Review")
-                        .foregroundColor(.blue)
-                    }
-
-                })
+                
                 
                 Section(header: Text("Privacy")) {
                     DisclosureGroup(isExpanded: $privacyExpanded) {
@@ -211,7 +215,7 @@ struct SettingsView: View {
                         }
                     }
                 }
-               
+                
                 
                 Section {
                     VStack(alignment: .leading, spacing: 2) {
@@ -335,4 +339,5 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
         }
     }
 }
+
 

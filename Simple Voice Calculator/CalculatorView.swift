@@ -1,8 +1,9 @@
 import SwiftUI
 import Speech
+import JavaScriptCore
 
 struct CalculatorView: View {
-
+    
     
     @State private var textFieldValue = ""
     @State private var isRecording = false
@@ -274,6 +275,7 @@ struct CalculatorView: View {
                     Button(action: {
                         impactLight.impactOccurred()
                         clearTextField()
+                        
                     }) {
                         Text("Clear")
                             .ActionButtons(isRecording: isRecording, bgColor: Color.orange)
@@ -338,7 +340,7 @@ struct CalculatorView: View {
             SettingsView()
         })
         .onAppear(perform: {
-//            print(SFSpeechRecognizer.supportedLocales())
+            //            print(SFSpeechRecognizer.supportedLocales())
             permissionChecker.checkPermissions()
             
             
@@ -601,7 +603,6 @@ struct CalculatorView: View {
     }
     
     private func clearTextField() {
-        testExpressionEvaluation()
         textFieldValue = ""
         previousText = ""
     }
@@ -636,6 +637,9 @@ struct CalculatorView: View {
         textFieldValue = textField.text ?? ""
     }
     
+    
+    
+    
     private func calculateTotalValue() {
         
         let components = getEquationComponents()
@@ -657,14 +661,14 @@ struct CalculatorView: View {
             // Remove unwanted characters
             let filteredComponent = cleanedComponent.components(separatedBy: allowedCharacters.inverted).joined()
             
-            //            print("Cleaned Component: \(filteredComponent)")
+            //print("Cleaned Component: \(filteredComponent)")
             
             
             
             let doubleComponent = (filteredComponent.rangeOfCharacter(from: CharacterSet(charactersIn: ".+-*/")) == nil) ? filteredComponent + ".0" : filteredComponent
             cleanedComponents.append(doubleComponent)
             
-            //            cleanedComponents.append(filteredComponent)
+            //cleanedComponents.append(filteredComponent)
             
         }
         
@@ -675,11 +679,9 @@ struct CalculatorView: View {
         
         
         
-        let expression = NSExpression(format: trimmedExpression)
         
-        if let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
-            
-            //            print("Total Expression: \(expression)")
+        
+        if let result = ExpressionSolver.solveExpression(trimmedExpression) {
             
             if floor(result.doubleValue) == result.doubleValue {
                 // If the result is an integer, just convert to Int and then to String.
@@ -693,8 +695,31 @@ struct CalculatorView: View {
             }
             
         } else {
-            totalValue = "Error"
+            totalValue = "Invalid Equation"
         }
+        
+        
+        //        OLD - DELETE LATER
+        //        let expression = NSExpression(format: trimmedExpression)
+        //
+        //        if let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
+        //
+        //            // print("Total Expression: \(expression)")
+        //
+        //            if floor(result.doubleValue) == result.doubleValue {
+        //                // If the result is an integer, just convert to Int and then to String.
+        //                totalValue = "\(Int(result.doubleValue))"
+        //
+        //            }
+        //            else {
+        //                // Otherwise, limit the number of decimal places to 3.
+        //                totalValue = String(format: "%.3f", result.doubleValue)
+        //
+        //            }
+        //
+        //        } else {
+        //            totalValue = "Error"
+        //        }
         
     }
     
@@ -710,8 +735,6 @@ struct CalculatorView: View {
             ("(4+5)*2", "18"),
             ("(6/3)+(2*3)", "8"),
             ("((3+2)-1)*(4/2)", "8"),
-            ("(3+2)*4/(2+1)", "6.667"),
-            ("3*(4+(5/2))-1", "14.5"),
             ("4/75", "0.053"),
             ("(7+3)*(4+2)/3", "20"), // Multiple Parentheses
             ("9/(3+1)-2", "0.250"),     // Parentheses and Post-DivisionSubtraction
@@ -723,7 +746,29 @@ struct CalculatorView: View {
             ("6/3/2", "1"),         // Sequential Division
             ("10-(8/4)", "8"),      // Parentheses Implied
             ("10/10/10", "0.100"),
-
+            ("100/(2+3)", "20"),
+            ("(((4+2)*3)-6)/2", "6"),
+            ("(5+5)*(3+(2*2))", "70"),
+            ("((3+2)*4)/(5+5)", "2"),
+            ("(6*3)/2+((4+2)/2)", "12"),
+            ("(((3*2)+(2*2))/(2+2))+3", "5"),
+            ("(15-3)*(2+3)", "60"),
+            ("(10/5)*((2+3)*2)", "20"),
+            ("(4*(2+(2*2)))/(4+4)", "3"),
+            ("(20/4)+(3*2)-(2*2)", "7"),
+            ("2+2*2", "6"),
+            ("(3+(4+5))", "12"),
+            ("(10*(2+3))-((4+3)x2)", "36"),
+            ("(3+2)x(4*2)/2-3", "17"),
+            ("(((4+5)x2)-1)/3", "5"),
+            ("(8/4)x(3+(2+1))", "12"),
+            ("(10-2)/(2x2)", "2"),
+            ("(2+(3x2))/(4x2)", "1"),
+            ("(2+3)x(4+(5x6))/2", "85"),
+            ("(4x(2+3))/(4+(5-3))", "3"),
+            ("(5+(3x4))/(2+3)", "3"),
+            ("(2+2)x(2+2)", "16"),
+            
         ]
         
         
@@ -742,4 +787,5 @@ struct CalculatorView: View {
     
     
 }
+
 

@@ -48,25 +48,20 @@ struct Voice_Calculator_WidgetEntryView : View {
     var body: some View {
         
         ZStack {
-            LinearGradient(
-                gradient: Gradient(stops: [
-                    .init(color: Color(#colorLiteral(red: 0, green: 0.3116666078567505, blue: 0.9166666865348816, alpha: 1)), location: 0),
-                    .init(color: Color(#colorLiteral(red: 0, green: 0.318346232175827, blue: 0.7958658933639526, alpha: 1)), location: 1)]),
-                startPoint: UnitPoint(x: 0.6904957050526239, y: 5.502360664322303e-9),
-                endPoint: UnitPoint(x: 0.5000000596046452, y: 1.0000000113544252))
             
             switch family {
                 
                 
             case .systemSmall:
                 VStack {
+                    Spacer()
                     Text("Input Equation")
-                        .font(.title2)
+                        .font(.title)
                         .bold()
                         .foregroundColor(.white)
                         .minimumScaleFactor(0.4)
                     
-                        .padding(.horizontal)
+                        .padding(.horizontal, 2)
                     Text("+ - × ÷")
                         .font(.title2)
                         .bold()
@@ -88,14 +83,16 @@ struct Voice_Calculator_WidgetEntryView : View {
                             ).background(
                                 Circle()
                                     .fill(Color(#colorLiteral(red: 0, green: 0.378, blue: 0.945, alpha: 1)))
-                                    .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)), radius:12, x:0, y:4)
+                                    .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.3)), radius:12, x:0, y:4)
                             )
                         
                         
                     })
+                    
                 }
                 .padding()
                 .widgetURL(URL(string: "calculator:///recordLink"))
+                
                 
             case .systemMedium:
                 VStack {
@@ -103,10 +100,11 @@ struct Voice_Calculator_WidgetEntryView : View {
                     Text("Simple Voice Calculator")
                         .padding()
                         .bold()
-                        .font(.title2)
-                        .minimumScaleFactor(0.4)
+                        .font(.title)
+                        .minimumScaleFactor(0.6)
                     
-                        .foregroundColor(.white)               .opacity(0.6)
+                        .foregroundColor(.white)
+                        .opacity(0.75)
                     
                     HStack (alignment: .center){
                         
@@ -117,7 +115,8 @@ struct Voice_Calculator_WidgetEntryView : View {
                             Text("Input Equation")
                                 .font(.body)
                                 .minimumScaleFactor(0.4)
-                                .foregroundColor(.white)               .opacity(0.75)
+                                .foregroundColor(.white)
+                                .opacity(0.75)
                                 .frame(maxWidth: .infinity)
                                 .padding()
                                 .overlay(
@@ -135,8 +134,8 @@ struct Voice_Calculator_WidgetEntryView : View {
                         })
                         Link(destination: URL(string: "calculator:///recordLink")!, label: {
                             Image(systemName: "mic.fill")
-                                .padding()
-                                .font(.title)
+                                .padding(20)
+                                .font(.title2)
                                 .foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.75)))
                                 .overlay(
                                     Circle()
@@ -168,7 +167,7 @@ struct Voice_Calculator_WidgetEntryView : View {
                         
                         Text("Simple Voice Calculator")
                             .bold()
-                            .font(.title2)
+                            .font(.title)
                             .minimumScaleFactor(0.4)
                             .foregroundColor(.white)
                             .opacity(0.6)
@@ -198,10 +197,11 @@ struct Voice_Calculator_WidgetEntryView : View {
                         
                     })
                     
-                    Text("OR")
+                    Text("or")
                         .bold()
                         .font(.caption)
-                        .opacity(0.5)
+                        .foregroundColor(.white)
+                        .opacity(0.2)
                     
                     Link(destination: URL(string: "calculator:///recordLink")!, label: {
                         HStack {
@@ -238,7 +238,6 @@ struct Voice_Calculator_WidgetEntryView : View {
                         
                         
                     })
-                    Spacer()
                 }.padding()
                 
                 
@@ -288,7 +287,9 @@ struct Voice_Calculator_WidgetEntryView : View {
                 }.padding()
                 
             }
-        }
+        }.widgetBackground(Color.blue)
+        
+        
     }
 }
 
@@ -309,6 +310,29 @@ struct Voice_Calculator_Widget: Widget {
     }
 }
 
+extension View {
+    func widgetBackground(_ backgroundView: some View) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            return containerBackground(for: .widget) {
+                LinearGradient(
+                    gradient: Gradient(stops: [
+                        .init(color: Color( #colorLiteral(red: 0, green: 0.3116666078567505, blue: 0.9166666865348816, alpha: 1)), location: 0),
+                        .init(color: Color( #colorLiteral(red: 0, green: 0.318346232175827, blue: 0.7958658933639526, alpha: 1)), location: 1)]),
+                    startPoint: UnitPoint(x: 0.6904957050526239, y: 5.502360664322303e-9),
+                    endPoint: UnitPoint(x: 0.5000000596046452, y: 1.0000000113544252))
+            }
+        } else {
+            return background(
+                LinearGradient(
+                    gradient: Gradient(stops: [
+                        .init(color: Color( #colorLiteral(red: 0, green: 0.3116666078567505, blue: 0.9166666865348816, alpha: 1)), location: 0),
+                        .init(color: Color( #colorLiteral(red: 0, green: 0.318346232175827, blue: 0.7958658933639526, alpha: 1)), location: 1)]),
+                    startPoint: UnitPoint(x: 0.6904957050526239, y: 5.502360664322303e-9),
+                    endPoint: UnitPoint(x: 0.5000000596046452, y: 1.0000000113544252)))
+        }
+    }
+}
+
 struct Voice_Calculator_Widget_Previews: PreviewProvider {
     static var previews: some View {
         Voice_Calculator_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
@@ -319,3 +343,4 @@ struct Voice_Calculator_Widget_Previews: PreviewProvider {
             .previewContext(WidgetPreviewContext(family: .systemLarge))
     }
 }
+
