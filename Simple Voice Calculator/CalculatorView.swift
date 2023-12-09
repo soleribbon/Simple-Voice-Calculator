@@ -76,7 +76,6 @@ struct CalculatorView: View {
                                                     
                                                     impactLight.impactOccurred()
                                                     selectedComponentIndex = index
-                                                    
                                                     selectComponentInTextField()
                                                     
                                                     
@@ -170,7 +169,7 @@ struct CalculatorView: View {
                                 ).background(
                                     RoundedRectangle(cornerRadius: 10)
                                         .fill(Color(red: 0.882, green: 0.882, blue: 0.882)) // #e1e1e1)
-                                        .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.01)), radius:5, x:0, y:3)
+                                        
                                 )
                                 .padding(.horizontal)
                             }
