@@ -18,7 +18,7 @@
 "About & Contact" = "소개 및 연락처";
 "About Simple Voice Calculator" = "간단한 음성 계산기 소개";
 "Contact Developer" = "개발자 연락처";
-"Tip developer a coffee" = "개발자에게 커피 팁을 주세요";
+"Tip Developer a Coffee" = "개발자에게 커피 팁을 주세요";
 "Simple Voice Calculator was made by students." = "간단한 음성 계산기는 학생들이 만들었습니다.";
 "Privacy" = "개인정보 보호";
 "Version" = "버전";
@@ -53,4 +53,6 @@
 "**What does the 'Sym' button do?**" = "**'기호' 버튼은 무엇을 하나요?**";
 "**How do I edit my voice input?**" = "**음성 입력을 어떻게 편집하나요?**";
 "Only **+ - × ÷**  are supported" = "**+ - × ÷** 만 지원됩니다";
-
+"Total equals" = "총합은 %@";
+"Announce Total" = "총액 발표";
+"Preferences" = "환경 설정";

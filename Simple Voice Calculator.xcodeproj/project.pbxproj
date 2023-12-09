@@ -30,6 +30,7 @@
 		534C9DAF2AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 534C9DB22AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition */; };
 		534C9DB02AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 534C9DB22AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition */; };
 		5353CC8D2AE00CDD00A4A2F9 /* ExpressionSolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CC8C2AE00CDD00A4A2F9 /* ExpressionSolver.m */; };
+		53AA4E6B2B25149C0071B497 /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AA4E6A2B25149C0071B497 /* GlobalSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		5353CC8A2AE00CAE00A4A2F9 /* ExpressionSolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExpressionSolver.h; sourceTree = "<group>"; };
 		5353CC8B2AE00CDD00A4A2F9 /* Simple Voice Calculator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Simple Voice Calculator-Bridging-Header.h"; sourceTree = "<group>"; };
 		5353CC8C2AE00CDD00A4A2F9 /* ExpressionSolver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExpressionSolver.m; sourceTree = "<group>"; };
+		53AA4E6A2B25149C0071B497 /* GlobalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				413C1B6B29F6DEBB0071DD19 /* CalculatorView.swift */,
 				413C1B822A00339F0071DD19 /* Onboarding */,
 				413C1B6F29F9BB390071DD19 /* SettingsView.swift */,
+				53AA4E6A2B25149C0071B497 /* GlobalSettings.swift */,
 				413C1B7129FABA0F0071DD19 /* AboutView.swift */,
 				4111E81F29F455E8003FA99C /* Assets.xcassets */,
 			);
@@ -320,6 +323,7 @@
 				413C1B7029F9BB390071DD19 /* SettingsView.swift in Sources */,
 				413C1B6C29F6DEBB0071DD19 /* CalculatorView.swift in Sources */,
 				5353CC8D2AE00CDD00A4A2F9 /* ExpressionSolver.m in Sources */,
+				53AA4E6B2B25149C0071B497 /* GlobalSettings.swift in Sources */,
 				4111E81C29F455E7003FA99C /* Simple_Voice_CalculatorApp.swift in Sources */,
 				534C9DAF2AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition in Sources */,
 				413C1B7F29FFD5C20071DD19 /* OnboardingContentView.swift in Sources */,

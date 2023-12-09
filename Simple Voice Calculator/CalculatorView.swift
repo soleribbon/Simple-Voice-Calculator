@@ -13,6 +13,8 @@ struct CalculatorView: View {
     let supportedLanguages = ["en-US", "de-DE", "es-ES", "es-MX", "it-IT", "ko-KR", "hi-IN"]
     @State var currentLanguage = Locale.current.identifier.replacingOccurrences(of: "_", with: "-")
     @State private var speechRecognizer: SFSpeechRecognizer!
+    @State private var speechSynthesizer = AVSpeechSynthesizer()
+    
     @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     @State private var recognitionTask: SFSpeechRecognitionTask?
     @State private var selectedComponentIndex: Int?
@@ -21,6 +23,8 @@ struct CalculatorView: View {
     @State private var isSettingsModalPresented = false
     @State private var scale: CGFloat = 1.0
     @State private var recordScale: CGFloat = 1.0
+    
+    @AppStorage("shouldSpeakTotal") var shouldSpeakTotal: Bool = false
     
     @StateObject private var permissionChecker = PermissionChecker()
     @FocusState private var isTextFieldFocused: Bool
@@ -33,6 +37,7 @@ struct CalculatorView: View {
     let impactLight = UIImpactFeedbackGenerator(style: .light)
     let impactSoft = UIImpactFeedbackGenerator(style: .soft)
     let impactRecord = UIImpactFeedbackGenerator(style: .medium)
+    let impactTotal = UIImpactFeedbackGenerator(style: .heavy)
     
     
     var body: some View {
@@ -157,6 +162,7 @@ struct CalculatorView: View {
                                         .font(.system(.headline, design: .monospaced))
                                         .bold()
                                         .foregroundColor(.black)
+                                    
                                 }
                                 .padding()
                                 .cornerRadius(10)
@@ -166,17 +172,20 @@ struct CalculatorView: View {
                                         .accessibilityLabel("TOTAL: \(totalValue)")
                                     
                                     
+                                    
                                 ).background(
                                     RoundedRectangle(cornerRadius: 10)
                                         .fill(Color(red: 0.882, green: 0.882, blue: 0.882)) // #e1e1e1)
-                                        
+                                    
                                 )
                                 .padding(.horizontal)
                             }
-                            
-                            
-                            
-                            
+                            .onTapGesture {
+                                if shouldSpeakTotal && !totalValue.isEmpty && totalValue != "Invalid Equation" {
+                                    impactTotal.impactOccurred()
+                                    speakTotal(totalValue)
+                                }
+                            }
                             
                         }
                         
@@ -305,7 +314,10 @@ struct CalculatorView: View {
                     }
                     
                     if isRecording {
-                        stopRecording(completion: {})//add completion handler if necessary
+                        stopRecording(completion: {})
+                        //add completion handler if necessary
+                        
+                        //play current total
                     } else {
                         startRecording()
                     }
@@ -373,7 +385,6 @@ struct CalculatorView: View {
         }
         
     } //end body
-    
     
     
     func handleWidgetDeepLink(_ url: URL) {
@@ -457,6 +468,13 @@ struct CalculatorView: View {
     }
     
     
+    func speakTotal(_ total: String) {
+        let languageCode = currentLanguage
+        let totalString = String(format: NSLocalizedString("Total equals", comment: ""), total)
+        let utterance = AVSpeechUtterance(string: totalString)
+        utterance.voice = AVSpeechSynthesisVoice(language: languageCode)
+        speechSynthesizer.speak(utterance)
+    }
     
     
     func getEquationComponents() -> [String] {
@@ -543,6 +561,11 @@ struct CalculatorView: View {
             recognitionTask = nil
         }
         
+        // Stop any ongoing speech playback
+        if speechSynthesizer.isSpeaking {
+            speechSynthesizer.stopSpeaking(at: .immediate)
+        }
+        
         previousText = textFieldValue
         
         isRecording = true
@@ -590,14 +613,21 @@ struct CalculatorView: View {
             fatalError("Could not start the audio engine: \(error)")
         }
     }
-    private func stopRecording(completion: @escaping () -> Void) {
-        audioEngine.stop()
-        audioEngine.inputNode.removeTap(onBus: 0)
-        textFieldValue = getEquationComponents().joined(separator: "")
-        
+    
+    func stopRecording(completion: @escaping () -> Void) {
         recognitionRequest?.endAudio()
-        
+        recognitionTask?.finish()
+        recognitionTask = nil
         isRecording = false
+        audioEngine.inputNode.removeTap(onBus: 0)
+        audioEngine.stop()
+        audioEngine.reset() //just for good measure
+        textFieldValue = getEquationComponents().joined(separator: "")//moved from 3rd to last in the list - revert if necessary
+        
+        //speak out total
+        if shouldSpeakTotal && !totalValue.isEmpty && totalValue != "Invalid Equation" {
+            speakTotal(totalValue)
+        }
         completion()
     }
     
@@ -610,7 +640,6 @@ struct CalculatorView: View {
               let textField = findTextField(in: windowScene.windows.first!) else { return }
         textFieldValue = textField.text ?? ""
     }
-    
     
     private func insertText(_ text: String) {
         guard let windowScene = getWindowScene(),
@@ -637,14 +666,11 @@ struct CalculatorView: View {
     }
     
     
-    
-    
     private func calculateTotalValue() {
         
         let components = getEquationComponents()
         //        print(components)
         var cleanedComponents: [String] = []
-        
         
         let allowedCharacters = CharacterSet(charactersIn: "0123456789.+-÷*×/()%")
         
@@ -662,8 +688,6 @@ struct CalculatorView: View {
             
             //print("Cleaned Component: \(filteredComponent)")
             
-            
-            
             let doubleComponent = (filteredComponent.rangeOfCharacter(from: CharacterSet(charactersIn: ".+-*/")) == nil) ? filteredComponent + ".0" : filteredComponent
             cleanedComponents.append(doubleComponent)
             
@@ -675,10 +699,6 @@ struct CalculatorView: View {
         //remove these specific operators from start & end if needed
         let trimmedExpression = cleanedExpression.trimmingCharacters(in: CharacterSet(charactersIn: "+*/"))
         //        print("Cleaned Expression: \(trimmedExpression)")
-        
-        
-        
-        
         
         if let result = ExpressionSolver.solveExpression(trimmedExpression) {
             
@@ -696,36 +716,7 @@ struct CalculatorView: View {
         } else {
             totalValue = "Invalid Equation"
         }
-        
-        
-        //        OLD - DELETE LATER
-        //        let expression = NSExpression(format: trimmedExpression)
-        //
-        //        if let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
-        //
-        //            // print("Total Expression: \(expression)")
-        //
-        //            if floor(result.doubleValue) == result.doubleValue {
-        //                // If the result is an integer, just convert to Int and then to String.
-        //                totalValue = "\(Int(result.doubleValue))"
-        //
-        //            }
-        //            else {
-        //                // Otherwise, limit the number of decimal places to 3.
-        //                totalValue = String(format: "%.3f", result.doubleValue)
-        //
-        //            }
-        //
-        //        } else {
-        //            totalValue = "Error"
-        //        }
-        
     }
-    
-    
-    
-    
-    
     
     func testExpressionEvaluation() {
         let testCases = [

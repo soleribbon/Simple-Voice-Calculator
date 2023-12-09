@@ -18,7 +18,7 @@
 "About & Contact" = "Informazioni & Contatti";
 "About Simple Voice Calculator" = "Informazioni su Simple Voice Calculator";
 "Contact Developer" = "Contatta lo sviluppatore";
-"Tip developer a coffee" = "Offri un caffè allo sviluppatore";
+"Tip Developer a Coffee" = "Offri un Caffè allo Sviluppatore";
 "Simple Voice Calculator was made by students." = "Simple Voice Calculator è stata realizzata da studenti.";
 "Privacy" = "Privacy";
 "Version" = "Versione";
@@ -54,3 +54,6 @@
 "After pressing 'Stop Talking', your dictated equation will be added to the end of the input field." = "Dopo aver premuto 'Smetti di parlare', l'equazione dettata verrà aggiunta alla fine del campo di input.";
 "While voice dictation is enabled, you are unable to manually edit the input field." = "Mentre la dettatura vocale è abilitata, non è possibile modificare manualmente il campo di input.";
 "Ensure no alphabetical letters are included in your input." = "Assicurati che non ci siano lettere dell'alfabeto nel tuo input.";
+"Total equals" = "Il totale è %@";
+"Announce Total" = "Annuncia Totale";
+"Preferences" = "Preferenze";

@@ -18,7 +18,7 @@
 "About & Contact" = "Acerca de & Contacto";
 "About Simple Voice Calculator" = "Acerca de Simple Voice Calculator";
 "Contact Developer" = "Contactar al desarrollador";
-"Tip developer a coffee" = "Invitar un café al desarrollador";
+"Tip Developer a Coffee" = "Invitar un Café al Desarrollador";
 "Simple Voice Calculator was made by students." = "Simple Voice Calculator fue creada por estudiantes.";
 "Privacy" = "Privacidad";
 "Version" = "Versión";
@@ -53,3 +53,6 @@
 "While voice dictation is enabled, you are unable to manually edit the input field." = "Mientras la dictación por voz esté habilitada, no podrá editar manualmente el campo de entrada.";
 "Ensure no alphabetical letters are included in your input." = "Asegúrese de que no haya letras del alfabeto en su entrada.";
 "Only **+ - × ÷**  are supported" = "Solo se admiten **+ - × ÷**";
+"Total equals" = "El total es %@";
+"Announce Total" = "Anunciar Total";
+"Preferences" = "Preferencias";

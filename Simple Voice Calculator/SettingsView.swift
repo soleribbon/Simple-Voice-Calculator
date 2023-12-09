@@ -8,9 +8,9 @@ struct SettingsView: View {
     @State private var helpExpanded = false
     @State private var privacyExpanded = false
     private let productIdentifiers = ["CoffeeTip1", "CoffeeTip5", "CoffeeTip10"]
+    @AppStorage("shouldSpeakTotal") var shouldSpeakTotal: Bool = false
     
     @ObservedObject var storeManager = StoreManager()
-    
     @State private var introCoverShowing: Bool = false
     
     @State private var versionNumber: String = "1.8.0"
@@ -137,7 +137,17 @@ struct SettingsView: View {
                         
                         
                         // Tip Button for $1
-                        VStack {
+                        VStack (alignment: .center){
+                            HStack (alignment: .center){
+                                Text("☕️")
+                                    .foregroundColor(.accentColor)
+                                Text("Tip Developer a Coffee")
+                                    .bold()
+                                    .minimumScaleFactor(0.4)
+                                
+                            }.accessibilityLabel("Tip developer a coffee")
+                            
+                            
                             HStack (alignment: .center) {
                                 Button(action: {
                                     storeManager.purchaseProduct(withIdentifier: "CoffeeTip1")
@@ -184,20 +194,18 @@ struct SettingsView: View {
                                 .font(.caption2)
                                 .opacity(0.4)
                                 .minimumScaleFactor(0.4)
+                                .padding(.top, 4)
                             
                         }
-                    } label: {
-                        HStack {
-                            Text("☕️")
-                                .foregroundColor(.accentColor)
-                            Text("Tip developer a coffee")
-                                .minimumScaleFactor(0.4)
-                            
-                        }.accessibilityLabel("Tip developer a coffee")
-                        
+                        .frame(maxWidth: .infinity)
                     }
                 }
                 
+                Section(header: Text("Preferences")) {
+                    Toggle(isOn: $shouldSpeakTotal) {
+                        Text("Announce Total")
+                    }
+                }
                 
                 
                 Section(header: Text("Privacy")) {
@@ -215,7 +223,6 @@ struct SettingsView: View {
                         }
                     }
                 }
-                
                 
                 Section {
                     VStack(alignment: .leading, spacing: 2) {

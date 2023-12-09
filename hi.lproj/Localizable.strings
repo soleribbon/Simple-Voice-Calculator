@@ -18,7 +18,7 @@
 "About & Contact" = "के बारे में और संपर्क";
 "About Simple Voice Calculator" = "सरल ध्वनि कैलक्यूलेटर के बारे में";
 "Contact Developer" = "डेवलपर से संपर्क करें";
-"Tip developer a coffee" = "डेवलपर को एक कॉफी के लिए टिप दें";
+"Tip Developer a Coffee" = "डेवलपर को एक कॉफी के लिए टिप दें";
 "Simple Voice Calculator was made by students." = "सरल ध्वनि कैलक्यूलेटर को छात्रों ने बनाया है।";
 "Privacy" = "गोपनीयता";
 "Version" = "संस्करण";
@@ -53,3 +53,6 @@
 "**What does the 'Sym' button do?**" = "**'सिम' बटन क्या करता है?**";
 "**How do I edit my voice input?**" = "**मैं अपने ध्वनि इनपुट को कैसे संपादित कर सकता हूँ?**";
 "Only **+ - × ÷**  are supported" = "केवल **+ - × ÷** समर्थित हैं";
+"Total equals" = "कुल योग है %@";
+"Announce Total" = "कुल घोषणा करें";
+"Preferences" = "प्राथमिकताएँ";
