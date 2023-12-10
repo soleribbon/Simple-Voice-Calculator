@@ -372,6 +372,16 @@ struct CalculatorView: View {
             
             speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: supportedLanguages.contains(currentLanguage) ? currentLanguage : "en-US"))
             
+            //configuring playback from main speaker, not just top one
+            do {
+                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.mixWithOthers])
+                try AVAudioSession.sharedInstance().setActive(true)
+                try AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
+            } catch {
+                print("Failed to set audio session category or override output port: \(error)")
+            }
+            
+            
             print(currentLanguage)
             
             
