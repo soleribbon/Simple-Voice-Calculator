@@ -13,7 +13,7 @@ struct SettingsView: View {
     @ObservedObject var storeManager = StoreManager()
     @State private var introCoverShowing: Bool = false
     
-    @State private var versionNumber: String = "1.9.1"
+    @State private var versionNumber: String = "2.0.0"
 
     
     //    @Environment(\.requestReview) var requestReview
