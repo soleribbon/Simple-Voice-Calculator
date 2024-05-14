@@ -8,12 +8,10 @@
 import SwiftUI
 import Speech
 import StoreKit
-
-
-
+import Sentry
 
 func replaceNumberWords(_ component: String) -> String {
-
+    
     //for transforming word inputs
     let numberWordMapping: [String: String] = [
         "zero": "0",
@@ -28,13 +26,13 @@ func replaceNumberWords(_ component: String) -> String {
         "nine": "9",
         "and": ""
     ]
-
+    
     var modifiedComponent = component
     for (word, number) in numberWordMapping {
-
+        
         if modifiedComponent.contains(word) {
             print("Found: \(word) in \(modifiedComponent) - deleted/replaced")
-
+            
             modifiedComponent = modifiedComponent.replacingOccurrences(of: word, with: number)
         }
     }
@@ -64,20 +62,20 @@ func isValidExpression(_ expression: String) -> Bool {
     if expression.isEmpty {
         return false
     }
-
+    
     // Check if the first character is a percent sign
     if expression.first == "%" {
         return false
     }
     let allowedCharacters = CharacterSet(charactersIn: "0123456789.+-÷*×/(),%")
     let unwantedCharacters = expression.unicodeScalars.filter { !allowedCharacters.contains($0) }
-
+    
     if !unwantedCharacters.isEmpty {
         return false
     }
     var openParenthesesCount = 0
     var closeParenthesesCount = 0
-
+    
     for i in 0..<expression.count {
         let char = expression[expression.index(expression.startIndex, offsetBy: i)]
         if char == "(" {
@@ -85,32 +83,32 @@ func isValidExpression(_ expression: String) -> Bool {
         } else if char == ")" {
             closeParenthesesCount += 1
         }
-
+        
         if i < expression.count - 1 {
             let nextChar = expression[expression.index(expression.startIndex, offsetBy: i + 1)]
-
+            
             if "+-÷*×/%".contains(char) && "+-÷*×/%".contains(nextChar) {
                 return false
             }
-
+            
             if "(".contains(char) && ")".contains(nextChar){
                 return false
             }
-
+            
             if "+-÷*×/".contains(char) && nextChar == ")" {
                 return false
             }
         }
     }
-
+    
     if openParenthesesCount != closeParenthesesCount {
         return false
     }
-
+    
     if let lastChar = expression.last, "+-÷*×/(.".contains(lastChar) {
         return false
     }
-
+    
     return true
 }
 
@@ -119,7 +117,7 @@ func isValidExpression(_ expression: String) -> Bool {
 struct actionButtons: ViewModifier {
     var isRecording: Bool
     var bgColor: Color
-
+    
     func body(content: Content) -> some View {
         content
             .bold()
@@ -130,7 +128,7 @@ struct actionButtons: ViewModifier {
             .opacity(isRecording ? 0.4 : 1)
             .lineLimit(1)
             .minimumScaleFactor(0.4)
-
+        
     }
 }
 
@@ -146,7 +144,7 @@ extension View {
 
 struct CustomTextFieldModifier: ViewModifier {
     var isRecording: Bool
-
+    
     func body(content: Content) -> some View {
         content
             .padding()
@@ -179,7 +177,7 @@ class PermissionChecker: ObservableObject {
     @Published var showAlert = false
     @Published var alertTitle = ""
     @Published var alertMessage = ""
-
+    
     func checkPermissions() {
         SFSpeechRecognizer.requestAuthorization { (status) in
             if status != .authorized {
@@ -190,7 +188,7 @@ class PermissionChecker: ObservableObject {
                 }
             }
         }
-
+        
         AVAudioSession.sharedInstance().requestRecordPermission { (allowed) in
             if !allowed {
                 self.alertTitle = "Microphone Access Denied"
@@ -212,12 +210,12 @@ class PermissionChecker: ObservableObject {
 
 class PurchaseModel: ObservableObject {
     let productIdentifiers = ["CoffeeTip1", "CoffeeTip5", "CoffeeTip10"]
-
+    
     @Published var products: [Product] = []
-
+    
     func fetchProducts() async {
-
-
+        
+        
         Task.init(priority: .background){
             do {
                 let products = try await Product.products(for: productIdentifiers)
@@ -228,14 +226,15 @@ class PurchaseModel: ObservableObject {
             }
             catch {
                 print(error)
+                SentrySDK.capture(message: "Error getting ProductIdentifiers/Products")
             }
-
+            
         }
-
+        
     }
-
+    
     func purchase() {
-
+        
         Task.init(priority: .background){
             guard let product = products.first else { return }
             do {
@@ -245,11 +244,11 @@ class PurchaseModel: ObservableObject {
             catch {
                 print(error)
             }
-
+            
         }
-
-
-
+        
+        
+        
     }
 }
 
@@ -257,11 +256,11 @@ class PurchaseModel: ObservableObject {
 func processPercentSigns(in component: String) -> String {
     var result = component
     let regexPattern = "([0-9.]+)%"
-
+    
     do {
         let regex = try NSRegularExpression(pattern: regexPattern, options: [])
         let matches = regex.matches(in: component, options: [], range: NSRange(location: 0, length: component.count))
-
+        
         for match in matches.reversed() {
             let percentValueRange = match.range(at: 1)
             let percentValue = NSString(string: component).substring(with: percentValueRange)
@@ -272,8 +271,9 @@ func processPercentSigns(in component: String) -> String {
         }
     } catch {
         print("Error processing percent signs: \(error.localizedDescription)")
+        SentrySDK.capture(message: "Error processing percent signs")
     }
-
+    
     return result
 }
 

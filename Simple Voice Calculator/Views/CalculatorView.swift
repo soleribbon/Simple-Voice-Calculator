@@ -1,20 +1,21 @@
 import SwiftUI
 import Speech
 import JavaScriptCore
+import Sentry
 
 struct CalculatorView: View {
-    
-    
+
+
     @State private var textFieldValue = ""
     @State private var isRecording = false
     @State private var previousText = ""
     @State private var audioEngine = AVAudioEngine()
-    
+
     let supportedLanguages = ["en-US", "de-DE", "es-ES", "es-MX", "it-IT", "ko-KR", "hi-IN"]
     @State var currentLanguage = Locale.current.identifier.replacingOccurrences(of: "_", with: "-")
     @State private var speechRecognizer: SFSpeechRecognizer!
     @State private var speechSynthesizer = AVSpeechSynthesizer()
-    
+
     @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     @State private var recognitionTask: SFSpeechRecognitionTask?
     @State private var selectedComponentIndex: Int?
@@ -23,23 +24,23 @@ struct CalculatorView: View {
     @State private var isSettingsModalPresented = false
     @State private var scale: CGFloat = 1.0
     @State private var recordScale: CGFloat = 1.0
-    
+
     @AppStorage("shouldSpeakTotal") var shouldSpeakTotal: Bool = false
-    
+
     @StateObject private var permissionChecker = PermissionChecker()
     @FocusState private var isTextFieldFocused: Bool
-    
-    
+
+
     @State var recordLink: Bool = false
     @State var inputLink: Bool = false
-    
+
     //haptics
     let impactLight = UIImpactFeedbackGenerator(style: .light)
     let impactSoft = UIImpactFeedbackGenerator(style: .soft)
     let impactRecord = UIImpactFeedbackGenerator(style: .medium)
     let impactTotal = UIImpactFeedbackGenerator(style: .heavy)
-    
-    
+
+
     var body: some View {
         VStack {
             Spacer()
@@ -52,38 +53,38 @@ struct CalculatorView: View {
                 Button(action: {
                     impactSoft.impactOccurred()
                     isSettingsModalPresented = true
-                    
+
                 }, label: {
                     Image(systemName: "gear.badge.questionmark")
                         .font(.title2)
                         .foregroundColor(.primary)
-                    
+
                 }).accessibilityLabel("Settings")
             }.padding(.horizontal)
-            
+
             GroupBox {
                 GeometryReader { geo in
                     ScrollViewReader { scrollViewProxy in
                         ScrollView(.vertical) {
                             VStack(alignment: .trailing, spacing: 4) {
-                                
+
                                 //main component styling
                                 ForEach(getEquationComponents().indices, id: \.self) { index in
-                                    
+
                                     let component = getEquationComponents()[index]
                                     let symbolColor = getSymbolColor(component: component)
-                                    
+
                                     HStack {
                                         Spacer()
                                         Menu {
                                             Section {
                                                 Button(action: {
-                                                    
+
                                                     impactLight.impactOccurred()
                                                     selectedComponentIndex = index
                                                     selectComponentInTextField()
-                                                    
-                                                    
+
+
                                                 }) {
                                                     Label("Edit", systemImage: "pencil").accessibilityLabel("Edit")
                                                 }
@@ -101,14 +102,14 @@ struct CalculatorView: View {
                                                         }
                                                     }
                                                     deleteComponent(at: index)
-                                                    
-                                                    
+
+
                                                 }) {
                                                     Label("Delete", systemImage: "trash")
                                                 }
                                             }
                                         } label: {
-                                            
+
                                             Text(component)
                                                 .bold()
                                                 .foregroundColor(symbolColor?.foreground ?? .black)
@@ -126,19 +127,19 @@ struct CalculatorView: View {
                                                 )
                                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
                                                 .scaleEffect(scale)
-                                            
-                                            
+
+
                                         }
-                                        
+
                                     }
                                     .padding(.horizontal)
                                 }//end of FOR EACH
-                                
+
                             }.id(scrollID) //useless for now
-                            
+
                         }//end of Scrollview
                         .onChange(of: getEquationComponents().count) { _ in
-                            
+
                             withAnimation {
                                 let lastIndex = getEquationComponents().indices.last
                                 if let last = lastIndex {
@@ -162,7 +163,7 @@ struct CalculatorView: View {
                                         .font(.system(.headline, design: .monospaced))
                                         .bold()
                                         .foregroundColor(.black)
-                                    
+
                                 }
                                 .padding()
                                 .cornerRadius(10)
@@ -170,13 +171,13 @@ struct CalculatorView: View {
                                     RoundedRectangle(cornerRadius: 10)
                                         .strokeBorder(Color(red: 0.839, green: 0.839, blue: 0.839), lineWidth: 2)
                                         .accessibilityLabel("TOTAL: \(totalValue)")
-                                    
-                                    
-                                    
+
+
+
                                 ).background(
                                     RoundedRectangle(cornerRadius: 10)
                                         .fill(Color(red: 0.882, green: 0.882, blue: 0.882)) // #e1e1e1)
-                                    
+
                                 )
                                 .padding(.horizontal)
                             }
@@ -186,21 +187,21 @@ struct CalculatorView: View {
                                     speakTotal(totalValue)
                                 }
                             }
-                            
+
                         }
-                        
+
                     }
-                    
+
                 }
-                
+
             } label: {
                 Text("Equation Components")
                     .accessibilityLabel("Equation Components")
                     .opacity(0.3)
-                
+
             }
             .padding(.horizontal)
-            
+
             Group {
                 TextField("Enter equation", text: $textFieldValue)
                     .accessibilityLabel("Enter equation")
@@ -214,7 +215,7 @@ struct CalculatorView: View {
                             print("NOT Valid: \(newValue)")
                             if textFieldValue == ""{
                                 totalValue = ""
-                                
+
                             }else{
                                 totalValue = "Invalid Equation"
                             }
@@ -230,8 +231,8 @@ struct CalculatorView: View {
                             .ActionButtons(isRecording: isRecording, bgColor: Color(white: 0.235))
                     }
                     .accessibilityLabel("(")
-                    
-                    
+
+
                     Button(action: {
                         impactLight.impactOccurred()
                         insertText(")")
@@ -239,11 +240,11 @@ struct CalculatorView: View {
                         Text(")")
                             .padding(.horizontal, 10)
                             .ActionButtons(isRecording: isRecording, bgColor: Color(white: 0.235))
-                        
+
                     }
                     .accessibilityLabel(")")
-                    
-                    
+
+
                     Menu {
                         Button(action: {
                             impactLight.impactOccurred()
@@ -251,14 +252,14 @@ struct CalculatorView: View {
                         }, label: {
                             Label("+ Insert", systemImage: "plus")
                         })
-                        
+
                         Button(action: {
                             impactLight.impactOccurred()
                             insertText("-")
                         }, label: {
                             Label("- Insert", systemImage: "minus")
-                            
-                            
+
+
                         }).accessibilityLabel("Minus Insert")
                         Button(action: {
                             impactLight.impactOccurred()
@@ -274,36 +275,36 @@ struct CalculatorView: View {
                         })
                     } label: {
                         Button(action: {}, label: {
-                            
+
                             Text("Sym")
                                 .ActionButtons(isRecording: isRecording, bgColor: Color(red: 0.608, green: 0.318, blue: 0.878))
-                            
+
                         })
                     }
                     Button(action: {
                         impactLight.impactOccurred()
                         clearTextField()
-                        
+
                     }) {
                         Text("Clear")
                             .ActionButtons(isRecording: isRecording, bgColor: Color.orange)
                             .opacity(textFieldValue.isEmpty ? 0.4 : 1)
-                        
+
                     }
                     .disabled(textFieldValue.isEmpty)
                 }
-                
+
             }
             .disabled(isRecording)
             .padding(.horizontal)
-            
+
             HStack {
-                
-                
+
+
                 Button(action: {
                     impactRecord.impactOccurred()
-                    
-                    
+
+
                     withAnimation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0.5)) {
                         recordScale = 1.1
                     }
@@ -312,11 +313,11 @@ struct CalculatorView: View {
                             recordScale = 1.0
                         }
                     }
-                    
+
                     if isRecording {
                         stopRecording(completion: {})
                         //add completion handler if necessary
-                        
+
                         //play current total
                     } else {
                         startRecording()
@@ -331,8 +332,8 @@ struct CalculatorView: View {
                 }.scaleEffect(recordScale)
             }
             .padding()
-            
-            
+
+
         }
         .onOpenURL { url in
             // Handle this deep link URL
@@ -342,19 +343,19 @@ struct CalculatorView: View {
         //                        self.recordLink = url == URL(string: "calculator:///recordLink")!
         //                        self.inputLink = url == URL(string: "calculator:///inputLink")!
         //         })
-        
+
         .onTapGesture {
             hideKeyboard()
         }
-        
+
         .sheet(isPresented: $isSettingsModalPresented, content: {
             SettingsView()
         })
         .onAppear(perform: {
             //            print(SFSpeechRecognizer.supportedLocales())
             permissionChecker.checkPermissions()
-            
-            
+
+
             //TRANSLATING SYSTEM LANGUAGE TO SF SPEECH LANGUAGE
             if (currentLanguage == "de-US"){
                 currentLanguage = "de-DE"
@@ -369,9 +370,9 @@ struct CalculatorView: View {
             } else if (currentLanguage == "hi-US"){
                 currentLanguage = "hi-IN"
             }
-            
+
             speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: supportedLanguages.contains(currentLanguage) ? currentLanguage : "en-US"))
-            
+
             //configuring playback from main speaker, not just top one
             do {
                 try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.mixWithOthers])
@@ -379,12 +380,13 @@ struct CalculatorView: View {
                 try AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
             } catch {
                 print("Failed to set audio session category or override output port: \(error)")
+                SentrySDK.capture(message: "Error setting up audio to play from main speaker")
             }
-            
-            
+
+
             print(currentLanguage)
-            
-            
+
+
         })
         .alert(isPresented: $permissionChecker.showAlert) {
             Alert(
@@ -393,12 +395,12 @@ struct CalculatorView: View {
                 dismissButton: .default(Text("OK"))
             )
         }
-        
+
     } //end body
-    
-    
+
+
     func handleWidgetDeepLink(_ url: URL) {
-        
+
         if url.absoluteString == "calculator:///recordLink"{
             startRecording()
         }else{
@@ -407,10 +409,10 @@ struct CalculatorView: View {
                let textField = findTextField(in: windowScene.windows.first!) {
                 textField.becomeFirstResponder()
             }
-            
+
         }
     }
-    
+
     func deleteComponent(at index: Int) {
         var components = getEquationComponents()
         if components.indices.contains(index) {
@@ -422,15 +424,15 @@ struct CalculatorView: View {
                 print("NOT Valid: \(textFieldValue)")
                 if textFieldValue == ""{
                     totalValue = ""
-                    
+
                 }else{
                     totalValue = "Invalid Equation"
                 }
             }
         }
     }
-    
-    
+
+
     private func findTextField(in view: UIView) -> UITextField? {
         for subview in view.subviews {
             if let textField = subview as? UITextField {
@@ -442,33 +444,33 @@ struct CalculatorView: View {
         }
         return nil
     }
-    
+
     private func getWindowScene() -> UIWindowScene? {
         return UIApplication.shared.connectedScenes
             .first { $0.activationState == .foregroundActive && $0 is UIWindowScene } as? UIWindowScene
     }
-    
+
     private func selectComponentInTextField() {
         guard let index = selectedComponentIndex else { return }
         let components = getEquationComponents()
         guard index < components.count else { return }
-        
+
         let selectedComponent = components[index]
-        
+
         var position = 0
-        
+
         // Iterate through the components before the selected one
         for i in 0..<index {
             // Add the length of each component to the position
             position += components[i].count
         }
-        
+
         // Find the TextField in the app's window
         if let windowScene = getWindowScene(),
            let textField = findTextField(in: windowScene.windows.first!) {
             // Make the TextField the first responder (give it focus)
             textField.becomeFirstResponder()
-            
+
             // Calculate the start and end positions of the selected component in the TextField
             if let startPosition = textField.position(from: textField.beginningOfDocument, offset: position),
                let endPosition = textField.position(from: startPosition, offset: selectedComponent.count) {
@@ -476,8 +478,8 @@ struct CalculatorView: View {
             }
         }
     }
-    
-    
+
+
     func speakTotal(_ total: String) {
         let languageCode = currentLanguage
         let totalString = String(format: NSLocalizedString("Total equals", comment: ""), total)
@@ -485,8 +487,8 @@ struct CalculatorView: View {
         utterance.voice = AVSpeechSynthesisVoice(language: languageCode)
         speechSynthesizer.speak(utterance)
     }
-    
-    
+
+
     func getEquationComponents() -> [String] {
         let inputValue = textFieldValue
         let equation = inputValue.lowercased()
@@ -494,13 +496,13 @@ struct CalculatorView: View {
         var currentComponent = ""
         var isInsideBracket = false
         var previousComponentWasSymbol = false
-        
+
         let characters = Array(equation)
-        
+
         for i in 0..<characters.count {
             let char = characters[i]
             var modifiedChar = char
-            
+
             // SOME FILTERS
             if char == "/" {
                 modifiedChar = "÷"
@@ -517,7 +519,7 @@ struct CalculatorView: View {
             if modifiedChar == "=" || modifiedChar == "," {
                 continue
             }
-            
+
             // Insert missing multiplication sign
             if i < characters.count - 1 {
                 let nextChar = characters[i + 1]
@@ -529,7 +531,7 @@ struct CalculatorView: View {
                     continue
                 }
             }
-            
+
             if isInsideBracket || !"+-÷×/*".contains(modifiedChar) {
                 currentComponent.append(modifiedChar)
             } else {
@@ -545,17 +547,17 @@ struct CalculatorView: View {
                 components.append(String(modifiedChar))
             }
         }
-        
+
         if !currentComponent.isEmpty {
             let replacedComponent = replaceNumberWords(currentComponent.filter { !$0.isWhitespace })
             let modifiedComponent = processPercentSigns(in: replacedComponent)
-            
+
             if previousComponentWasSymbol {
                 components[components.count - 1].append(contentsOf: modifiedComponent)
             } else {
                 components.append(modifiedComponent)
             }
-            
+
         }
         //removing first characters if they are invalid (in real time)
         if let first = components.first, let firstChar = first.first, ["×", "÷", "+", "%"].contains(firstChar) {
@@ -570,60 +572,64 @@ struct CalculatorView: View {
             recognitionTask?.cancel()
             recognitionTask = nil
         }
-        
+
         // Stop any ongoing speech playback
         if speechSynthesizer.isSpeaking {
             speechSynthesizer.stopSpeaking(at: .immediate)
         }
-        
+
         previousText = textFieldValue
-        
+
         isRecording = true
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         guard let recognitionRequest = recognitionRequest else {
+            SentrySDK.capture(message: "SFSpeechAudioBufferRecognitionRequest error")
+
             fatalError("Unable to create a SFSpeechAudioBufferRecognitionRequest")
         }
-        
+
         let inputNode = audioEngine.inputNode
-        
+
         if(inputNode.inputFormat(forBus: 0).channelCount == 0){
             NSLog("Not enough available inputs!")
             return
         }
-        
+
         recognitionRequest.shouldReportPartialResults = true
-        
+
         recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
             if let result = result {
                 let transcribedText = result.bestTranscription.formattedString.replacingOccurrences(of: " ", with: "")
-                
+
                 //                let convertedText = convertWordsToNumbers(transcribedText)
                 textFieldValue = previousText + transcribedText            }
-            
+
             if error != nil {
+                SentrySDK.capture(message: "recognitionTask error")
                 audioEngine.stop()
                 inputNode.removeTap(onBus: 0)
-                
+
                 recognitionRequest.endAudio()
                 self.recognitionRequest = nil
                 recognitionTask = nil
             }
         }
-        
+
         let recordingFormat = inputNode.outputFormat(forBus: 0)
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, when) in
             recognitionRequest.append(buffer)
         }
-        
+
         audioEngine.prepare()
-        
+
         do {
             try audioEngine.start()
         } catch {
+            SentrySDK.capture(message: "Audio engine start error")
             fatalError("Could not start the audio engine: \(error)")
         }
     }
-    
+
     func stopRecording(completion: @escaping () -> Void) {
         recognitionRequest?.endAudio()
         recognitionTask?.finish()
@@ -633,14 +639,14 @@ struct CalculatorView: View {
         audioEngine.stop()
         audioEngine.reset() //just for good measure
         textFieldValue = getEquationComponents().joined(separator: "")//moved from 3rd to last in the list - revert if necessary
-        
+
         //speak out total
         if shouldSpeakTotal && !totalValue.isEmpty && totalValue != "Invalid Equation" {
             speakTotal(totalValue)
         }
         completion()
     }
-    
+
     private func clearTextField() {
         textFieldValue = ""
         previousText = ""
@@ -650,40 +656,40 @@ struct CalculatorView: View {
               let textField = findTextField(in: windowScene.windows.first!) else { return }
         textFieldValue = textField.text ?? ""
     }
-    
+
     private func insertText(_ text: String) {
         guard let windowScene = getWindowScene(),
               let textField = findTextField(in: windowScene.windows.first!) else { return }
-        
+
         // If the cursor is at the start of the text field, move it to the end.
         if let startPosition = textField.selectedTextRange?.start, startPosition == textField.beginningOfDocument {
             textField.selectedTextRange = textField.textRange(from: textField.endOfDocument, to: textField.endOfDocument)
         }
-        
+
         // Save cursor position
         let cursorPosition = textField.offset(from: textField.beginningOfDocument, to: textField.selectedTextRange!.start) + text.count
-        
+
         // Insert the given text at the current cursor position.
         textField.replace(textField.selectedTextRange!, withText: text)
-        
+
         // Restore cursor position
         if let newPosition = textField.position(from: textField.beginningOfDocument, offset: cursorPosition) {
             textField.selectedTextRange = textField.textRange(from: newPosition, to: newPosition)
         }
-        
+
         // Update textFieldValue manually
         textFieldValue = textField.text ?? ""
     }
-    
-    
+
+
     private func calculateTotalValue() {
-        
+
         let components = getEquationComponents()
         //        print(components)
         var cleanedComponents: [String] = []
-        
+
         let allowedCharacters = CharacterSet(charactersIn: "0123456789.+-÷*×/()%")
-        
+
         for component in components {
             //Filtering out some bad bits
             let cleanedComponent = component
@@ -691,43 +697,43 @@ struct CalculatorView: View {
                 .replacingOccurrences(of: "÷", with: "/")
                 .replacingOccurrences(of: "=", with: "")
                 .replacingOccurrences(of: " ", with: "")
-            
-            
+
+
             // Remove unwanted characters
             let filteredComponent = cleanedComponent.components(separatedBy: allowedCharacters.inverted).joined()
-            
+
             //print("Cleaned Component: \(filteredComponent)")
-            
+
             let doubleComponent = (filteredComponent.rangeOfCharacter(from: CharacterSet(charactersIn: ".+-*/")) == nil) ? filteredComponent + ".0" : filteredComponent
             cleanedComponents.append(doubleComponent)
-            
+
             //cleanedComponents.append(filteredComponent)
-            
+
         }
-        
+
         let cleanedExpression = cleanedComponents.joined(separator: "")
         //remove these specific operators from start & end if needed
         let trimmedExpression = cleanedExpression.trimmingCharacters(in: CharacterSet(charactersIn: "+*/"))
         //        print("Cleaned Expression: \(trimmedExpression)")
-        
+
         if let result = ExpressionSolver.solveExpression(trimmedExpression) {
-            
+
             if floor(result.doubleValue) == result.doubleValue {
                 // If the result is an integer, just convert to Int and then to String.
                 totalValue = "\(Int(result.doubleValue))"
-                
+
             }
             else {
                 // Otherwise, limit the number of decimal places to 3.
                 totalValue = String(format: "%.3f", result.doubleValue)
-                
+
             }
-            
+
         } else {
             totalValue = "Invalid Equation"
         }
     }
-    
+
     func testExpressionEvaluation() {
         let testCases = [
             ("1+2", "3"),
@@ -768,15 +774,14 @@ struct CalculatorView: View {
             ("(4x(2+3))/(4+(5-3))", "3"),
             ("(5+(3x4))/(2+3)", "3"),
             ("(2+2)x(2+2)", "16"),
-            
+
         ]
-        
-        
+
         for (expression, expected) in testCases {
             textFieldValue = expression
             print("Testing expression: \(expression)")
             calculateTotalValue()
-            
+
             if totalValue == expected {
                 print("✔️ passed for expression \(expression)")
             } else {
@@ -784,8 +789,8 @@ struct CalculatorView: View {
             }
         }
     }
-    
-    
+
+
 }
 
 

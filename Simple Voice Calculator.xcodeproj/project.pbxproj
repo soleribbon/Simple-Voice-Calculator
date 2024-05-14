@@ -27,10 +27,17 @@
 		41B78AB52A0820DD0057D9F9 /* Voice_Calculator_Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B78AB42A0820DD0057D9F9 /* Voice_Calculator_Widget.swift */; };
 		41B78AB82A0820DE0057D9F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41B78AB72A0820DE0057D9F9 /* Assets.xcassets */; };
 		41B78ABE2A0820DE0057D9F9 /* Voice Calculator WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 41B78AAA2A0820DC0057D9F9 /* Voice Calculator WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		533DDBEA2BF34FD300B5F3CC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 533DDBE92BF34FD300B5F3CC /* LaunchScreen.storyboard */; };
 		534C9DAF2AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 534C9DB22AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition */; };
 		534C9DB02AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 534C9DB22AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition */; };
 		5353CC8D2AE00CDD00A4A2F9 /* ExpressionSolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CC8C2AE00CDD00A4A2F9 /* ExpressionSolver.m */; };
+		539354AA2BF39BD2006EB9D1 /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = 539354A92BF39BD2006EB9D1 /* Mixpanel */; };
+		539354AD2BF39C8B006EB9D1 /* StoreKitStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539354AC2BF39C8B006EB9D1 /* StoreKitStuff.swift */; };
+		539354B12BF3B510006EB9D1 /* DonationButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539354B02BF3B510006EB9D1 /* DonationButtonView.swift */; };
 		53AA4E6B2B25149C0071B497 /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AA4E6A2B25149C0071B497 /* GlobalSettings.swift */; };
+		53FECEEC2BF3475300163090 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		53FECEED2BF3475400163090 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 056A65C848064675B0B09199 /* Sentry */; };
+		C58FA502BB074AA78B16031D /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 056A65C848064675B0B09199 /* Sentry */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +92,7 @@
 		41B78AB42A0820DD0057D9F9 /* Voice_Calculator_Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voice_Calculator_Widget.swift; sourceTree = "<group>"; };
 		41B78AB72A0820DE0057D9F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		41B78AB92A0820DE0057D9F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		533DDBE92BF34FD300B5F3CC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		534C9DB12AE00AE4007F6819 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/Voice_Calculator_Widget.intentdefinition; sourceTree = "<group>"; };
 		534C9DB42AE00AE7007F6819 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Voice_Calculator_Widget.strings; sourceTree = "<group>"; };
 		534C9DB62AE00AE8007F6819 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Voice_Calculator_Widget.strings; sourceTree = "<group>"; };
@@ -96,6 +104,8 @@
 		5353CC8A2AE00CAE00A4A2F9 /* ExpressionSolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExpressionSolver.h; sourceTree = "<group>"; };
 		5353CC8B2AE00CDD00A4A2F9 /* Simple Voice Calculator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Simple Voice Calculator-Bridging-Header.h"; sourceTree = "<group>"; };
 		5353CC8C2AE00CDD00A4A2F9 /* ExpressionSolver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExpressionSolver.m; sourceTree = "<group>"; };
+		539354AC2BF39C8B006EB9D1 /* StoreKitStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitStuff.swift; sourceTree = "<group>"; };
+		539354B02BF3B510006EB9D1 /* DonationButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationButtonView.swift; sourceTree = "<group>"; };
 		53AA4E6A2B25149C0071B497 /* GlobalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,7 +114,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53FECEED2BF3475400163090 /* Sentry in Frameworks */,
 				4183E8112A14357800AEEF40 /* StoreKit.framework in Frameworks */,
+				539354AA2BF39BD2006EB9D1 /* Mixpanel in Frameworks */,
+				53FECEEC2BF3475300163090 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +127,7 @@
 			files = (
 				41B78AAE2A0820DC0057D9F9 /* SwiftUI.framework in Frameworks */,
 				41B78AAC2A0820DC0057D9F9 /* WidgetKit.framework in Frameworks */,
+				C58FA502BB074AA78B16031D /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,6 +137,7 @@
 		4111E80F29F455E7003FA99C = {
 			isa = PBXGroup;
 			children = (
+				533DDBE92BF34FD300B5F3CC /* LaunchScreen.storyboard */,
 				411F18F12A098A2F00086755 /* Localizable.strings */,
 				413C1B7829FC3C1B0071DD19 /* StoreKitConfiguration.storekit */,
 				4111E81A29F455E7003FA99C /* Simple Voice Calculator */,
@@ -148,12 +163,9 @@
 				411F18EC2A09895800086755 /* Simple-Voice-Calculator-Info.plist */,
 				4111E82129F455E8003FA99C /* Preview Content */,
 				4111E81B29F455E7003FA99C /* Simple_Voice_CalculatorApp.swift */,
-				413C1B6D29F734AF0071DD19 /* Functions.swift */,
-				413C1B6B29F6DEBB0071DD19 /* CalculatorView.swift */,
+				539354B22BF3B53A006EB9D1 /* Views */,
 				413C1B822A00339F0071DD19 /* Onboarding */,
-				413C1B6F29F9BB390071DD19 /* SettingsView.swift */,
-				53AA4E6A2B25149C0071B497 /* GlobalSettings.swift */,
-				413C1B7129FABA0F0071DD19 /* AboutView.swift */,
+				539354AB2BF39C6B006EB9D1 /* Utils */,
 				4111E81F29F455E8003FA99C /* Assets.xcassets */,
 			);
 			path = "Simple Voice Calculator";
@@ -208,6 +220,27 @@
 			path = ExpressionObjC;
 			sourceTree = "<group>";
 		};
+		539354AB2BF39C6B006EB9D1 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				413C1B6D29F734AF0071DD19 /* Functions.swift */,
+				53AA4E6A2B25149C0071B497 /* GlobalSettings.swift */,
+				539354AC2BF39C8B006EB9D1 /* StoreKitStuff.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		539354B22BF3B53A006EB9D1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				413C1B6B29F6DEBB0071DD19 /* CalculatorView.swift */,
+				413C1B6F29F9BB390071DD19 /* SettingsView.swift */,
+				413C1B7129FABA0F0071DD19 /* AboutView.swift */,
+				539354B02BF3B510006EB9D1 /* DonationButtonView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -219,6 +252,7 @@
 				4111E81529F455E7003FA99C /* Frameworks */,
 				4111E81629F455E7003FA99C /* Resources */,
 				41B78ABF2A0820DE0057D9F9 /* Embed Foundation Extensions */,
+				161AE812D2E449D0900EA516 /* Upload Debug Symbols to Sentry */,
 			);
 			buildRules = (
 			);
@@ -226,6 +260,10 @@
 				41B78ABD2A0820DE0057D9F9 /* PBXTargetDependency */,
 			);
 			name = "Simple Voice Calculator";
+			packageProductDependencies = (
+				056A65C848064675B0B09199 /* Sentry */,
+				539354A92BF39BD2006EB9D1 /* Mixpanel */,
+			);
 			productName = "Simple Voice Calculator";
 			productReference = 4111E81829F455E7003FA99C /* Simple Voice Calculator.app */;
 			productType = "com.apple.product-type.application";
@@ -281,6 +319,10 @@
 				hi,
 			);
 			mainGroup = 4111E80F29F455E7003FA99C;
+			packageReferences = (
+				6179057AD7A24B15BFF6AFCE /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				539354A82BF39BD2006EB9D1 /* XCRemoteSwiftPackageReference "mixpanel-swift" */,
+			);
 			productRefGroup = 4111E81929F455E7003FA99C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -299,6 +341,7 @@
 				413C1B7929FC3C1B0071DD19 /* StoreKitConfiguration.storekit in Resources */,
 				411F18EF2A098A2F00086755 /* Localizable.strings in Resources */,
 				4111E82329F455E8003FA99C /* Preview Assets.xcassets in Resources */,
+				533DDBEA2BF34FD300B5F3CC /* LaunchScreen.storyboard in Resources */,
 				4111E82029F455E8003FA99C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -315,6 +358,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		161AE812D2E449D0900EA516 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"$(SRCROOT)/.sentryclirc",
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+			);
+			name = "Upload Debug Symbols to Sentry";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script is responsable to upload debug symbols and source context for Sentry.\nif which sentry-cli >/dev/null; then\nexport SENTRY_ORG=vito-software\nexport SENTRY_PROJECT=apple-ios\nERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4111E81429F455E7003FA99C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -326,7 +390,9 @@
 				53AA4E6B2B25149C0071B497 /* GlobalSettings.swift in Sources */,
 				4111E81C29F455E7003FA99C /* Simple_Voice_CalculatorApp.swift in Sources */,
 				534C9DAF2AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition in Sources */,
+				539354B12BF3B510006EB9D1 /* DonationButtonView.swift in Sources */,
 				413C1B7F29FFD5C20071DD19 /* OnboardingContentView.swift in Sources */,
+				539354AD2BF39C8B006EB9D1 /* StoreKitStuff.swift in Sources */,
 				413C1B6E29F734AF0071DD19 /* Functions.swift in Sources */,
 				413C1B7229FABA0F0071DD19 /* AboutView.swift in Sources */,
 				413C1B7D29FFD5AF0071DD19 /* OnboardingContainerView.swift in Sources */,
@@ -509,10 +575,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Simple Voice Calculator/Preview Content\"";
 				DEVELOPMENT_TEAM = JPXSGQNS89;
 				ENABLE_PREVIEWS = YES;
@@ -525,6 +592,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -532,7 +600,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -548,10 +616,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Simple Voice Calculator/Preview Content\"";
 				DEVELOPMENT_TEAM = JPXSGQNS89;
 				ENABLE_PREVIEWS = YES;
@@ -564,6 +633,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -571,7 +641,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -598,7 +668,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator.Voice-Calculator-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -625,7 +695,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator.Voice-Calculator-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -666,6 +736,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		539354A82BF39BD2006EB9D1 /* XCRemoteSwiftPackageReference "mixpanel-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mixpanel/mixpanel-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		6179057AD7A24B15BFF6AFCE /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		056A65C848064675B0B09199 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6179057AD7A24B15BFF6AFCE /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+		539354A92BF39BD2006EB9D1 /* Mixpanel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 539354A82BF39BD2006EB9D1 /* XCRemoteSwiftPackageReference "mixpanel-swift" */;
+			productName = Mixpanel;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4111E81029F455E7003FA99C /* Project object */;
 }

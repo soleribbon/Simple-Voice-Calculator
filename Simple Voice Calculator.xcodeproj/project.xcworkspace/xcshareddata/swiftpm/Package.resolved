@@ -1,0 +1,24 @@
+{
+  "originHash" : "c2eef458a8f23d4a41329c7eb68e5444bd23020cacefe957370801f5cb35c6fa",
+  "pins" : [
+    {
+      "identity" : "mixpanel-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mixpanel/mixpanel-swift",
+      "state" : {
+        "branch" : "master",
+        "revision" : "e7869c433ee01cdc52aa14abf636fe0b412d72f8"
+      }
+    },
+    {
+      "identity" : "sentry-cocoa",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/getsentry/sentry-cocoa.git",
+      "state" : {
+        "revision" : "7fc7ca43967e2980d8691a8e017c118a84133aac",
+        "version" : "8.26.0"
+      }
+    }
+  ],
+  "version" : 3
+}

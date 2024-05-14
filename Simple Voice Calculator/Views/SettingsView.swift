@@ -1,6 +1,6 @@
 
 import SwiftUI
-import StoreKit
+import Mixpanel
 
 struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -12,11 +12,7 @@ struct SettingsView: View {
     
     @ObservedObject var storeManager = StoreManager()
     @State private var introCoverShowing: Bool = false
-    
-    @State private var versionNumber: String = "2.0.0"
-
-    
-    //    @Environment(\.requestReview) var requestReview
+    @State private var versionNumber: String = "2.1.0"
     
     var body: some View {
         NavigationView {
@@ -88,13 +84,7 @@ struct SettingsView: View {
                             Spacer()
                         }
                     })
-                    
-                    
-                    
-                    
-                    
                 }
-                
                 
                 Section(header: Text("About & Contact")) {
                     NavigationLink(destination: AboutView())
@@ -117,94 +107,50 @@ struct SettingsView: View {
                         }
                     }).accessibilityLabel("Contact Developer")
                     
-                    //BUTTON TO REQUEST REVIEW - MIGHT DO NOTHING AT ALL DEPENDS ON APPLE ALWAYS
-                    //                    Button(action: {
-                    //                        requestReview()
-                    //                    }, label: {
-                    //
-                    //
-                    //                        HStack{
-                    //                            Text("⭐️")
-                    //                                .foregroundColor(.accentColor)
-                    //                            Text("Leave Review")
-                    //                            .foregroundColor(.primary)
-                    //                        }
-                    //
-                    //                    })
-                    //
+                    
+                    
                     
                     GroupBox {
-                        
-                        
-                        // Tip Button for $1
-                        VStack (alignment: .center){
-                            HStack (alignment: .center){
+                        VStack (alignment: .center) {
+                            HStack (alignment: .center) {
                                 Text("☕️")
                                     .foregroundColor(.accentColor)
                                 Text("Tip Developer a Coffee")
                                     .bold()
                                     .minimumScaleFactor(0.4)
-                                
-                            }.accessibilityLabel("Tip developer a coffee")
+                            }
+                            .accessibilityLabel("Tip developer a coffee")
                             
-                            
-                            HStack (alignment: .center) {
-                                Button(action: {
+                            HStack(alignment: .center) {
+                                DonationButton(title: "1 Cup", color: .green, isProcessing: storeManager.is1CoffeePurchaseProcessing) {
                                     storeManager.purchaseProduct(withIdentifier: "CoffeeTip1")
-                                }) {
-                                    Text("1 Cup")
-                                        .bold()
-                                        .font(.body)
-                                        .foregroundColor(.white)
-                                        .padding()
-                                        .background(.green)
-                                        .cornerRadius(10)
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.4)
                                 }
-                                Button(action: {
+                                DonationButton(title: "5 Cups", color: .teal, isProcessing: storeManager.is5CoffeesPurchaseProcessing) {
                                     storeManager.purchaseProduct(withIdentifier: "CoffeeTip5")
-                                }) {
-                                    Text("5 Cups")
-                                        .bold()
-                                        .font(.body)
-                                        .foregroundColor(.white)
-                                        .padding()
-                                        .background(.teal)
-                                        .cornerRadius(10)
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.4)
                                 }
-                                Button(action: {
+                                DonationButton(title: "10 Cups", color: .blue, isProcessing: storeManager.is10CoffeesPurchaseProcessing) {
                                     storeManager.purchaseProduct(withIdentifier: "CoffeeTip10")
-                                }) {
-                                    Text("10 Cups")
-                                        .bold()
-                                        .font(.body)
-                                        .foregroundColor(.white)
-                                        .padding()
-                                        .background(.blue)
-                                        .cornerRadius(10)
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.4)
                                 }
                             }
-                            
                             Text("Simple Voice Calculator was made by students.")
                                 .font(.caption2)
                                 .opacity(0.4)
                                 .minimumScaleFactor(0.4)
                                 .padding(.top, 4)
-                            
                         }
                         .frame(maxWidth: .infinity)
                     }
+                    
                 }
                 
                 Section(header: Text("Preferences")) {
                     Toggle(isOn: $shouldSpeakTotal) {
                         Text("Announce Total")
                     }
+                    .onChange(of: shouldSpeakTotal, perform: handleToggleChange)
+                    
+                    
+                    
                 }
                 
                 
@@ -288,63 +234,14 @@ struct SettingsView: View {
             }
         }
     }
-}
-
-class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPaymentTransactionObserver {
-    var request: SKProductsRequest!
-    @Published var products: [SKProduct] = []
-    @Published var showAlert = false
-    @Published var alertMessage = ""
-    
-    override init() {
-        super.init()
-        SKPaymentQueue.default().add(self)
-    }
-    
-    func startRequest(with identifiers: [String]) {
-        let productIdentifiers = Set(identifiers)
-        request = SKProductsRequest(productIdentifiers: productIdentifiers)
-        request.delegate = self
-        request.start()
-    }
-    
-    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        DispatchQueue.main.async {
-            self.products = response.products
-        }
-    }
-    
-    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        for transaction in transactions {
-            switch transaction.transactionState {
-            case .purchased:
-                // Handle the purchase
-                DispatchQueue.main.async {
-                    self.showAlert = true
-                    self.alertMessage = "Thank you for your donation ❤️"
-                }
-                SKPaymentQueue.default().finishTransaction(transaction)
-            case .failed:
-                // Handle the failure
-                //                DispatchQueue.main.async {
-                //                    self.showAlert = true
-                //                    self.alertMessage = "Donation failed - Please try again."
-                //                }
-                print("Donation failed...")
-                SKPaymentQueue.default().finishTransaction(transaction)
-            default:
-                break
-            }
-        }
-    }
-    
-    func purchaseProduct(withIdentifier productIdentifier: String) {
-        if let product = products.first(where: { $0.productIdentifier == productIdentifier }) {
-            print(product)
-            let payment = SKPayment(product: product)
-            SKPaymentQueue.default().add(payment)
+    private func handleToggleChange(isOn: Bool) {
+        if isOn {
+            
+            Mixpanel.mainInstance().track(event: "enabledTotalAnnouncement")
+        } else {
+            
+            Mixpanel.mainInstance().track(event: "disabledTotalAnnouncement")
         }
     }
 }
-
 

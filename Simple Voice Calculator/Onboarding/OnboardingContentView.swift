@@ -30,7 +30,7 @@ struct OnboardingContentView: View {
     @Binding var currentPage: Int
     
     var actualIntro: Bool
-
+    
     var featureIndex: Int
     
     
@@ -118,6 +118,7 @@ struct OnboardingContentView: View {
                             
                             
                             Button(action: {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 isOnboarding = false
                             }, label: {
                                 Text("Skip Introduction")
@@ -232,9 +233,6 @@ struct OnboardingContentView: View {
             
             
         }
-        
-        
-        
     }
 }
 
