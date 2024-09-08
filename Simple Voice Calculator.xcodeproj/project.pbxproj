@@ -28,13 +28,22 @@
 		41B78AB82A0820DE0057D9F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41B78AB72A0820DE0057D9F9 /* Assets.xcassets */; };
 		41B78ABE2A0820DE0057D9F9 /* Voice Calculator WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 41B78AAA2A0820DC0057D9F9 /* Voice Calculator WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		533DDBEA2BF34FD300B5F3CC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 533DDBE92BF34FD300B5F3CC /* LaunchScreen.storyboard */; };
+		534952532C38620B00CDFBF5 /* Simple_Voice_Calculator_Watch_EditionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534952522C38620B00CDFBF5 /* Simple_Voice_Calculator_Watch_EditionApp.swift */; };
+		534952552C38620B00CDFBF5 /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534952542C38620B00CDFBF5 /* CalculatorView.swift */; };
+		534952572C38620D00CDFBF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 534952562C38620D00CDFBF5 /* Assets.xcassets */; };
+		5349525A2C38620D00CDFBF5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 534952592C38620D00CDFBF5 /* Preview Assets.xcassets */; };
+		5349525D2C38620D00CDFBF5 /* Voice Calculator.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 534952502C38620B00CDFBF5 /* Voice Calculator.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		534C9DAF2AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 534C9DB22AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition */; };
 		534C9DB02AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 534C9DB22AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition */; };
 		5353CC8D2AE00CDD00A4A2F9 /* ExpressionSolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CC8C2AE00CDD00A4A2F9 /* ExpressionSolver.m */; };
+		5375AF132C4872C500A50830 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5375AF122C4872C500A50830 /* SettingsView.swift */; };
 		539354AA2BF39BD2006EB9D1 /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = 539354A92BF39BD2006EB9D1 /* Mixpanel */; };
 		539354AD2BF39C8B006EB9D1 /* StoreKitStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539354AC2BF39C8B006EB9D1 /* StoreKitStuff.swift */; };
 		539354B12BF3B510006EB9D1 /* DonationButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539354B02BF3B510006EB9D1 /* DonationButtonView.swift */; };
 		53AA4E6B2B25149C0071B497 /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AA4E6A2B25149C0071B497 /* GlobalSettings.swift */; };
+		53EF811E2C8C8FC6000B00C9 /* CalculatorLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF811D2C8C8FC6000B00C9 /* CalculatorLogic.swift */; };
+		53EF81232C8DFFFD000B00C9 /* MathParser in Frameworks */ = {isa = PBXBuildFile; productRef = 53EF81222C8DFFFD000B00C9 /* MathParser */; };
+		53EF81252C8E066C000B00C9 /* CalculatorTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF81242C8E066C000B00C9 /* CalculatorTester.swift */; };
 		53FECEEC2BF3475300163090 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		53FECEED2BF3475400163090 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 056A65C848064675B0B09199 /* Sentry */; };
 		C58FA502BB074AA78B16031D /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 056A65C848064675B0B09199 /* Sentry */; };
@@ -48,6 +57,13 @@
 			remoteGlobalIDString = 41B78AA92A0820DC0057D9F9;
 			remoteInfo = "Voice Calculator WidgetExtension";
 		};
+		5349525B2C38620D00CDFBF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4111E81029F455E7003FA99C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5349524F2C38620B00CDFBF5;
+			remoteInfo = "Simple Voice Calculator Watch Edition Watch App";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,6 +76,17 @@
 				41B78ABE2A0820DE0057D9F9 /* Voice Calculator WidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5349525E2C38620D00CDFBF5 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				5349525D2C38620D00CDFBF5 /* Voice Calculator.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -93,6 +120,11 @@
 		41B78AB72A0820DE0057D9F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		41B78AB92A0820DE0057D9F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		533DDBE92BF34FD300B5F3CC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		534952502C38620B00CDFBF5 /* Voice Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Voice Calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		534952522C38620B00CDFBF5 /* Simple_Voice_Calculator_Watch_EditionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simple_Voice_Calculator_Watch_EditionApp.swift; sourceTree = "<group>"; };
+		534952542C38620B00CDFBF5 /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
+		534952562C38620D00CDFBF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		534952592C38620D00CDFBF5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		534C9DB12AE00AE4007F6819 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/Voice_Calculator_Widget.intentdefinition; sourceTree = "<group>"; };
 		534C9DB42AE00AE7007F6819 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Voice_Calculator_Widget.strings; sourceTree = "<group>"; };
 		534C9DB62AE00AE8007F6819 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Voice_Calculator_Widget.strings; sourceTree = "<group>"; };
@@ -104,9 +136,12 @@
 		5353CC8A2AE00CAE00A4A2F9 /* ExpressionSolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExpressionSolver.h; sourceTree = "<group>"; };
 		5353CC8B2AE00CDD00A4A2F9 /* Simple Voice Calculator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Simple Voice Calculator-Bridging-Header.h"; sourceTree = "<group>"; };
 		5353CC8C2AE00CDD00A4A2F9 /* ExpressionSolver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExpressionSolver.m; sourceTree = "<group>"; };
+		5375AF122C4872C500A50830 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		539354AC2BF39C8B006EB9D1 /* StoreKitStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitStuff.swift; sourceTree = "<group>"; };
 		539354B02BF3B510006EB9D1 /* DonationButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationButtonView.swift; sourceTree = "<group>"; };
 		53AA4E6A2B25149C0071B497 /* GlobalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettings.swift; sourceTree = "<group>"; };
+		53EF811D2C8C8FC6000B00C9 /* CalculatorLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorLogic.swift; sourceTree = "<group>"; };
+		53EF81242C8E066C000B00C9 /* CalculatorTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorTester.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +166,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5349524D2C38620B00CDFBF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53EF81232C8DFFFD000B00C9 /* MathParser in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -142,6 +185,7 @@
 				413C1B7829FC3C1B0071DD19 /* StoreKitConfiguration.storekit */,
 				4111E81A29F455E7003FA99C /* Simple Voice Calculator */,
 				41B78AAF2A0820DC0057D9F9 /* Voice Calculator Widget */,
+				534952512C38620B00CDFBF5 /* Simple Voice Calculator Watch Edition Watch App */,
 				4111E81929F455E7003FA99C /* Products */,
 				413C1B7529FC34E30071DD19 /* Frameworks */,
 			);
@@ -152,6 +196,7 @@
 			children = (
 				4111E81829F455E7003FA99C /* Simple Voice Calculator.app */,
 				41B78AAA2A0820DC0057D9F9 /* Voice Calculator WidgetExtension.appex */,
+				534952502C38620B00CDFBF5 /* Voice Calculator.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -210,6 +255,28 @@
 			path = "Voice Calculator Widget";
 			sourceTree = "<group>";
 		};
+		534952512C38620B00CDFBF5 /* Simple Voice Calculator Watch Edition Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				534952522C38620B00CDFBF5 /* Simple_Voice_Calculator_Watch_EditionApp.swift */,
+				534952542C38620B00CDFBF5 /* CalculatorView.swift */,
+				53EF81242C8E066C000B00C9 /* CalculatorTester.swift */,
+				53EF811D2C8C8FC6000B00C9 /* CalculatorLogic.swift */,
+				5375AF122C4872C500A50830 /* SettingsView.swift */,
+				534952562C38620D00CDFBF5 /* Assets.xcassets */,
+				534952582C38620D00CDFBF5 /* Preview Content */,
+			);
+			path = "Simple Voice Calculator Watch Edition Watch App";
+			sourceTree = "<group>";
+		};
+		534952582C38620D00CDFBF5 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				534952592C38620D00CDFBF5 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		5353CC892AE00C8F00A4A2F9 /* ExpressionObjC */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,6 +316,7 @@
 			buildConfigurationList = 4111E82629F455E8003FA99C /* Build configuration list for PBXNativeTarget "Simple Voice Calculator" */;
 			buildPhases = (
 				4111E81429F455E7003FA99C /* Sources */,
+				5349525E2C38620D00CDFBF5 /* Embed Watch Content */,
 				4111E81529F455E7003FA99C /* Frameworks */,
 				4111E81629F455E7003FA99C /* Resources */,
 				41B78ABF2A0820DE0057D9F9 /* Embed Foundation Extensions */,
@@ -258,6 +326,7 @@
 			);
 			dependencies = (
 				41B78ABD2A0820DE0057D9F9 /* PBXTargetDependency */,
+				5349525C2C38620D00CDFBF5 /* PBXTargetDependency */,
 			);
 			name = "Simple Voice Calculator";
 			packageProductDependencies = (
@@ -285,6 +354,26 @@
 			productReference = 41B78AAA2A0820DC0057D9F9 /* Voice Calculator WidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		5349524F2C38620B00CDFBF5 /* Simple Voice Calculator Watch Edition Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 534952612C38620D00CDFBF5 /* Build configuration list for PBXNativeTarget "Simple Voice Calculator Watch Edition Watch App" */;
+			buildPhases = (
+				5349524C2C38620B00CDFBF5 /* Sources */,
+				5349524D2C38620B00CDFBF5 /* Frameworks */,
+				5349524E2C38620B00CDFBF5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Simple Voice Calculator Watch Edition Watch App";
+			packageProductDependencies = (
+				53EF81222C8DFFFD000B00C9 /* MathParser */,
+			);
+			productName = "Simple Voice Calculator Watch Edition Watch App";
+			productReference = 534952502C38620B00CDFBF5 /* Voice Calculator.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -292,7 +381,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					4111E81729F455E7003FA99C = {
@@ -301,6 +390,9 @@
 					};
 					41B78AA92A0820DC0057D9F9 = {
 						CreatedOnToolsVersion = 14.3;
+					};
+					5349524F2C38620B00CDFBF5 = {
+						CreatedOnToolsVersion = 15.4;
 					};
 				};
 			};
@@ -322,6 +414,7 @@
 			packageReferences = (
 				6179057AD7A24B15BFF6AFCE /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				539354A82BF39BD2006EB9D1 /* XCRemoteSwiftPackageReference "mixpanel-swift" */,
+				53EF811F2C8DFB62000B00C9 /* XCRemoteSwiftPackageReference "DDMathParser" */,
 			);
 			productRefGroup = 4111E81929F455E7003FA99C /* Products */;
 			projectDirPath = "";
@@ -329,6 +422,7 @@
 			targets = (
 				4111E81729F455E7003FA99C /* Simple Voice Calculator */,
 				41B78AA92A0820DC0057D9F9 /* Voice Calculator WidgetExtension */,
+				5349524F2C38620B00CDFBF5 /* Simple Voice Calculator Watch Edition Watch App */,
 			);
 		};
 /* End PBXProject section */
@@ -353,6 +447,15 @@
 				4183E8102A1434D400AEEF40 /* Simple-Voice-Calculator-Info.plist in Resources */,
 				41B78AB82A0820DE0057D9F9 /* Assets.xcassets in Resources */,
 				411F18F62A09A13D00086755 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5349524E2C38620B00CDFBF5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5349525A2C38620D00CDFBF5 /* Preview Assets.xcassets in Resources */,
+				534952572C38620D00CDFBF5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +512,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5349524C2C38620B00CDFBF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53EF811E2C8C8FC6000B00C9 /* CalculatorLogic.swift in Sources */,
+				5375AF132C4872C500A50830 /* SettingsView.swift in Sources */,
+				534952552C38620B00CDFBF5 /* CalculatorView.swift in Sources */,
+				53EF81252C8E066C000B00C9 /* CalculatorTester.swift in Sources */,
+				534952532C38620B00CDFBF5 /* Simple_Voice_Calculator_Watch_EditionApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -416,6 +531,11 @@
 			isa = PBXTargetDependency;
 			target = 41B78AA92A0820DC0057D9F9 /* Voice Calculator WidgetExtension */;
 			targetProxy = 41B78ABC2A0820DE0057D9F9 /* PBXContainerItemProxy */;
+		};
+		5349525C2C38620D00CDFBF5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5349524F2C38620B00CDFBF5 /* Simple Voice Calculator Watch Edition Watch App */;
+			targetProxy = 5349525B2C38620D00CDFBF5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -707,6 +827,69 @@
 			};
 			name = Release;
 		};
+		5349525F2C38620D00CDFBF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Simple Voice Calculator Watch Edition Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = JPXSGQNS89;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.raviheyne.Simple-Voice-Calculator";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator.watchkitapp";
+				PRODUCT_NAME = "Voice Calculator";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+			};
+			name = Debug;
+		};
+		534952602C38620D00CDFBF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Simple Voice Calculator Watch Edition Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = JPXSGQNS89;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.raviheyne.Simple-Voice-Calculator";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator.watchkitapp";
+				PRODUCT_NAME = "Voice Calculator";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -737,6 +920,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		534952612C38620D00CDFBF5 /* Build configuration list for PBXNativeTarget "Simple Voice Calculator Watch Edition Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5349525F2C38620D00CDFBF5 /* Debug */,
+				534952602C38620D00CDFBF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -746,6 +938,14 @@
 			requirement = {
 				branch = master;
 				kind = branch;
+			};
+		};
+		53EF811F2C8DFB62000B00C9 /* XCRemoteSwiftPackageReference "DDMathParser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/davedelong/DDMathParser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.0;
 			};
 		};
 		6179057AD7A24B15BFF6AFCE /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
@@ -768,6 +968,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 539354A82BF39BD2006EB9D1 /* XCRemoteSwiftPackageReference "mixpanel-swift" */;
 			productName = Mixpanel;
+		};
+		53EF81222C8DFFFD000B00C9 /* MathParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53EF811F2C8DFB62000B00C9 /* XCRemoteSwiftPackageReference "DDMathParser" */;
+			productName = MathParser;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

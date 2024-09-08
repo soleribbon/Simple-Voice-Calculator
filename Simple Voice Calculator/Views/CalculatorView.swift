@@ -300,11 +300,8 @@ struct CalculatorView: View {
 
             HStack {
 
-
                 Button(action: {
                     impactRecord.impactOccurred()
-
-
                     withAnimation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0.5)) {
                         recordScale = 1.1
                     }
@@ -698,7 +695,6 @@ struct CalculatorView: View {
                 .replacingOccurrences(of: "=", with: "")
                 .replacingOccurrences(of: " ", with: "")
 
-
             // Remove unwanted characters
             let filteredComponent = cleanedComponent.components(separatedBy: allowedCharacters.inverted).joined()
 
@@ -789,8 +785,6 @@ struct CalculatorView: View {
             }
         }
     }
-
-
 }
 
 

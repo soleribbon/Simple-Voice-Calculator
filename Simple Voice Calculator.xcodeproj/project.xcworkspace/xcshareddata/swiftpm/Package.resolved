@@ -1,6 +1,15 @@
 {
-  "originHash" : "c2eef458a8f23d4a41329c7eb68e5444bd23020cacefe957370801f5cb35c6fa",
+  "originHash" : "51586e9bf497378d744df230deba98f5d07bec069e07ea643abaebfb091a618a",
   "pins" : [
+    {
+      "identity" : "ddmathparser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/davedelong/DDMathParser.git",
+      "state" : {
+        "revision" : "0a159109e2393c3e1db4e2b638009c82e6650b4d",
+        "version" : "3.1.0"
+      }
+    },
     {
       "identity" : "mixpanel-swift",
       "kind" : "remoteSourceControl",
