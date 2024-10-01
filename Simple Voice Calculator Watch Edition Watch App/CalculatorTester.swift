@@ -12,14 +12,14 @@ struct CalculatorTester {
     var processVoiceInput: (String) -> Void
     var getTotalValue: () -> String
     var clearEquation: () -> Void
-
+    
     init(calculator: CalculatorLogic, processVoiceInput: @escaping (String) -> Void, getTotalValue: @escaping () -> String, clearEquation: @escaping () -> Void) {
         self.calculator = calculator
         self.processVoiceInput = processVoiceInput
         self.getTotalValue = getTotalValue
         self.clearEquation = clearEquation
     }
-
+    
     func runInputTest() {
         let testCases: [(equation: String, expectedTotal: String)] = [
             ("3,000.435×-2+5", "-5995.87"), //Decimal test + negative multiplication
@@ -41,40 +41,40 @@ struct CalculatorTester {
             ("200+300×4-500÷2+100", "1250"), // Combining all four operators
             ("1000-50×2+100÷5", "920") // Division and multiplication precedence
         ]
-
+        
         func runTest(at index: Int) {
             guard index < testCases.count else {
                 print("All tests completed.")
                 return
             }
-
+            
             let testCase = testCases[index]
-
+            
             // Process the input for the current equation
             self.processVoiceInput(testCase.equation)
-
+            
             // Allow some time for the equation to be processed
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 // Compare the actual result with the expected result
                 let actualTotal = self.getTotalValue()
                 let expectedTotal = testCase.expectedTotal
-
+                
                 if actualTotal == expectedTotal {
                     print("✅ Passed: \(testCase.equation) = \(actualTotal)")
                 } else {
                     print("❌ Failed: \(testCase.equation) expected \(expectedTotal), but got \(actualTotal)")
                 }
-
+                
                 // Clear the equation after processing the result
                 self.clearEquation()
-
+                
                 // Run the next test after a short delay
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     runTest(at: index + 1)
                 }
             }
         }
-
+        
         // Start running tests
         runTest(at: 0)
     }

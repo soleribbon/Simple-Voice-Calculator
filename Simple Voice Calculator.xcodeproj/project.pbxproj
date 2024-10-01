@@ -40,12 +40,17 @@
 		539354AA2BF39BD2006EB9D1 /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = 539354A92BF39BD2006EB9D1 /* Mixpanel */; };
 		539354AD2BF39C8B006EB9D1 /* StoreKitStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539354AC2BF39C8B006EB9D1 /* StoreKitStuff.swift */; };
 		539354B12BF3B510006EB9D1 /* DonationButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539354B02BF3B510006EB9D1 /* DonationButtonView.swift */; };
+		5395DE412CAABBC00003F2E1 /* SentrySwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5395DE402CAABBC00003F2E1 /* SentrySwiftUI */; };
+		5395DE452CAAF6BB0003F2E1 /* StoreKitStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5395DE442CAAF6BB0003F2E1 /* StoreKitStuff.swift */; };
+		5395DE482CAAF7DD0003F2E1 /* StoreKitConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 413C1B7829FC3C1B0071DD19 /* StoreKitConfiguration.storekit */; };
+		5395DE4A2CAB00ED0003F2E1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5395DE492CAB00ED0003F2E1 /* ContentView.swift */; };
+		5395DE4C2CAB02D30003F2E1 /* CalculatorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5395DE4B2CAB02D30003F2E1 /* CalculatorModel.swift */; };
+		5395DE4E2CAB02F90003F2E1 /* ClearEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5395DE4D2CAB02F90003F2E1 /* ClearEquationView.swift */; };
 		53AA4E6B2B25149C0071B497 /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AA4E6A2B25149C0071B497 /* GlobalSettings.swift */; };
 		53EF811E2C8C8FC6000B00C9 /* CalculatorLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF811D2C8C8FC6000B00C9 /* CalculatorLogic.swift */; };
 		53EF81232C8DFFFD000B00C9 /* MathParser in Frameworks */ = {isa = PBXBuildFile; productRef = 53EF81222C8DFFFD000B00C9 /* MathParser */; };
 		53EF81252C8E066C000B00C9 /* CalculatorTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF81242C8E066C000B00C9 /* CalculatorTester.swift */; };
 		53FECEEC2BF3475300163090 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		53FECEED2BF3475400163090 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 056A65C848064675B0B09199 /* Sentry */; };
 		C58FA502BB074AA78B16031D /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 056A65C848064675B0B09199 /* Sentry */; };
 /* End PBXBuildFile section */
 
@@ -139,6 +144,11 @@
 		5375AF122C4872C500A50830 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		539354AC2BF39C8B006EB9D1 /* StoreKitStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitStuff.swift; sourceTree = "<group>"; };
 		539354B02BF3B510006EB9D1 /* DonationButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationButtonView.swift; sourceTree = "<group>"; };
+		5395DE442CAAF6BB0003F2E1 /* StoreKitStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitStuff.swift; sourceTree = "<group>"; };
+		5395DE462CAAF73E0003F2E1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS10.5.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
+		5395DE492CAB00ED0003F2E1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5395DE4B2CAB02D30003F2E1 /* CalculatorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorModel.swift; sourceTree = "<group>"; };
+		5395DE4D2CAB02F90003F2E1 /* ClearEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearEquationView.swift; sourceTree = "<group>"; };
 		53AA4E6A2B25149C0071B497 /* GlobalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettings.swift; sourceTree = "<group>"; };
 		53EF811D2C8C8FC6000B00C9 /* CalculatorLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorLogic.swift; sourceTree = "<group>"; };
 		53EF81242C8E066C000B00C9 /* CalculatorTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorTester.swift; sourceTree = "<group>"; };
@@ -149,8 +159,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53FECEED2BF3475400163090 /* Sentry in Frameworks */,
 				4183E8112A14357800AEEF40 /* StoreKit.framework in Frameworks */,
+				5395DE412CAABBC00003F2E1 /* SentrySwiftUI in Frameworks */,
 				539354AA2BF39BD2006EB9D1 /* Mixpanel in Frameworks */,
 				53FECEEC2BF3475300163090 /* (null) in Frameworks */,
 			);
@@ -228,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				413C1B7629FC34E30071DD19 /* StoreKit.framework */,
+				5395DE462CAAF73E0003F2E1 /* StoreKit.framework */,
 				41B78AAB2A0820DC0057D9F9 /* WidgetKit.framework */,
 				41B78AAD2A0820DC0057D9F9 /* SwiftUI.framework */,
 			);
@@ -259,10 +270,14 @@
 			isa = PBXGroup;
 			children = (
 				534952522C38620B00CDFBF5 /* Simple_Voice_Calculator_Watch_EditionApp.swift */,
+				5395DE492CAB00ED0003F2E1 /* ContentView.swift */,
+				5395DE4D2CAB02F90003F2E1 /* ClearEquationView.swift */,
 				534952542C38620B00CDFBF5 /* CalculatorView.swift */,
+				5395DE4B2CAB02D30003F2E1 /* CalculatorModel.swift */,
 				53EF81242C8E066C000B00C9 /* CalculatorTester.swift */,
 				53EF811D2C8C8FC6000B00C9 /* CalculatorLogic.swift */,
 				5375AF122C4872C500A50830 /* SettingsView.swift */,
+				5395DE442CAAF6BB0003F2E1 /* StoreKitStuff.swift */,
 				534952562C38620D00CDFBF5 /* Assets.xcassets */,
 				534952582C38620D00CDFBF5 /* Preview Content */,
 			);
@@ -330,8 +345,8 @@
 			);
 			name = "Simple Voice Calculator";
 			packageProductDependencies = (
-				056A65C848064675B0B09199 /* Sentry */,
 				539354A92BF39BD2006EB9D1 /* Mixpanel */,
+				5395DE402CAABBC00003F2E1 /* SentrySwiftUI */,
 			);
 			productName = "Simple Voice Calculator";
 			productReference = 4111E81829F455E7003FA99C /* Simple Voice Calculator.app */;
@@ -412,9 +427,9 @@
 			);
 			mainGroup = 4111E80F29F455E7003FA99C;
 			packageReferences = (
-				6179057AD7A24B15BFF6AFCE /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				539354A82BF39BD2006EB9D1 /* XCRemoteSwiftPackageReference "mixpanel-swift" */,
 				53EF811F2C8DFB62000B00C9 /* XCRemoteSwiftPackageReference "DDMathParser" */,
+				5395DE3F2CAABBC00003F2E1 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = 4111E81929F455E7003FA99C /* Products */;
 			projectDirPath = "";
@@ -454,6 +469,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5395DE482CAAF7DD0003F2E1 /* StoreKitConfiguration.storekit in Resources */,
 				5349525A2C38620D00CDFBF5 /* Preview Assets.xcassets in Resources */,
 				534952572C38620D00CDFBF5 /* Assets.xcassets in Resources */,
 			);
@@ -471,10 +487,11 @@
 				"$(SRCROOT)/.sentryclirc",
 			);
 			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}\n",
 			);
 			name = "Upload Debug Symbols to Sentry";
 			outputPaths = (
+				"${BUILT_PRODUCTS_DIR}/sentry-debug-symbols-uploaded\n",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -518,9 +535,13 @@
 			files = (
 				53EF811E2C8C8FC6000B00C9 /* CalculatorLogic.swift in Sources */,
 				5375AF132C4872C500A50830 /* SettingsView.swift in Sources */,
+				5395DE4A2CAB00ED0003F2E1 /* ContentView.swift in Sources */,
+				5395DE4E2CAB02F90003F2E1 /* ClearEquationView.swift in Sources */,
+				5395DE4C2CAB02D30003F2E1 /* CalculatorModel.swift in Sources */,
 				534952552C38620B00CDFBF5 /* CalculatorView.swift in Sources */,
 				53EF81252C8E066C000B00C9 /* CalculatorTester.swift in Sources */,
 				534952532C38620B00CDFBF5 /* Simple_Voice_Calculator_Watch_EditionApp.swift in Sources */,
+				5395DE452CAAF6BB0003F2E1 /* StoreKitStuff.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -940,6 +961,14 @@
 				kind = branch;
 			};
 		};
+		5395DE3F2CAABBC00003F2E1 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.36.0;
+			};
+		};
 		53EF811F2C8DFB62000B00C9 /* XCRemoteSwiftPackageReference "DDMathParser" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/davedelong/DDMathParser.git";
@@ -968,6 +997,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 539354A82BF39BD2006EB9D1 /* XCRemoteSwiftPackageReference "mixpanel-swift" */;
 			productName = Mixpanel;
+		};
+		5395DE402CAABBC00003F2E1 /* SentrySwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5395DE3F2CAABBC00003F2E1 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = SentrySwiftUI;
 		};
 		53EF81222C8DFFFD000B00C9 /* MathParser */ = {
 			isa = XCSwiftPackageProductDependency;

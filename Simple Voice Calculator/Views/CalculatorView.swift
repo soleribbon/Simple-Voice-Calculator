@@ -14,7 +14,7 @@ struct CalculatorView: View {
     let supportedLanguages = ["en-US", "de-DE", "es-ES", "es-MX", "it-IT", "ko-KR", "hi-IN"]
     @State var currentLanguage = Locale.current.identifier.replacingOccurrences(of: "_", with: "-")
     @State private var speechRecognizer: SFSpeechRecognizer!
-    @State private var speechSynthesizer = AVSpeechSynthesizer()
+    private let speechSynthesizer = AVSpeechSynthesizer()
 
     @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     @State private var recognitionTask: SFSpeechRecognitionTask?
@@ -354,26 +354,31 @@ struct CalculatorView: View {
 
 
             //TRANSLATING SYSTEM LANGUAGE TO SF SPEECH LANGUAGE
-            if (currentLanguage == "de-US"){
-                currentLanguage = "de-DE"
-            } else if (currentLanguage == "it-US"){
-                currentLanguage = "it-IT"
-            } else if (currentLanguage == "es-US"){
-                currentLanguage = "es-ES"
-            } else if (currentLanguage == "mx-US"){
-                currentLanguage = "es-MX"
-            } else if (currentLanguage == "ko-US"){
-                currentLanguage = "ko-KR"
-            } else if (currentLanguage == "hi-US"){
-                currentLanguage = "hi-IN"
+            let languageMappings: [String: String] = [
+                "de-US": "de-DE",
+                "it-US": "it-IT",
+                "es-US": "es-ES",
+                "mx-US": "es-MX",
+                "ko-US": "ko-KR",
+                "hi-US": "hi-IN"
+            ]
+
+            if let mappedLanguage = languageMappings[currentLanguage] {
+                currentLanguage = mappedLanguage
             }
 
-            speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: supportedLanguages.contains(currentLanguage) ? currentLanguage : "en-US"))
+            if !supportedLanguages.contains(currentLanguage) {
+                currentLanguage = "en-US"
+            }
+
+            speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: currentLanguage))
+            print("Current Language: \(currentLanguage)")
 
             //configuring playback from main speaker, not just top one
             do {
-                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.mixWithOthers])
-                try AVAudioSession.sharedInstance().setActive(true)
+                let audioSession = AVAudioSession.sharedInstance()
+                try audioSession.setCategory(.playAndRecord, mode: .default, options: [.mixWithOthers])
+                try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
                 try AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
             } catch {
                 print("Failed to set audio session category or override output port: \(error)")
@@ -477,12 +482,23 @@ struct CalculatorView: View {
     }
 
 
+
     func speakTotal(_ total: String) {
         let languageCode = currentLanguage
-        let totalString = String(format: NSLocalizedString("Total equals", comment: ""), total)
+        let totalString = String(format: NSLocalizedString("Total equals %@", comment: ""), total)
         let utterance = AVSpeechUtterance(string: totalString)
-        utterance.voice = AVSpeechSynthesisVoice(language: languageCode)
-        speechSynthesizer.speak(utterance)
+
+        if let voice = AVSpeechSynthesisVoice(language: languageCode) {
+            utterance.voice = voice
+        } else {
+            // Log the issue and use default voice
+            SentrySDK.capture(message: "Invalid language code: \(languageCode). Falling back to default voice.")
+            utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        }
+
+        DispatchQueue.main.async {
+            speechSynthesizer.speak(utterance)
+        }
     }
 
 
@@ -577,7 +593,9 @@ struct CalculatorView: View {
 
         previousText = textFieldValue
 
-        isRecording = true
+        DispatchQueue.main.async {
+            isRecording = true
+        }
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         guard let recognitionRequest = recognitionRequest else {
             SentrySDK.capture(message: "SFSpeechAudioBufferRecognitionRequest error")
@@ -597,12 +615,12 @@ struct CalculatorView: View {
         recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
             if let result = result {
                 let transcribedText = result.bestTranscription.formattedString.replacingOccurrences(of: " ", with: "")
-
-                //                let convertedText = convertWordsToNumbers(transcribedText)
-                textFieldValue = previousText + transcribedText            }
+                DispatchQueue.main.async {
+                    textFieldValue = previousText + transcribedText
+                }
+            }
 
             if error != nil {
-                SentrySDK.capture(message: "recognitionTask error")
                 audioEngine.stop()
                 inputNode.removeTap(onBus: 0)
 
@@ -612,7 +630,7 @@ struct CalculatorView: View {
             }
         }
 
-        let recordingFormat = inputNode.outputFormat(forBus: 0)
+        let recordingFormat = inputNode.inputFormat(forBus: 0)
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, when) in
             recognitionRequest.append(buffer)
         }
@@ -628,18 +646,21 @@ struct CalculatorView: View {
     }
 
     func stopRecording(completion: @escaping () -> Void) {
+
         recognitionRequest?.endAudio()
         recognitionTask?.finish()
         recognitionTask = nil
-        isRecording = false
+
         audioEngine.inputNode.removeTap(onBus: 0)
         audioEngine.stop()
         audioEngine.reset() //just for good measure
-        textFieldValue = getEquationComponents().joined(separator: "")//moved from 3rd to last in the list - revert if necessary
-
-        //speak out total
-        if shouldSpeakTotal && !totalValue.isEmpty && totalValue != "Invalid Equation" {
-            speakTotal(totalValue)
+        DispatchQueue.main.async {
+            isRecording = false
+            textFieldValue = getEquationComponents().joined(separator: "")//moved from 3rd to last in the list - revert if necessary
+            //speak out total
+            if shouldSpeakTotal && !totalValue.isEmpty && totalValue != "Invalid Equation" {
+                speakTotal(totalValue)
+            }
         }
         completion()
     }
@@ -680,53 +701,58 @@ struct CalculatorView: View {
 
 
     private func calculateTotalValue() {
+        DispatchQueue.global(qos: .userInitiated).async {
 
-        let components = getEquationComponents()
-        //        print(components)
-        var cleanedComponents: [String] = []
+            let components = getEquationComponents()
+            //        print(components)
+            var cleanedComponents: [String] = []
 
-        let allowedCharacters = CharacterSet(charactersIn: "0123456789.+-÷*×/()%")
+            let allowedCharacters = CharacterSet(charactersIn: "0123456789.+-÷*×/()%")
 
-        for component in components {
-            //Filtering out some bad bits
-            let cleanedComponent = component
-                .replacingOccurrences(of: "×", with: "*")
-                .replacingOccurrences(of: "÷", with: "/")
-                .replacingOccurrences(of: "=", with: "")
-                .replacingOccurrences(of: " ", with: "")
+            for component in components {
+                //Filtering out some bad bits
+                let cleanedComponent = component
+                    .replacingOccurrences(of: "×", with: "*")
+                    .replacingOccurrences(of: "÷", with: "/")
+                    .replacingOccurrences(of: "=", with: "")
+                    .replacingOccurrences(of: " ", with: "")
 
-            // Remove unwanted characters
-            let filteredComponent = cleanedComponent.components(separatedBy: allowedCharacters.inverted).joined()
+                // Remove unwanted characters
+                let filteredComponent = cleanedComponent.components(separatedBy: allowedCharacters.inverted).joined()
 
-            //print("Cleaned Component: \(filteredComponent)")
+                //print("Cleaned Component: \(filteredComponent)")
 
-            let doubleComponent = (filteredComponent.rangeOfCharacter(from: CharacterSet(charactersIn: ".+-*/")) == nil) ? filteredComponent + ".0" : filteredComponent
-            cleanedComponents.append(doubleComponent)
+                let doubleComponent = (filteredComponent.rangeOfCharacter(from: CharacterSet(charactersIn: ".+-*/")) == nil) ? filteredComponent + ".0" : filteredComponent
+                cleanedComponents.append(doubleComponent)
 
-            //cleanedComponents.append(filteredComponent)
-
-        }
-
-        let cleanedExpression = cleanedComponents.joined(separator: "")
-        //remove these specific operators from start & end if needed
-        let trimmedExpression = cleanedExpression.trimmingCharacters(in: CharacterSet(charactersIn: "+*/"))
-        //        print("Cleaned Expression: \(trimmedExpression)")
-
-        if let result = ExpressionSolver.solveExpression(trimmedExpression) {
-
-            if floor(result.doubleValue) == result.doubleValue {
-                // If the result is an integer, just convert to Int and then to String.
-                totalValue = "\(Int(result.doubleValue))"
-
-            }
-            else {
-                // Otherwise, limit the number of decimal places to 3.
-                totalValue = String(format: "%.3f", result.doubleValue)
+                //cleanedComponents.append(filteredComponent)
 
             }
 
-        } else {
-            totalValue = "Invalid Equation"
+            let cleanedExpression = cleanedComponents.joined(separator: "")
+            //remove these specific operators from start & end if needed
+            let trimmedExpression = cleanedExpression.trimmingCharacters(in: CharacterSet(charactersIn: "+*/"))
+            //        print("Cleaned Expression: \(trimmedExpression)")
+
+            DispatchQueue.main.async {
+
+                if let result = ExpressionSolver.solveExpression(trimmedExpression) {
+
+                    if floor(result.doubleValue) == result.doubleValue {
+                        // If the result is an integer, just convert to Int and then to String.
+                        totalValue = "\(Int(result.doubleValue))"
+
+                    }
+                    else {
+                        // Otherwise, limit the number of decimal places to 3.
+                        totalValue = String(format: "%.3f", result.doubleValue)
+
+                    }
+
+                } else {
+                    totalValue = "Invalid Equation"
+                }
+            }
         }
     }
 

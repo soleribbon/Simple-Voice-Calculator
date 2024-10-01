@@ -36,10 +36,13 @@ struct Simple_Voice_CalculatorApp: App {
         SentrySDK.start { options in
             options.dsn = "https://d0a92dbd3ff1cef3e4d5fb8b8c3e8ec8@o4507253468823552.ingest.us.sentry.io/4507253470330880"
             /*options.debug = true*/ // Uncomment for terminal debug prints
-            options.enableTracing = true
+            
             // Uncomment the following lines to add more data to your events
             // options.attachScreenshot = true // Adds a screenshot to error events
             options.attachViewHierarchy = true // Adds the view hierarchy to error events
+              // Currently under experimental options:
+            options.experimental.sessionReplay.onErrorSampleRate = 0.1 //10% of errors
+            options.experimental.sessionReplay.sessionSampleRate = 0.0
         }
         // Uncomment next line to test if Sentry is working
         // SentrySDK.capture(message: "This app uses Sentry! :)")

@@ -11,7 +11,8 @@ import SwiftUI
 struct Simple_Voice_Calculator_Watch_Edition_Watch_AppApp: App {
     var body: some Scene {
         WindowGroup {
-            CalculatorView()
+            ContentView()
         }
     }
 }
+

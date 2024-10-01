@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class GlobalSettings: ObservableObject {
-    @Published var shouldSpeakTotal: Bool = false
-}
+//class GlobalSettings: ObservableObject {
+//    @Published var shouldSpeakTotal: Bool = false
+//}
 

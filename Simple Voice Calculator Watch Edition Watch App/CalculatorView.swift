@@ -1,14 +1,18 @@
 import SwiftUI
 import WatchKit
+import AVFoundation
 
 struct CalculatorView: View {
     @State private var recognizedText: String = ""
     @State private var isListening: Bool = false
-    @State private var equationComponents: [String] = []
-    @State private var totalValue: String = "0"
+    
+    @ObservedObject var calculatorModel: CalculatorModel
+    
+    
+    @AppStorage("shouldSpeakTotal") var shouldSpeakTotal: Bool = false
+    private let speechSynthesizer = AVSpeechSynthesizer()
     
     @State private var isSettingsModalPresented: Bool = false
-    
     @State private var selectedComponentIndex: Int? = nil
     @State private var alertTitle: String = ""
     @State private var alertMessage: String = ""
@@ -16,44 +20,21 @@ struct CalculatorView: View {
     @State private var scrollOffset: Double = 0 // Offset for crown rotation
     @State private var contentWidth: CGFloat = 0.0 // Calculated content width
     
+    let supportedLanguages = ["en-US", "de-DE", "es-ES", "es-MX", "it-IT", "ko-KR", "hi-IN"]
+    @State var currentLanguage = Locale.current.identifier.replacingOccurrences(of: "_", with: "-")
+    
     let calculator = CalculatorLogic()
     
     
     var body: some View {
         VStack {
-            HStack {
-                Button(action: showClearAlert) {
-                    Text("Clear")
-                        .accessibilityLabel("Clear")
-                        .foregroundColor(.orange)
-                    
-                }
-                .buttonStyle(.plain)
-                .opacity(equationComponents.isEmpty ? 0 : 1)
-                
-                Spacer()
-                //SETTINGS BUTTON
-                Button(action: {
-                    isSettingsModalPresented.toggle()
-                    WKInterfaceDevice.current().play(.click)
-                    
-                }, label: {
-                    Image(systemName: "gear.badge.questionmark")
-                        .foregroundColor(.primary)
-                    
-                })
-                .accessibilityLabel("Settings")
-                .buttonStyle(.plain)
-                .fullScreenCover(isPresented: $isSettingsModalPresented) {
-                    SettingsView(isPresented: $isSettingsModalPresented)
-                }
-            }
+            
             Spacer()
             //TOP HSTACK
             
             VStack {
                 
-                if equationComponents.isEmpty {
+                if calculatorModel.equationComponents.isEmpty {
                     VStack {
                         Image("recordEquation")
                             .resizable()
@@ -70,8 +51,9 @@ struct CalculatorView: View {
                             
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack {
-                                    ForEach(equationComponents.indices, id: \.self) { index in
-                                        let component = equationComponents[index]
+                                    ForEach(calculatorModel.equationComponents.indices, id: \.self) { index in
+                                        let component = calculatorModel.equationComponents[index]
+                                        
                                         let symbolColor = calculator.getSymbolColor(component: component)
                                         
                                         Text(component)
@@ -92,7 +74,7 @@ struct CalculatorView: View {
                                         Color.clear.onAppear {
                                             contentWidth = hstackGeometry.size.width
                                         }
-                                        .onChange(of: equationComponents) {
+                                        .onChange(of: calculatorModel.equationComponents) {
                                             let previousWidth = contentWidth
                                             contentWidth = hstackGeometry.size.width
                                             
@@ -134,7 +116,7 @@ struct CalculatorView: View {
                     Spacer()
                     GeometryReader { geometry in
                         let width = geometry.size.width
-                        let length = totalValue.count
+                        let length = calculatorModel.totalValue.count
                         
                         // Set the maximum and minimum font size
                         let maxFontSize: CGFloat = 24
@@ -150,7 +132,7 @@ struct CalculatorView: View {
                             }
                         }()
                         
-                        Text(totalValue)
+                        Text(calculatorModel.totalValue)
                             .font(.system(size: fontSize)) // Apply the calculated font size
                             .fontWeight(.bold)
                             .foregroundColor(.primary)
@@ -160,7 +142,8 @@ struct CalculatorView: View {
                     }
                     .frame(height: 30)
                 }
-                .opacity(equationComponents.isEmpty ? 0 : 1)
+                .opacity(calculatorModel.equationComponents.isEmpty ? 0 : 1)
+                .padding()
                 
                 Button(action: {
                     WKInterfaceDevice.current().play(.click)
@@ -193,7 +176,7 @@ struct CalculatorView: View {
                             .foregroundColor(isListening ? .red : .blue)
                             .transition(.scale)
                         
-                        if !equationComponents.isEmpty {
+                        if !calculatorModel.equationComponents.isEmpty {
                             Image(systemName: "plus")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -208,11 +191,11 @@ struct CalculatorView: View {
             }
             
         }
-        .onChange(of: equationComponents) {
+        .onChange(of: calculatorModel.equationComponents) {
             //            totalValue = calculator.calculateTotal(equationComponents: equationComponents)
             scrollOffset = 0
         }
-
+        
     }
     
     func showDeletionAlert(for component: String) {
@@ -235,30 +218,11 @@ struct CalculatorView: View {
             ]
         )
     }
-
-    func showClearAlert() {
-        alertTitle = "Clear Equation?"
-        alertMessage = ""//optional extra message
-
-        WKInterfaceDevice.current().play(.click)
-
-        WKExtension.shared().rootInterfaceController?.presentAlert(
-            withTitle: alertTitle,
-            message: alertMessage,
-            preferredStyle: .actionSheet,
-            actions: [
-                WKAlertAction(title: "Clear", style: .destructive, handler: {
-                    clearEquation()
-                }),
-                WKAlertAction(title: "Cancel", style: .cancel, handler: {})
-            ]
-        )
-    }
-
+    
     
     func deleteComponent(at index: Int) {
-        equationComponents.remove(at: index)
-        totalValue = calculator.calculateTotal(equationComponents: equationComponents)
+        calculatorModel.equationComponents.remove(at: index)
+        calculatorModel.totalValue = calculator.calculateTotal(equationComponents: calculatorModel.equationComponents)
         WKInterfaceDevice.current().play(.failure)
     }
     
@@ -284,43 +248,43 @@ struct CalculatorView: View {
     
     
     func processVoiceInput(_ input: String) {
-        recognizedText = input
-        let components = calculator.getEquationComponents(input)
-        equationComponents.append(contentsOf: components)
-        totalValue = calculator.calculateTotal(equationComponents: equationComponents)
+        DispatchQueue.main.async {
+            recognizedText = input
+            let components = calculator.getEquationComponents(input)
+            calculatorModel.equationComponents.append(contentsOf: components)
+            calculatorModel.totalValue = calculator.calculateTotal(equationComponents: calculatorModel.equationComponents)
+            if shouldSpeakTotal && !calculatorModel.totalValue.isEmpty && calculatorModel.totalValue != "Invalid Equation" {
+                speakTotal(calculatorModel.totalValue)
+            }
+        }
     }
-    
-    func clearEquation() {
-        WKInterfaceDevice.current().play(.start)
+    func speakTotal(_ total: String) {
+        let languageCode = currentLanguage
+        let totalString = String(format: NSLocalizedString("Total equals %@", comment: ""), total)
+        let utterance = AVSpeechUtterance(string: totalString)
         
-        saveEquation(equationComponents.joined(separator: ""))
-        
-        equationComponents = []
-        totalValue = "0"
-        scrollOffset = 0
-    }
-    
-    func saveEquation(_ equation: String) {
-        // Retrieve stored equations from UserDefaults
-        var recentEquations = UserDefaults.standard.stringArray(forKey: "recentEquations") ?? []
-        
-        // Append the new equation
-        recentEquations.append(equation)
-        
-        // Ensure we only store the last 3 equations
-        if recentEquations.count > 3 {
-            recentEquations.removeFirst()
+        if let voice = AVSpeechSynthesisVoice(language: languageCode) {
+            utterance.voice = voice
+        } else {
+            // Log the issue and use default voice
+            
+            utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
         }
         
-        // Save the updated array back to UserDefaults
-        UserDefaults.standard.set(recentEquations, forKey: "recentEquations")
+        DispatchQueue.main.async {
+            speechSynthesizer.speak(utterance)
+        }
     }
     
-
+   
+    
+    
+    
+    
     
     
     
 }
 #Preview {
-    CalculatorView()
+    CalculatorView(calculatorModel: CalculatorModel())
 }

@@ -148,9 +148,6 @@ struct SettingsView: View {
                         Text("Announce Total")
                     }
                     .onChange(of: shouldSpeakTotal, perform: handleToggleChange)
-                    
-                    
-                    
                 }
                 
                 

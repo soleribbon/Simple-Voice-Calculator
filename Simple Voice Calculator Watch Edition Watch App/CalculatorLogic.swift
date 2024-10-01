@@ -11,16 +11,15 @@ import MathParser
 
 
 struct CalculatorLogic {
-
-
+    
     func getEquationComponents(_ equation: String) -> [String] {
         let operatorSet = CharacterSet(charactersIn: "+-×÷*/")
         var components: [String] = []
         var currentComponent = ""
-
+        
         // Remove commas from the equation
         let sanitizedEquation = equation.replacingOccurrences(of: ",", with: "")
-
+        
         for (index, char) in sanitizedEquation.enumerated() {
             if operatorSet.contains(char.unicodeScalars.first!) {
                 // Handle first operator, if it's '+' or '-'
@@ -36,25 +35,25 @@ struct CalculatorLogic {
                 currentComponent.append(char) // Continue building the number
             }
         }
-
+        
         if !currentComponent.isEmpty {
             components.append(currentComponent) // Append the last component
         }
-
+        
         return components
     }
-
-
+    
+    
     func calculateTotal(equationComponents: [String]) -> String {
         guard !equationComponents.isEmpty else {
             return "" // or return "Invalid Equation" if you prefer
         }
-
+        
         let equation = equationComponents.joined()
-
+        
         do {
             let result = try equation.evaluate()
-
+            
             if floor(result) == result {
                 return String(format: "%.0f", result) // No decimal places for whole numbers
             } else {
@@ -74,9 +73,9 @@ struct CalculatorLogic {
             return "Unknown Error"
         }
     }
-
-
-
+    
+    
+    
     func getSymbolColor(component: String) -> (foreground: Color, background: Color) {
         let operatorSet = CharacterSet(charactersIn: "+-×÷*/")
         if let firstChar = component.first, operatorSet.contains(firstChar.unicodeScalars.first!) {
