@@ -40,7 +40,7 @@ struct Simple_Voice_CalculatorApp: App {
             // Uncomment the following lines to add more data to your events
             // options.attachScreenshot = true // Adds a screenshot to error events
             options.attachViewHierarchy = true // Adds the view hierarchy to error events
-              // Currently under experimental options:
+            // Currently under experimental options:
             options.experimental.sessionReplay.onErrorSampleRate = 0.1 //10% of errors
             options.experimental.sessionReplay.sessionSampleRate = 0.0
         }

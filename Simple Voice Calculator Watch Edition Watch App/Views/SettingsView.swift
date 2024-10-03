@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-//    @Binding var isPresented: Bool
+    //    @Binding var isPresented: Bool
     @ObservedObject var storeManager = StoreManager.shared
     @AppStorage("shouldSpeakTotal") var shouldSpeakTotal: Bool = false
     

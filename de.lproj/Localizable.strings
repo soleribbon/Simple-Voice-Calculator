@@ -56,3 +56,7 @@
 "Total equals" = "Gesamtbetrag ist %@";
 "Announce Total" = "Gesamtbetrag Ansagen";
 "Preferences" = "Optionen";
+
+//WatchOS
+"Clear Equation" = "Gleichung löschen";
+"Tip a Coffee" = "Kaffee spendieren";

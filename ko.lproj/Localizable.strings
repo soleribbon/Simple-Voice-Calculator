@@ -56,3 +56,7 @@
 "Total equals" = "총합은 %@";
 "Announce Total" = "총액 발표";
 "Preferences" = "환경 설정";
+
+//WatchOS
+"Clear Equation" = "방정식 지우기";
+"Tip a Coffee" = "커피 팁 주기";

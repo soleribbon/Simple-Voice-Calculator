@@ -4,23 +4,23 @@ import Mixpanel
 
 struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
-    
+
     @State private var helpExpanded = false
     @State private var privacyExpanded = false
     private let productIdentifiers = ["CoffeeTip1", "CoffeeTip5", "CoffeeTip10"]
     @AppStorage("shouldSpeakTotal") var shouldSpeakTotal: Bool = false
-    
+
     @ObservedObject var storeManager = StoreManager()
     @State private var introCoverShowing: Bool = false
-    @State private var versionNumber: String = "2.1.0"
-    
+    @State private var versionNumber: String = Bundle.main.releaseVersionNumber ?? "1.0"
+
     var body: some View {
         NavigationView {
             List {
                 Section(header: Text("Quick Help")) {
-                    
+
                     DisclosureGroup(isExpanded: $helpExpanded) {
-                        
+
                         VStack(alignment: .leading) {
                             Text("**What math operators are supported?**")
                                 .font(.body)
@@ -31,8 +31,8 @@ struct SettingsView: View {
                                 .font(.body)
                                 .padding(.bottom)
                         }
-                        
-                        
+
+
                         VStack(alignment: .leading) {
                             Text("**What does 'Invalid Equation' mean?**")
                                 .font(.body)
@@ -40,7 +40,7 @@ struct SettingsView: View {
                             Text("Invalid Equation is presented when the textfield contains characters that are not valid in a mathematical equation or not currently supported.")
                                 .font(.body)
                                 .padding(.bottom)
-                            
+
                         }
                         VStack(alignment: .leading) {
                             Text("**What does the 'Sym' button do?**")
@@ -49,10 +49,10 @@ struct SettingsView: View {
                             Text("The Sym button can be used to insert a desired math symbol where your cursor is placed in the textfield.")
                                 .font(.body)
                                 .padding(.bottom)
-                            
+
                         }
-                        
-                        
+
+
                         VStack(alignment: .leading) {
                             Text("**How do I edit my voice input?**")
                                 .font(.body)
@@ -60,23 +60,23 @@ struct SettingsView: View {
                             Text("You can edit any component of your equation in the 'Equation Components' section. Just tap you desired components and it will be selected in your textfield. Make sure you do not have voice input enabled (button should say 'Start Talking').")
                                 .font(.body)
                                 .padding(.bottom)
-                            
+
                         }
-                        
+
                     } label: {
                         HStack {
                             Image(systemName: "questionmark.circle")
                                 .foregroundColor(.accentColor)
                             Text("FAQ")
-                            
+
                         }
                     }
-                    
+
                     Button(action: {
                         introCoverShowing = true
-                        
+
                     }, label: {
-                        
+
                         HStack {
                             Image(systemName: "pencil.and.outline")
                                 .foregroundColor(.accentColor)
@@ -85,7 +85,7 @@ struct SettingsView: View {
                         }
                     })
                 }
-                
+
                 Section(header: Text("About & Contact")) {
                     NavigationLink(destination: AboutView())
                     {
@@ -95,9 +95,9 @@ struct SettingsView: View {
                             Text("About Simple Voice Calculator")
                             Spacer()
                         }
-                        
-                        
-                        
+
+
+
                     }.accessibilityLabel("About Simple Voice Calculator")
                     Link(destination: URL(string: "https://www.raviheyne.com")!, label: {
                         HStack {
@@ -106,10 +106,10 @@ struct SettingsView: View {
                             Text("Contact Developer").foregroundColor(.blue)
                         }
                     }).accessibilityLabel("Contact Developer")
-                    
-                    
-                    
-                    
+
+
+
+
                     GroupBox {
                         VStack (alignment: .center) {
                             HStack (alignment: .center) {
@@ -120,7 +120,7 @@ struct SettingsView: View {
                                     .minimumScaleFactor(0.4)
                             }
                             .accessibilityLabel("Tip developer a coffee")
-                            
+
                             HStack(alignment: .center) {
                                 DonationButton(title: "1 Cup", color: .green, isProcessing: storeManager.is1CoffeePurchaseProcessing) {
                                     storeManager.purchaseProduct(withIdentifier: "CoffeeTip1")
@@ -140,24 +140,24 @@ struct SettingsView: View {
                         }
                         .frame(maxWidth: .infinity)
                     }
-                    
+
                 }
-                
+
                 Section(header: Text("Preferences")) {
                     Toggle(isOn: $shouldSpeakTotal) {
                         Text("Announce Total")
                     }
                     .onChange(of: shouldSpeakTotal, perform: handleToggleChange)
                 }
-                
-                
+
+
                 Section(header: Text("Privacy")) {
                     DisclosureGroup(isExpanded: $privacyExpanded) {
                         Text("We take privacy so seriously, we do not collect any information at all! Once a calculation is cleared, it is gone forever.")
                         Text("*Speech data is sent to Apple to ensure transcription accuracy")
                             .font(.caption2)
                             .opacity(0.4)
-                        
+
                     } label: {
                         HStack {
                             Image(systemName: "shield")
@@ -166,7 +166,7 @@ struct SettingsView: View {
                         }
                     }
                 }
-                
+
                 Section {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Version")
@@ -175,7 +175,7 @@ struct SettingsView: View {
                         Text(versionNumber)
                             .font(.body)
                             .opacity(0.6)
-                        
+
                     }
                 }
             }
@@ -191,7 +191,7 @@ struct SettingsView: View {
                     VStack {
                         HStack{
                             Spacer()
-                            
+
                             Button(action: {
                                 introCoverShowing = false
                             }, label:  {
@@ -199,7 +199,7 @@ struct SettingsView: View {
                                     .font(.title)
                                     .foregroundColor(.white)
                                     .padding(8)
-                                
+
                             })
                             .background(
                                 Circle()
@@ -208,13 +208,13 @@ struct SettingsView: View {
                             .padding()
                         }.padding(.horizontal)
                         Spacer()
-                        
+
                     }
-                    
+
                 }
-                
-                
-                
+
+
+
             })
             .listStyle(InsetGroupedListStyle())
             .navigationTitle("Settings")
@@ -233,12 +233,20 @@ struct SettingsView: View {
     }
     private func handleToggleChange(isOn: Bool) {
         if isOn {
-            
+
             Mixpanel.mainInstance().track(event: "enabledTotalAnnouncement")
         } else {
-            
+
             Mixpanel.mainInstance().track(event: "disabledTotalAnnouncement")
         }
     }
 }
 
+extension Bundle {
+    var releaseVersionNumber: String? {
+        return infoDictionary?["CFBundleShortVersionString"] as? String
+    }
+    var buildVersionNumber: String? {
+        return infoDictionary?["CFBundleVersion"] as? String
+    }
+}

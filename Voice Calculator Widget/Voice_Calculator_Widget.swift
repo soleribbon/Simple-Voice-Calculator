@@ -11,11 +11,11 @@ import Intents
 
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent())
+        SimpleEntry(date: Date())
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration)
+        let entry = SimpleEntry(date: Date())
         completion(entry)
     }
 
@@ -26,7 +26,7 @@ struct Provider: IntentTimelineProvider {
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
+            let entry = SimpleEntry(date: entryDate)
             entries.append(entry)
         }
 
@@ -37,8 +37,8 @@ struct Provider: IntentTimelineProvider {
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let configuration: ConfigurationIntent
 }
+
 
 struct Voice_Calculator_WidgetEntryView : View {
     var entry: Provider.Entry
@@ -333,11 +333,11 @@ extension View {
 
 struct Voice_Calculator_Widget_Previews: PreviewProvider {
     static var previews: some View {
-        Voice_Calculator_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
+        Voice_Calculator_WidgetEntryView(entry: SimpleEntry(date: Date()))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
-        Voice_Calculator_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
+        Voice_Calculator_WidgetEntryView(entry: SimpleEntry(date: Date()))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
-        Voice_Calculator_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
+        Voice_Calculator_WidgetEntryView(entry: SimpleEntry(date: Date()))
             .previewContext(WidgetPreviewContext(family: .systemLarge))
     }
 }

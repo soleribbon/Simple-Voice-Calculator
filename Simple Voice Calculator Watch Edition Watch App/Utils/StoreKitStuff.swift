@@ -180,9 +180,6 @@ class PurchaseModel: ObservableObject {
             }
             
         }
-        
-        
-        
     }
 }
 
