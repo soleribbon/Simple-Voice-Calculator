@@ -9,8 +9,28 @@ import Foundation
 import SwiftUI
 import MathParser
 
-
 struct CalculatorLogic {
+    
+    static let wordReplacements: [String: String] = [
+        "zero": "0",
+        "one": "1",
+        "two": "2",
+        "three": "3",
+        "four": "4",
+        "five": "5",
+        "six": "6",
+        "seven": "7",
+        "eight": "8",
+        "nine": "9",
+        "million": "000000",
+        "minus": "-",
+        "plus": "+",
+        "times": "×",
+        "multiplyby": "×",
+        "multipliedby": "×",
+        "dividedby": "÷",
+        "divideby": "÷"
+    ]
     
     func getEquationComponents(_ equation: String) -> [String] {
         let operatorSet = CharacterSet(charactersIn: "+-×÷*/")
@@ -18,7 +38,13 @@ struct CalculatorLogic {
         var currentComponent = ""
         
         // Remove commas from the equation
-        let sanitizedEquation = equation.replacingOccurrences(of: ",", with: "")
+        var sanitizedEquation = equation.replacingOccurrences(of: ",", with: "")
+        
+        // Filter words like "minus seven" to "-7", etc.
+        for (key, value) in CalculatorLogic.wordReplacements {
+            sanitizedEquation = sanitizedEquation.lowercased()
+            sanitizedEquation = sanitizedEquation.replacingOccurrences(of: key.lowercased(), with: value).replacingOccurrences(of: " ", with: "")
+        }
         
         for (index, char) in sanitizedEquation.enumerated() {
             if operatorSet.contains(char.unicodeScalars.first!) {
@@ -40,9 +66,28 @@ struct CalculatorLogic {
             components.append(currentComponent) // Append the last component
         }
         
-        return components
+        // Combine splitting logic with the initial iteration
+        var finalComponents: [String] = []
+        var tempComponent = ""
+        for component in components {
+            for char in component {
+                if operatorSet.contains(char.unicodeScalars.first!) {
+                    if !tempComponent.isEmpty {
+                        finalComponents.append(tempComponent)
+                    }
+                    tempComponent = String(char) // Start a new component with the operator
+                } else {
+                    tempComponent.append(char) // Continue building the number
+                }
+            }
+            if !tempComponent.isEmpty {
+                finalComponents.append(tempComponent)
+                tempComponent = "" // Reset tempComponent for the next iteration
+            }
+        }
+        
+        return finalComponents
     }
-    
     
     func calculateTotal(equationComponents: [String]) -> String {
         guard !equationComponents.isEmpty else {
@@ -73,8 +118,6 @@ struct CalculatorLogic {
             return "Unknown Error"
         }
     }
-    
-    
     
     func getSymbolColor(component: String) -> (foreground: Color, background: Color) {
         let operatorSet = CharacterSet(charactersIn: "+-×÷*/")

@@ -6,29 +6,33 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct CalculatorTester {
-    let calculator: CalculatorLogic
-    var processVoiceInput: (String) -> Void
-    var getTotalValue: () -> String
-    var clearEquation: () -> Void
     
-    init(calculator: CalculatorLogic, processVoiceInput: @escaping (String) -> Void, getTotalValue: @escaping () -> String, clearEquation: @escaping () -> Void) {
-        self.calculator = calculator
-        self.processVoiceInput = processVoiceInput
-        self.getTotalValue = getTotalValue
-        self.clearEquation = clearEquation
+    @ObservedObject var calculatorModel: CalculatorModel
+    let calculatorLogic = CalculatorLogic()
+    
+    //for tests
+    func clearEquation() {
+        calculatorModel.equationComponents.removeAll()
+        calculatorModel.totalValue = ""
+    }
+    func getTotalValue() -> String {
+        return calculatorModel.totalValue
     }
     
     func runInputTest() {
         let testCases: [(equation: String, expectedTotal: String)] = [
-            ("3,000.435×-2+5", "-5995.87"), //Decimal test + negative multiplication
+            ("3,000.435×-2+5", "-5995.87"), // Decimal test + negative multiplication
             ("10+20×3", "70"),  // Multiplication should occur before addition
             ("100÷2--30", "80"), // Division before subtraction + negative subtraction
             ("50-25×2+10", "10"), // Multiplication first, then addition and subtraction
             ("204+535-32÷4×5", "699"), // Division and multiplication, then addition and subtraction
             ("1+1", "2"), // Simple addition
             ("50×3-40÷8", "145"), // Multiplication first, then division, and subtraction
+            ("50×3-40 divided by 8", "145"), // Words version
+            ("50×3-40 dividedby 8", "145"), // Words version
             ("-50+56÷1000000÷5+56", "6.00"), // Negative number before
             ("+50+56÷1000000÷5+56", "106.00"), // Positive number before
             ("50+-56÷1000000÷5+56", "106.00"), // Plus negative
@@ -51,7 +55,9 @@ struct CalculatorTester {
             let testCase = testCases[index]
             
             // Process the input for the current equation
-            self.processVoiceInput(testCase.equation)
+            let components = calculatorLogic.getEquationComponents(testCase.equation)
+            calculatorModel.equationComponents = components
+            calculatorModel.totalValue = calculatorLogic.calculateTotal(equationComponents: components)
             
             // Allow some time for the equation to be processed
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {

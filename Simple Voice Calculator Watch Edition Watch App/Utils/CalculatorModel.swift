@@ -11,5 +11,5 @@ import Combine
 class CalculatorModel: ObservableObject {
     @Published var equationComponents: [String] = []
     @Published var totalValue: String = "0"
-    // Add any other shared properties if needed
+    // Any other shared properties if needed
 }

@@ -4,16 +4,25 @@ import AVFoundation
 
 struct CalculatorView: View {
     @ObservedObject var calculatorModel: CalculatorModel
+    let calculator: CalculatorLogic
+    let calculatorTester: CalculatorTester // Declare CalculatorTester without initializing it here
+    
+    init(calculatorModel: CalculatorModel) {
+        self.calculatorModel = calculatorModel
+        self.calculator = CalculatorLogic()
+        self.calculatorTester = CalculatorTester(calculatorModel: calculatorModel)
+    }
+    
     @State private var isListening: Bool = false
     @State private var selectedComponentIndex: Int? = nil
     @State private var scrollOffset: Double = 0
     @State private var contentWidth: CGFloat = 0.0
-
+    
     @AppStorage("shouldSpeakTotal") var shouldSpeakTotal: Bool = false
     private let speechSynthesizer = AVSpeechSynthesizer()
-    let calculator = CalculatorLogic()
+    
     @State private var currentLanguage = Locale.current.identifier.replacingOccurrences(of: "_", with: "-")
-
+    
     var body: some View {
         VStack {
             Spacer()
@@ -24,28 +33,30 @@ struct CalculatorView: View {
                     VStack {
                         equationComponentsView
                         totalView
+                            .padding([.vertical])
                     }
                 }
             }
             .animation(.easeInOut(duration: 0.3), value: calculatorModel.equationComponents.isEmpty)
             .transition(.opacity)
             recordButton
+                .padding([.bottom], 20)
         }
         .padding(.horizontal)
         .onChange(of: calculatorModel.equationComponents) {
             scrollOffset = 0
         }
     }
-
+    
     var emptyEquationView: some View {
         VStack {
-            Image("recordEquation")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 90)
+            Text("Record Equation")
+                .font(.headline)
+                .foregroundColor(.gray)
+                .padding(.bottom, 40)
         }
     }
-
+    
     var equationComponentsView: some View {
         EquationScrollView(
             calculatorModel: calculatorModel,
@@ -57,7 +68,7 @@ struct CalculatorView: View {
         )
         .frame(height: 50)
     }
-
+    
     var totalView: some View {
         HStack(alignment: .center) {
             Text("TOTAL")
@@ -71,10 +82,10 @@ struct CalculatorView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
         }
-        .opacity(calculatorModel.equationComponents.isEmpty ? 0 : 1)
-        .padding(.vertical)
+        
+        .padding(.bottom)
     }
-
+    
     var recordButton: some View {
         Button(action: {
             WKInterfaceDevice.current().play(.click)
@@ -83,28 +94,53 @@ struct CalculatorView: View {
             }
             if isListening {
                 launchVoiceInput()
+                //TESTS
+                //                calculatorTester.runInputTest()
             }
         }) {
             ZStack {
-                Circle()
-                    .fill(isListening ? Color.red : Color.blue)
-                    .frame(width: 60, height: 60)
-                Image(systemName: isListening ? "waveform" : "mic.fill")
-                    .foregroundColor(.white)
-                    .font(.system(size: 26))
                 if !calculatorModel.equationComponents.isEmpty {
+                    Circle()
+                        .fill(LinearGradient(gradient: Gradient(colors: [isListening ? Color.red.opacity(0.8) : Color.blue.opacity(0.8), isListening ? Color.red : Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .frame(width: 70, height: 70)
+                        .overlay(
+                            Circle()
+                                .stroke(isListening ? Color.red.opacity(0.8) : Color.blue.opacity(0.8), lineWidth: 6) // Stroke color changes when recording
+                        )
+                        .shadow(radius: 6)
+                    
+                    Image(systemName: isListening ? "waveform" : "mic.fill")
+                        .foregroundColor(.white)
+                        .font(.system(size: 28))
+                        .shadow(radius: 4)
+                    
                     Image(systemName: "plus")
                         .foregroundColor(.white)
-                        .font(.system(size: 12))
-                        .offset(x: 10, y: -10)
+                        .font(.system(size: 14))
+                        .offset(x: 12, y: -12)
+                        .shadow(radius: 2)
+                } else {
+                    // Nothing inputted yet
+                    Circle()
+                        .fill(LinearGradient(gradient: Gradient(colors: [isListening ? Color.red.opacity(0.8) : Color.blue.opacity(0.8), isListening ? Color.red : Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .frame(width: 100, height: 100)
+                        .overlay(
+                            Circle()
+                                .stroke(isListening ? Color.red.opacity(0.8) : Color.blue.opacity(0.8), lineWidth: 6) // Stroke color changes when recording
+                        )
+                        .shadow(radius: 8)
+                    
+                    Image(systemName: isListening ? "waveform" : "mic.fill")
+                        .foregroundColor(.white)
+                        .font(.system(size: 34))
+                        .shadow(radius: 5)
                 }
             }
         }
-        //        .padding(.bottom, calculatorModel.equationComponents.isEmpty ? 40 : 0)
-        .padding(.bottom, 20)
+        .buttonStyle(BorderedButtonStyle(tint: .clear))
         .disabled(isListening)
     }
-
+    
     func showDeletionAlert(for component: String) {
         let alertTitle = "Delete \(component)?"
         let alertMessage = ""
@@ -123,13 +159,13 @@ struct CalculatorView: View {
             ]
         )
     }
-
+    
     func deleteComponent(at index: Int) {
         calculatorModel.equationComponents.remove(at: index)
         calculatorModel.totalValue = calculator.calculateTotal(equationComponents: calculatorModel.equationComponents)
         WKInterfaceDevice.current().play(.failure)
     }
-
+    
     func launchVoiceInput() {
         let recentEquations = UserDefaults.standard.stringArray(forKey: "recentEquations") ?? ["1+2", "30.5÷6", "17×6-5"]
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
@@ -147,7 +183,7 @@ struct CalculatorView: View {
             }
         }
     }
-
+    
     func processVoiceInput(_ input: String) {
         DispatchQueue.main.async {
             let components = calculator.getEquationComponents(input)
@@ -158,7 +194,7 @@ struct CalculatorView: View {
             }
         }
     }
-
+    
     func speakTotal(_ total: String) {
         let totalString = String(format: NSLocalizedString("Total equals %@", comment: ""), total)
         let utterance = AVSpeechUtterance(string: totalString)
@@ -180,8 +216,6 @@ struct EquationScrollView: View {
     @Binding var scrollOffset: Double
     @Binding var selectedComponentIndex: Int?
     let showDeletionAlert: (String) -> Void
-
-
     var body: some View {
         GeometryReader { geometry in
             let visibleWidth = geometry.size.width
