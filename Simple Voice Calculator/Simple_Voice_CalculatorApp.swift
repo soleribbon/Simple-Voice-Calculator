@@ -17,8 +17,6 @@ struct Simple_Voice_CalculatorApp: App {
     }
     @AppStorage("isOnboarding") var isOnboarding = true
     var body: some Scene {
-        
-        
         WindowGroup {
             if isOnboarding {
                 OnboardingContainerView(isActualIntro: true)
