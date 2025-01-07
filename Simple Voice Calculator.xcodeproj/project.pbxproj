@@ -27,6 +27,7 @@
 		41B78AB52A0820DD0057D9F9 /* Voice_Calculator_Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B78AB42A0820DD0057D9F9 /* Voice_Calculator_Widget.swift */; };
 		41B78AB82A0820DE0057D9F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41B78AB72A0820DE0057D9F9 /* Assets.xcassets */; };
 		41B78ABE2A0820DE0057D9F9 /* Voice Calculator WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 41B78AAA2A0820DC0057D9F9 /* Voice Calculator WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5328E4212D2DA63300913D09 /* RecordButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5328E4202D2DA63300913D09 /* RecordButtonView.swift */; };
 		533DDBEA2BF34FD300B5F3CC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 533DDBE92BF34FD300B5F3CC /* LaunchScreen.storyboard */; };
 		534952532C38620B00CDFBF5 /* Simple_Voice_Calculator_Watch_EditionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534952522C38620B00CDFBF5 /* Simple_Voice_Calculator_Watch_EditionApp.swift */; };
 		534952552C38620B00CDFBF5 /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534952542C38620B00CDFBF5 /* CalculatorView.swift */; };
@@ -148,6 +149,7 @@
 		41B78AB42A0820DD0057D9F9 /* Voice_Calculator_Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voice_Calculator_Widget.swift; sourceTree = "<group>"; };
 		41B78AB72A0820DE0057D9F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		41B78AB92A0820DE0057D9F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5328E4202D2DA63300913D09 /* RecordButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButtonView.swift; sourceTree = "<group>"; };
 		533DDBE92BF34FD300B5F3CC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		534952502C38620B00CDFBF5 /* Voice Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Voice Calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		534952522C38620B00CDFBF5 /* Simple_Voice_Calculator_Watch_EditionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simple_Voice_Calculator_Watch_EditionApp.swift; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 				413C1B6F29F9BB390071DD19 /* SettingsView.swift */,
 				413C1B7129FABA0F0071DD19 /* AboutView.swift */,
 				539354B02BF3B510006EB9D1 /* DonationButtonView.swift */,
+				5328E4202D2DA63300913D09 /* RecordButtonView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -601,6 +604,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				413C1B7029F9BB390071DD19 /* SettingsView.swift in Sources */,
+				5328E4212D2DA63300913D09 /* RecordButtonView.swift in Sources */,
 				413C1B6C29F6DEBB0071DD19 /* CalculatorView.swift in Sources */,
 				5353CC8D2AE00CDD00A4A2F9 /* ExpressionSolver.m in Sources */,
 				4111E81C29F455E7003FA99C /* Simple_Voice_CalculatorApp.swift in Sources */,
@@ -829,7 +833,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Simple Voice Calculator/Preview Content\"";
 				DEVELOPMENT_TEAM = JPXSGQNS89;
@@ -851,7 +855,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2;
+				MARKETING_VERSION = 2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -870,7 +874,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Simple Voice Calculator/Preview Content\"";
 				DEVELOPMENT_TEAM = JPXSGQNS89;
@@ -892,7 +896,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2;
+				MARKETING_VERSION = 2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -39,4 +39,3 @@ struct OnboardingContainerView: View {
             .edgesIgnoringSafeArea(.all)
     }
 }
-

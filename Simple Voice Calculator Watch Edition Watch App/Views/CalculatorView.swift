@@ -42,6 +42,7 @@ struct CalculatorView: View {
             recordButton
                 .padding([.bottom], 20)
         }
+
         .padding(.horizontal)
         .onChange(of: calculatorModel.equationComponents) {
             scrollOffset = 0
@@ -82,20 +83,20 @@ struct CalculatorView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
         }
-        
+
         .padding(.bottom)
     }
     
     var recordButton: some View {
         Button(action: {
+
             WKInterfaceDevice.current().play(.click)
             withAnimation {
                 isListening.toggle()
             }
+
             if isListening {
                 launchVoiceInput()
-                //TESTS
-                //                calculatorTester.runInputTest()
             }
         }) {
             ZStack {

@@ -12,14 +12,14 @@ struct DonationButton: View {
     let color: Color
     let isProcessing: Bool
     let action: () -> Void
-
+    
     var body: some View {
         Button(action: action) {
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(color)
                     .frame(height: 50)
-
+                
                 if isProcessing {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
