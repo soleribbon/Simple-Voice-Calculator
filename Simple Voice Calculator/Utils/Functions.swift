@@ -47,13 +47,13 @@ func parseEquationComponents(from textFieldValue: String) -> [String] {
     var currentComponent = ""
     var isInsideBracket = false
     var previousComponentWasSymbol = false
-
+    
     let characters = Array(equation)
-
+    
     for i in 0..<characters.count {
         let char = characters[i]
         var modifiedChar = char
-
+        
         // SOME FILTERS
         if char == "/" {
             modifiedChar = "÷"
@@ -70,7 +70,7 @@ func parseEquationComponents(from textFieldValue: String) -> [String] {
         if modifiedChar == "=" || modifiedChar == "," {
             continue
         }
-
+        
         // Insert missing multiplication sign
         if i < characters.count - 1 {
             let nextChar = characters[i + 1]
@@ -82,7 +82,7 @@ func parseEquationComponents(from textFieldValue: String) -> [String] {
                 continue
             }
         }
-
+        
         if isInsideBracket || !"+-÷×/*".contains(modifiedChar) {
             currentComponent.append(modifiedChar)
         } else {
@@ -98,32 +98,32 @@ func parseEquationComponents(from textFieldValue: String) -> [String] {
             components.append(String(modifiedChar))
         }
     }
-
+    
     if !currentComponent.isEmpty {
         let replacedComponent = replaceNumberWords(currentComponent.filter { !$0.isWhitespace })
         let modifiedComponent = processPercentSigns(in: replacedComponent)
-
+        
         if previousComponentWasSymbol {
             components[components.count - 1].append(contentsOf: modifiedComponent)
         } else {
             components.append(modifiedComponent)
         }
     }
-
+    
     //removing first characters if they are invalid (in real time)
     if let first = components.first, let firstChar = first.first, ["×", "÷", "+", "%"].contains(firstChar) {
         components[0] = String(first.dropFirst())
     }
-
+    
     return components
 }
 
 // Function to prepare an expression for evaluation
 func prepareExpressionForEvaluation(components: [String]) -> String {
     var cleanedComponents: [String] = []
-
+    
     let allowedCharacters = CharacterSet(charactersIn: "0123456789.+-÷*×/()%")
-
+    
     for component in components {
         //Filtering out some bad bits
         let cleanedComponent = component
@@ -131,23 +131,23 @@ func prepareExpressionForEvaluation(components: [String]) -> String {
             .replacingOccurrences(of: "÷", with: "/")
             .replacingOccurrences(of: "=", with: "")
             .replacingOccurrences(of: " ", with: "")
-
+        
         // Remove unwanted characters
         let filteredComponent = cleanedComponent.components(separatedBy: allowedCharacters.inverted).joined()
-
+        
         let doubleComponent = filteredComponent
-
+        
         cleanedComponents.append(doubleComponent)
     }
-
+    
     let cleanedExpression = cleanedComponents
         .joined(separator: "")
         .replacingOccurrences(of: "/", with: "*1.0/")
         .trimmingCharacters(in: CharacterSet(charactersIn: "+*/"))
-
+    
     //remove these specific operators from start & end if needed
     let trimmedExpression = cleanedExpression.trimmingCharacters(in: CharacterSet(charactersIn: "+*/"))
-
+    
     return trimmedExpression
 }
 
@@ -268,14 +268,23 @@ struct CustomTextFieldModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
+            .background(Color(.systemGray6))
+            .cornerRadius(10)
+            .foregroundColor(.primary)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.clear, lineWidth: 0)
+            )
             .padding()
-            .textFieldStyle(RoundedBorderTextFieldStyle())
             .autocapitalization(.none)
+            .disableAutocorrection(true)
+            .textInputAutocapitalization(.never)
             .keyboardType(.numbersAndPunctuation)
             .multilineTextAlignment(.leading)
             .submitLabel(.done)
             .font(.title2)
             .opacity(isRecording ? 0.6 : 1)
+        
     }
 }
 

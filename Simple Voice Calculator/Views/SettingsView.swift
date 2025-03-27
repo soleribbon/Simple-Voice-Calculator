@@ -99,11 +99,11 @@ struct SettingsView: View {
                         
                         
                     }.accessibilityLabel("About Simple Voice Calculator")
-                    Link(destination: URL(string: "https://www.raviheyne.com")!, label: {
+                    Link(destination: URL(string: "mailto:raviheyne@gmail.com")!, label: {
                         HStack {
                             Text("💌")
                                 .foregroundColor(.accentColor)
-                            Text("Contact Developer").foregroundColor(.blue)
+                            Text("Contact Developer")/*.foregroundColor(.blue)*/
                         }
                     }).accessibilityLabel("Contact Developer")
                     

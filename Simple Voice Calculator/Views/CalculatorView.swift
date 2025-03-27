@@ -195,12 +195,12 @@ struct CalculatorView: View {
                     textFieldValue = equation
                     calculateTotalValue()
                 },
-                onEquationOperation: { historyEquation, operation in
+                onEquationOperation: { historyResult, operation in
                     if !textFieldValue.isEmpty && operation != "" {
-                        textFieldValue = "(\(textFieldValue))\(operation)(\(historyEquation))"
+                        textFieldValue = "(\(textFieldValue))\(operation)(\(historyResult))"
                         calculateTotalValue()
                     } else {
-                        textFieldValue = historyEquation
+                        textFieldValue = historyResult
                         calculateTotalValue()
                     }
                 }
@@ -348,6 +348,7 @@ extension CalculatorView {
         }
     }
 
+
     func speakTotal(_ total: String) {
         let languageCode = currentLanguage
         let totalString = String(format: NSLocalizedString("Total equals %@", comment: ""), total)
@@ -468,15 +469,7 @@ extension CalculatorView {
             guard let windowScene = getWindowScene(),
                   let textField = findTextField(in: windowScene.windows.first!) else { return }
 
-            // Check if text field has focus first
-            if !textField.isFirstResponder {
-                textField.becomeFirstResponder()
-
-                // Give it a moment to establish the input session
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    self.performTextInsertion(textField: textField, text: text)
-                }
-            } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.performTextInsertion(textField: textField, text: text)
             }
         }
@@ -484,36 +477,24 @@ extension CalculatorView {
 
     // New helper method to handle the actual insertion
     private func performTextInsertion(textField: UITextField, text: String) {
-        // Null safety check
-        guard let selectedRange = textField.selectedTextRange else {
-            // Fallback when no selection range exists
-            let newText = (textField.text ?? "") + text
-            textField.text = newText
-            textFieldValue = newText
-            return
+        // If the cursor is at the start of the text field, move it to the end.
+        if let startPosition = textField.selectedTextRange?.start, startPosition == textField.beginningOfDocument {
+            textField.selectedTextRange = textField.textRange(from: textField.endOfDocument, to: textField.endOfDocument)
         }
 
-        let startPosition = selectedRange.start
-        if startPosition == textField.beginningOfDocument {
-            textField.selectedTextRange = textField.textRange(
-                from: textField.endOfDocument,
-                to: textField.endOfDocument
-            )
+        // Save cursor position
+        let cursorPosition = textField.offset(from: textField.beginningOfDocument, to: textField.selectedTextRange!.start) + text.count
+
+        // Insert the given text at the current cursor position.
+        textField.replace(textField.selectedTextRange!, withText: text)
+
+        // Restore cursor position
+        if let newPosition = textField.position(from: textField.beginningOfDocument, offset: cursorPosition) {
+            textField.selectedTextRange = textField.textRange(from: newPosition, to: newPosition)
         }
 
-        // We need to get the selection range again to be safe
-        if let currentRange = textField.selectedTextRange {
-            // Removed: Cursor position calculation that could fail
-            // Simplified: Just insert the text without trying to restore position
-            textField.replace(currentRange, withText: text)
-
-            textFieldValue = textField.text ?? ""
-        } else {
-            // Another fallback
-            let newText = (textField.text ?? "") + text
-            textField.text = newText
-            textFieldValue = newText
-        }
+        // Update textFieldValue manually
+        textFieldValue = textField.text ?? ""
     }
 
     func calculateTotalValue() {

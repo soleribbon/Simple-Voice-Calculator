@@ -22,8 +22,11 @@ struct CalculatorInputView: View {
     var body: some View {
         VStack {
             TextField("Enter equation", text: $textFieldValue)
+                .accentColor(.blue) // Cursor color
+                .padding(.horizontal, 14)
+                .padding(.vertical, 10)
                 .accessibilityLabel("Enter equation")
-                .focused($internalFocusState) // Use our internal focus state
+                .focused($internalFocusState)
                 .customTextFieldStyle(isRecording: isRecording)
                 .onChange(of: internalFocusState) { newValue in
                     // Use async to prevent blocking the main thread
@@ -103,3 +106,32 @@ struct CalculatorInputView: View {
         .disabled(isRecording)
     }
 }
+
+#Preview {
+    struct CalculatorInputViewPreviewWrapper: View {
+        @State private var textFieldValue = ""
+        @State private var isRecording = false
+        private let impactLight = UIImpactFeedbackGenerator(style: .light)
+        
+        var body: some View {
+            CalculatorInputView(
+                textFieldValue: $textFieldValue,
+                isRecording: isRecording,
+                impactLight: impactLight,
+                onInsertText: { insertedText in
+                    textFieldValue.append(insertedText)
+                },
+                onClear: {
+                    textFieldValue = ""
+                },
+                onFocusChanged: { focused in
+                    print("Focus changed: \(focused)")
+                }
+            )
+            .padding()
+        }
+    }
+    
+    return CalculatorInputViewPreviewWrapper()
+}
+
