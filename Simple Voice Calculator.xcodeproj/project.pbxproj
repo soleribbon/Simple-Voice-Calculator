@@ -38,6 +38,11 @@
 		534C9DB02AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 534C9DB22AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition */; };
 		5353CC8D2AE00CDD00A4A2F9 /* ExpressionSolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CC8C2AE00CDD00A4A2F9 /* ExpressionSolver.m */; };
 		5375AF132C4872C500A50830 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5375AF122C4872C500A50830 /* SettingsView.swift */; };
+		5392D63C2D9483BF00439720 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5392D63B2D9483BF00439720 /* HistoryView.swift */; };
+		5392D63E2D948B0A00439720 /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5392D63D2D948B0A00439720 /* HistoryModel.swift */; };
+		5392D6402D9588E500439720 /* EquationComponentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5392D63F2D9588E500439720 /* EquationComponentsView.swift */; };
+		5392D6422D95890000439720 /* CalculatorInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5392D6412D95890000439720 /* CalculatorInputView.swift */; };
+		5392D6442D95891D00439720 /* TotalDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5392D6432D95891D00439720 /* TotalDisplayView.swift */; };
 		539354AA2BF39BD2006EB9D1 /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = 539354A92BF39BD2006EB9D1 /* Mixpanel */; };
 		539354AD2BF39C8B006EB9D1 /* StoreKitStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539354AC2BF39C8B006EB9D1 /* StoreKitStuff.swift */; };
 		539354B12BF3B510006EB9D1 /* DonationButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539354B02BF3B510006EB9D1 /* DonationButtonView.swift */; };
@@ -168,6 +173,11 @@
 		5353CC8B2AE00CDD00A4A2F9 /* Simple Voice Calculator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Simple Voice Calculator-Bridging-Header.h"; sourceTree = "<group>"; };
 		5353CC8C2AE00CDD00A4A2F9 /* ExpressionSolver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExpressionSolver.m; sourceTree = "<group>"; };
 		5375AF122C4872C500A50830 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		5392D63B2D9483BF00439720 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		5392D63D2D948B0A00439720 /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
+		5392D63F2D9588E500439720 /* EquationComponentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationComponentsView.swift; sourceTree = "<group>"; };
+		5392D6412D95890000439720 /* CalculatorInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorInputView.swift; sourceTree = "<group>"; };
+		5392D6432D95891D00439720 /* TotalDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalDisplayView.swift; sourceTree = "<group>"; };
 		539354AC2BF39C8B006EB9D1 /* StoreKitStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitStuff.swift; sourceTree = "<group>"; };
 		539354B02BF3B510006EB9D1 /* DonationButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationButtonView.swift; sourceTree = "<group>"; };
 		5395DE442CAAF6BB0003F2E1 /* StoreKitStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitStuff.swift; sourceTree = "<group>"; };
@@ -336,11 +346,24 @@
 			path = ExpressionObjC;
 			sourceTree = "<group>";
 		};
+		5392D6472D9598FF00439720 /* Subs */ = {
+			isa = PBXGroup;
+			children = (
+				5392D6432D95891D00439720 /* TotalDisplayView.swift */,
+				5392D6412D95890000439720 /* CalculatorInputView.swift */,
+				5392D63F2D9588E500439720 /* EquationComponentsView.swift */,
+				539354B02BF3B510006EB9D1 /* DonationButtonView.swift */,
+				5328E4202D2DA63300913D09 /* RecordButtonView.swift */,
+			);
+			path = Subs;
+			sourceTree = "<group>";
+		};
 		539354AB2BF39C6B006EB9D1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				413C1B6D29F734AF0071DD19 /* Functions.swift */,
 				539354AC2BF39C8B006EB9D1 /* StoreKitStuff.swift */,
+				5392D63D2D948B0A00439720 /* HistoryModel.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -350,9 +373,9 @@
 			children = (
 				413C1B6B29F6DEBB0071DD19 /* CalculatorView.swift */,
 				413C1B6F29F9BB390071DD19 /* SettingsView.swift */,
+				5392D63B2D9483BF00439720 /* HistoryView.swift */,
 				413C1B7129FABA0F0071DD19 /* AboutView.swift */,
-				539354B02BF3B510006EB9D1 /* DonationButtonView.swift */,
-				5328E4202D2DA63300913D09 /* RecordButtonView.swift */,
+				5392D6472D9598FF00439720 /* Subs */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -607,13 +630,18 @@
 				5328E4212D2DA63300913D09 /* RecordButtonView.swift in Sources */,
 				413C1B6C29F6DEBB0071DD19 /* CalculatorView.swift in Sources */,
 				5353CC8D2AE00CDD00A4A2F9 /* ExpressionSolver.m in Sources */,
+				5392D63C2D9483BF00439720 /* HistoryView.swift in Sources */,
 				4111E81C29F455E7003FA99C /* Simple_Voice_CalculatorApp.swift in Sources */,
 				534C9DAF2AE00AE4007F6819 /* Voice_Calculator_Widget.intentdefinition in Sources */,
 				539354B12BF3B510006EB9D1 /* DonationButtonView.swift in Sources */,
 				413C1B7F29FFD5C20071DD19 /* OnboardingContentView.swift in Sources */,
+				5392D6422D95890000439720 /* CalculatorInputView.swift in Sources */,
 				539354AD2BF39C8B006EB9D1 /* StoreKitStuff.swift in Sources */,
 				413C1B6E29F734AF0071DD19 /* Functions.swift in Sources */,
 				413C1B7229FABA0F0071DD19 /* AboutView.swift in Sources */,
+				5392D6442D95891D00439720 /* TotalDisplayView.swift in Sources */,
+				5392D6402D9588E500439720 /* EquationComponentsView.swift in Sources */,
+				5392D63E2D948B0A00439720 /* HistoryModel.swift in Sources */,
 				413C1B7D29FFD5AF0071DD19 /* OnboardingContainerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -833,7 +861,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Simple Voice Calculator/Preview Content\"";
 				DEVELOPMENT_TEAM = JPXSGQNS89;
@@ -874,7 +902,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Simple Voice Calculator/Preview Content\"";
 				DEVELOPMENT_TEAM = JPXSGQNS89;

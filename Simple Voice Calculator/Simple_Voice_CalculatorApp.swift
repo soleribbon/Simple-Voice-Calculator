@@ -39,8 +39,8 @@ struct Simple_Voice_CalculatorApp: App {
             // options.attachScreenshot = true // Adds a screenshot to error events
             options.attachViewHierarchy = true // Adds the view hierarchy to error events
             // Currently under experimental options:
-            options.experimental.sessionReplay.onErrorSampleRate = 0.1 //10% of errors
-            options.experimental.sessionReplay.sessionSampleRate = 0.0
+            options.sessionReplay.onErrorSampleRate = 0.1 //10% of errors
+            options.sessionReplay.sessionSampleRate = 0.0
         }
         // Uncomment next line to test if Sentry is working
         // SentrySDK.capture(message: "This app uses Sentry! :)")

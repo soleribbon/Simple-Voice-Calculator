@@ -1,3 +1,10 @@
+//
+//  EquationComponentsView.swift
+//  Simple Voice Calculator
+//
+//  Created by Ravi Heyne
+//
+
 import SwiftUI
 
 /// A view that behaves more like a classic UIKit button:
@@ -13,7 +20,7 @@ struct RecordButton<Label: View>: View {
     let impactRecord = UIImpactFeedbackGenerator(style: .medium)
     
     var body: some View {
-        //    press down (onChanged) and release (onEnded).
+        // Press down (onChanged) and release (onEnded).
         let pressGesture = DragGesture(minimumDistance: 0)
             .updating($isPressed) { _, state, _ in
                 // The moment the finger goes down, set isPressed = true

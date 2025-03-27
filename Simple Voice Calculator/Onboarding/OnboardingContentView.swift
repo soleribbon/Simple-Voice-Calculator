@@ -28,17 +28,17 @@ struct OnboardingContentView: View {
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     var feature: Feature
     @Binding var currentPage: Int
-
+    
     var actualIntro: Bool
-
+    
     var featureIndex: Int
-
-
+    
+    
     var isLastFeature: Bool {
         feature.id == features.last?.id
     }
     var body: some View {
-
+        
         ZStack {
             LinearGradient(
                 gradient: Gradient(stops: [
@@ -47,7 +47,7 @@ struct OnboardingContentView: View {
                 startPoint: UnitPoint(x: 0.5, y: -3.0616171314629196e-17),
                 endPoint: UnitPoint(x: 0.5, y: 0.9999999999999999))
             .edgesIgnoringSafeArea(.all)
-
+            
             if !isLastFeature {
                 VStack {
                     VStack {
@@ -75,14 +75,14 @@ struct OnboardingContentView: View {
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
                             .strokeBorder(Color(red: 0.129, green: 0.231, blue: 0.537), lineWidth: 2)
-
-
-
+                        
+                        
+                        
                     )
                     .background(
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color(red: 0.0725, green: 0.166, blue: 0.458))
-
+                        
                             .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)), radius:3.78, x:0, y:1.89)
                     )
                     .padding()
@@ -92,13 +92,13 @@ struct OnboardingContentView: View {
                             withAnimation{
                                 currentPage = featureIndex + 1
                             }
-
-
+                            
+                            
                         }, label: {
                             HStack{
                                 Text(LocalizedStringKey(feature.buttonText))
                                 Image(systemName: "arrow.right")
-
+                                
                             }
                             .bold()
                             .foregroundColor(.white)
@@ -106,17 +106,17 @@ struct OnboardingContentView: View {
                             .background(.blue)
                             .cornerRadius(10)
                         })
-
+                        
                         //IF NOT DISPLAYED FROM SETTINGS, SHOW SKIP
                         if actualIntro {
-
+                            
                             Text("or")
                                 .bold()
                                 .font(.body)
                                 .foregroundColor(.white)
                                 .opacity(0.5)
-
-
+                            
+                            
                             Button(action: {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 isOnboarding = false
@@ -127,19 +127,19 @@ struct OnboardingContentView: View {
                                     .foregroundColor(.white)
                                     .opacity(0.75)
                             })
-
+                            
                         }
-
-
-
+                        
+                        
+                        
                         Spacer().frame(height: 10)
                     }//end button and skip vstack
-
-
-
-
-
-
+                    
+                    
+                    
+                    
+                    
+                    
                 }
             } else {
                 //LAST ENDING VIEW
@@ -152,7 +152,7 @@ struct OnboardingContentView: View {
                                     .bold()
                                     .font(.title)
                                     .foregroundColor(.white)
-
+                                
                                 Spacer()
                             }.padding()
                             VStack (alignment: .center){
@@ -186,7 +186,7 @@ struct OnboardingContentView: View {
                                             .fill(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.10000000149011612)))
                                     )
                                 //end of one
-
+                                
                                 Text("Ensure no alphabetical letters are included in your input.")
                                     .font(.body)
                                     .foregroundColor(.white)
@@ -217,16 +217,16 @@ struct OnboardingContentView: View {
                                     .background(.blue)
                                     .cornerRadius(10)
                                 })
-
+                                
                             }.padding()
-
-
-
-
-
+                            
+                            
+                            
+                            
+                            
                         }
                     }
-
+                    
                 }
                 .padding()
             }

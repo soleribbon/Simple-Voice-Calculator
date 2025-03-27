@@ -26,6 +26,7 @@ struct CalculatorLogic {
         "minus": "-",
         "plus": "+",
         "times": "×",
+        "time": "×",
         "multiplyby": "×",
         "multipliedby": "×",
         "dividedby": "÷",

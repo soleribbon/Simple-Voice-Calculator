@@ -40,6 +40,127 @@ func replaceNumberWords(_ component: String) -> String {
 }
 
 
+// Function to parse equation text into components
+func parseEquationComponents(from textFieldValue: String) -> [String] {
+    let equation = textFieldValue.lowercased()
+    var components = [String]()
+    var currentComponent = ""
+    var isInsideBracket = false
+    var previousComponentWasSymbol = false
+
+    let characters = Array(equation)
+
+    for i in 0..<characters.count {
+        let char = characters[i]
+        var modifiedChar = char
+
+        // SOME FILTERS
+        if char == "/" {
+            modifiedChar = "÷"
+        }
+        if char == "x" {
+            modifiedChar = "×"
+        }
+        if modifiedChar == "(" {
+            isInsideBracket = true
+        }
+        if modifiedChar == ")" {
+            isInsideBracket = false
+        }
+        if modifiedChar == "=" || modifiedChar == "," {
+            continue
+        }
+
+        // Insert missing multiplication sign
+        if i < characters.count - 1 {
+            let nextChar = characters[i + 1]
+            if (char.isNumber && nextChar == "(") || (char == ")" && nextChar.isNumber) {
+                currentComponent.append(modifiedChar)
+                components.append(currentComponent.filter { !$0.isWhitespace })
+                components.append("×")
+                currentComponent = ""
+                continue
+            }
+        }
+
+        if isInsideBracket || !"+-÷×/*".contains(modifiedChar) {
+            currentComponent.append(modifiedChar)
+        } else {
+            if !currentComponent.isEmpty {
+                if previousComponentWasSymbol {
+                    components[components.count - 1].append(contentsOf: currentComponent.filter { !$0.isWhitespace })
+                } else {
+                    components.append(currentComponent.filter { !$0.isWhitespace })
+                }
+                currentComponent = ""
+            }
+            previousComponentWasSymbol = true
+            components.append(String(modifiedChar))
+        }
+    }
+
+    if !currentComponent.isEmpty {
+        let replacedComponent = replaceNumberWords(currentComponent.filter { !$0.isWhitespace })
+        let modifiedComponent = processPercentSigns(in: replacedComponent)
+
+        if previousComponentWasSymbol {
+            components[components.count - 1].append(contentsOf: modifiedComponent)
+        } else {
+            components.append(modifiedComponent)
+        }
+    }
+
+    //removing first characters if they are invalid (in real time)
+    if let first = components.first, let firstChar = first.first, ["×", "÷", "+", "%"].contains(firstChar) {
+        components[0] = String(first.dropFirst())
+    }
+
+    return components
+}
+
+// Function to prepare an expression for evaluation
+func prepareExpressionForEvaluation(components: [String]) -> String {
+    var cleanedComponents: [String] = []
+
+    let allowedCharacters = CharacterSet(charactersIn: "0123456789.+-÷*×/()%")
+
+    for component in components {
+        //Filtering out some bad bits
+        let cleanedComponent = component
+            .replacingOccurrences(of: "×", with: "*")
+            .replacingOccurrences(of: "÷", with: "/")
+            .replacingOccurrences(of: "=", with: "")
+            .replacingOccurrences(of: " ", with: "")
+
+        // Remove unwanted characters
+        let filteredComponent = cleanedComponent.components(separatedBy: allowedCharacters.inverted).joined()
+
+        let doubleComponent = filteredComponent
+
+        cleanedComponents.append(doubleComponent)
+    }
+
+    let cleanedExpression = cleanedComponents
+        .joined(separator: "")
+        .replacingOccurrences(of: "/", with: "*1.0/")
+        .trimmingCharacters(in: CharacterSet(charactersIn: "+*/"))
+
+    //remove these specific operators from start & end if needed
+    let trimmedExpression = cleanedExpression.trimmingCharacters(in: CharacterSet(charactersIn: "+*/"))
+
+    return trimmedExpression
+}
+
+// Function to format calculation result
+func formatCalculationResult(result: NSNumber) -> String {
+    if floor(result.doubleValue) == result.doubleValue {
+        // If the result is an integer, just convert to Int and then to String.
+        return "\(Int(result.doubleValue))"
+    } else {
+        // Otherwise, limit the number of decimal places to 3.
+        return String(format: "%.3f", result.doubleValue)
+    }
+}
 
 func getSymbolColor(component: String) -> (foreground: Color, background: Color, strokeColor: Color)? {
     if component.starts(with: "+") {

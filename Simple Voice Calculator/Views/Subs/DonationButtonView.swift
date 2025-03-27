@@ -30,7 +30,7 @@ struct DonationButton: View {
                         .foregroundColor(.white)
                         .lineLimit(1)
                         .minimumScaleFactor(0.4)
-                        .padding(.horizontal, 16)  
+                        .padding(.horizontal, 16)
                 }
             }
             .frame(maxWidth: .infinity)
