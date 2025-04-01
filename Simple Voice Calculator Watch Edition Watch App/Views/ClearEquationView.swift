@@ -71,7 +71,7 @@ struct ClearEquationView: View {
         // Append the new equation
         recentEquations.append(equation)
         
-        // Ensure we only store the last 3 equations
+        // Ensure to only store the last 3 equations
         if recentEquations.count > 3 {
             recentEquations.removeFirst()
         }

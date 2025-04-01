@@ -5,8 +5,7 @@ import AVFoundation
 struct CalculatorView: View {
     @ObservedObject var calculatorModel: CalculatorModel
     let calculator: CalculatorLogic
-    let calculatorTester: CalculatorTester // Declare CalculatorTester without initializing it here
-    
+    let calculatorTester: CalculatorTester
     init(calculatorModel: CalculatorModel) {
         self.calculatorModel = calculatorModel
         self.calculator = CalculatorLogic()
@@ -31,6 +30,8 @@ struct CalculatorView: View {
                     emptyEquationView
                 } else {
                     VStack {
+
+
                         equationComponentsView
                         totalView
                             .padding([.vertical])
@@ -39,6 +40,7 @@ struct CalculatorView: View {
             }
             .animation(.easeInOut(duration: 0.3), value: calculatorModel.equationComponents.isEmpty)
             .transition(.opacity)
+            
             recordButton
                 .padding([.bottom], 20)
         }
@@ -98,6 +100,8 @@ struct CalculatorView: View {
             if isListening {
                 launchVoiceInput()
             }
+
+
         }) {
             ZStack {
                 if !calculatorModel.equationComponents.isEmpty {

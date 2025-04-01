@@ -16,36 +16,14 @@ enum HistoryMode: Int {
     case multiply = 3
     case divide = 4
     
-    // Get the next mode in the cycle
-    var next: HistoryMode {
-        switch self {
-        case .replace: return .add
-        case .add: return .subtract
-        case .subtract: return .multiply
-        case .multiply: return .divide
-        case .divide: return .replace
-        }
-    }
-    
-    // SF Symbol for the current mode
+    // SF Symbol for the operation
     var sfSymbol: String {
         switch self {
-        case .replace: return "arrow.right"
+        case .replace: return "rectangle.2.swap"
         case .add: return "plus"
         case .subtract: return "minus"
         case .multiply: return "multiply"
         case .divide: return "divide"
-        }
-    }
-    
-    // Button title text
-    var buttonTitle: String {
-        switch self {
-        case .replace: return "Tap to REPLACE"
-        case .add: return "Tap to ADD"
-        case .subtract: return "Tap to SUBTRACT"
-        case .multiply: return "Tap to MULTIPLY"
-        case .divide: return "Tap to DIVIDE"
         }
     }
     
@@ -60,7 +38,7 @@ enum HistoryMode: Int {
         }
     }
     
-    // Color for the mode button
+    // Color for the mode
     var color: Color {
         switch self {
         case .replace: return Color(.systemPink)
@@ -72,84 +50,6 @@ enum HistoryMode: Int {
     }
 }
 
-// MARK: - History Row Component
-struct HistoryRowWithMode: View {
-    var equation: String
-    var result: String
-    var mode: HistoryMode
-    var onTap: () -> Void
-    
-    // State for animation
-    @State private var itemScale: CGFloat = 1.0
-    
-    let mediumImpact = UIImpactFeedbackGenerator(style: .medium)
-    let heavyImpact = UIImpactFeedbackGenerator(style: .heavy)
-    
-    var body: some View {
-        HStack {
-            Text(equation)
-                .foregroundColor(.primary)
-                .padding(.vertical, 8)
-                .font(.body)
-            
-            Spacer()
-            
-            HStack {
-                Text("=")
-                    .foregroundColor(.primary)
-                    .font(.body)
-                    .opacity(0.3)
-                Text(result)
-                    .foregroundColor(.primary)
-                    .font(.body)
-                    .bold()
-            }
-            .padding(.vertical)
-            .padding(.leading)
-            
-            Button(action: {
-                withAnimation(.spring(response: 0.2, dampingFraction: 0.6)) {
-                    itemScale = 0.95
-                }
-                
-                switch mode {
-                case .replace:
-                    heavyImpact.impactOccurred()
-                case .add, .subtract, .multiply, .divide:
-                    mediumImpact.impactOccurred()
-                }
-                
-                // Reset scale after delay
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    withAnimation(.spring(response: 0.2, dampingFraction: 0.6)) {
-                        itemScale = 1.0
-                    }
-                    
-                    // Call the original onTap action after animation starts
-                    onTap()
-                }
-            }) {
-                Image(systemName: mode.sfSymbol)
-                    .foregroundColor(mode.color)
-                    .font(.headline)
-            }
-        }
-        .scaleEffect(itemScale)
-        .contentShape(Rectangle())
-        .listRowBackground(
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color(UIColor.tertiarySystemBackground))
-                .padding(
-                    EdgeInsets(
-                        top: 4,
-                        leading: 0,
-                        bottom: 4,
-                        trailing: 0
-                    )
-                )
-        )
-    }
-}
 
 // MARK: - History Manager Extensions
 extension HistoryManager {
@@ -169,21 +69,17 @@ extension HistoryManager {
     }
 }
 
-// MARK: - Main History View
+// MARK: - Updated Main History View
 struct HistoryView: View {
     // MARK: Properties
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var historyManager: HistoryManager
     @State private var showingClearConfirmation = false
     @State private var clearButtonScale: CGFloat = 1.0
-    @State private var modeButtonScale: CGFloat = 1.0
     
     // Haptic feedback
     let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
-    
-    // State to track the active mode
-    @AppStorage("historyViewMode") private var storedMode: Int = 0
-    @State private var currentMode: HistoryMode = .replace
+    let impactClear = UIImpactFeedbackGenerator(style: .heavy)
     
     // Handle when an equation is selected from history
     var onEquationSelected: ((String) -> Void)?
@@ -242,6 +138,33 @@ struct HistoryView: View {
         }
     }
     
+    // Handle history item actions
+    private func handleHistoryAction(item: HistoryItem, mode: HistoryMode) {
+        switch mode {
+        case .replace:
+            onEquationSelected?(item.equation)
+        case .subtract:
+            // Check if current equation is empty
+            if historyManager.currentEquation.isEmpty {
+                // If empty and the result is already negative, don't add another minus
+                if item.result.hasPrefix("-") {
+                    onEquationSelected?(item.result)
+                } else {
+                    // For positive numbers, add the negative sign
+                    // Force string conversion to ensure proper concatenation
+                    let negativeResult = "-" + item.result
+                    onEquationSelected?(negativeResult)
+                }
+            } else {
+                // Normal operation (append with operator)
+                onEquationOperation?(item.result, mode.operationSymbol)
+            }
+        case .add, .multiply, .divide:
+            onEquationOperation?(item.result, mode.operationSymbol)
+        }
+        presentationMode.wrappedValue.dismiss()
+    }
+    
     // MARK: Empty State View
     private var emptyStateView: some View {
         VStack(spacing: 4) {
@@ -261,18 +184,11 @@ struct HistoryView: View {
                 if let items = historyByDate[section], !items.isEmpty {
                     Section(header: Text(section)) {
                         ForEach(items) { item in
-                            HistoryRowWithMode(
+                            HistoryRow(
                                 equation: item.equation,
                                 result: item.result,
-                                mode: currentMode,
-                                onTap: {
-                                    switch currentMode {
-                                    case .replace:
-                                        onEquationSelected?(item.equation)
-                                    case .add, .subtract, .multiply, .divide:
-                                        onEquationOperation?(item.result, currentMode.operationSymbol)
-                                    }
-                                    presentationMode.wrappedValue.dismiss()
+                                onAction: { mode in
+                                    handleHistoryAction(item: item, mode: mode)
                                 }
                             )
                         }
@@ -297,30 +213,6 @@ struct HistoryView: View {
             Spacer()
             
             HStack {
-                // Mode cycling button with consistent width
-                Button(action: {
-                    impactFeedback.impactOccurred()
-                    
-                    withAnimation(.spring(response: 0.2, dampingFraction: 0.6)) {
-                        modeButtonScale = 0.95
-                        currentMode = currentMode.next // Cycle to next mode
-                    }
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        withAnimation(.spring(response: 0.2, dampingFraction: 0.6)) {
-                            modeButtonScale = 1.0
-                        }
-                    }
-                }) {
-                    HStack {
-                        Image(systemName: currentMode.sfSymbol)
-                        Text(currentMode.buttonTitle)
-                    }
-                    .frame(minWidth: 180) // Consistent width
-                    .ActionButtons(isRecording: false, bgColor: currentMode.color)
-                    .shadow(color: currentMode.color.opacity(0.05), radius: 10, x: 0, y: 5)
-                }
-                .scaleEffect(modeButtonScale)
                 
                 // Clear button
                 Button(action: {
@@ -336,22 +228,27 @@ struct HistoryView: View {
                 }) {
                     HStack {
                         Image(systemName: "trash")
-                        Text("Clear")
+                        Text("Clear History")
                     }
                     .ActionButtons(isRecording: false, bgColor: Color.orange)
                 }
                 .scaleEffect(clearButtonScale)
+                .background(
+                    //Blur effect for button (restored from original)
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color.primary.opacity(0.05))
+                        .background(Color(UIColor.systemBackground))
+                        .blur(radius: 30)
+                        .padding(-15)
+                    
+                )
+                
+                Spacer()
             }
-            .background(
-                // Blur effect for both buttons
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.primary.opacity(0.05))
-                    .background(Color(UIColor.systemBackground))
-                    .blur(radius: 20)
-                    .padding(-15)
-            )
+            .padding(.bottom)
+            
             .padding(.horizontal)
-            .padding(.bottom, 16)
+            
         }
     }
     
@@ -384,20 +281,13 @@ struct HistoryView: View {
                     message: Text("Are you sure you want to clear all calculation history?"),
                     primaryButton: .destructive(Text("Clear")) {
                         withAnimation {
+                            impactClear.impactOccurred()
                             historyManager.clearAllHistory()
                         }
                     },
                     secondaryButton: .cancel()
                 )
             }
-        }
-        .onAppear {
-            // Convert stored integer to HistoryMode
-            currentMode = HistoryMode(rawValue: storedMode) ?? .replace
-        }
-        .onChange(of: currentMode) { newMode in
-            // Store the raw value of the mode when it changes
-            storedMode = newMode.rawValue
         }
     }
 }

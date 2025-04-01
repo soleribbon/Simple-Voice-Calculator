@@ -35,13 +35,31 @@ class HistoryManager: ObservableObject {
     @Published var currentEquation: String = ""
     @Published var currentResult: String = ""
     
-    // Track if we have a valid equation to save
+    @Published var isRegUser: Bool = false // TOGGLE FOR TESTING false = subscriber
+    @Published var historyViewCount: Int = 0
+    private let historyViewCountKey = "historyViewCount"
+    @Published var showHistoryBadge: Bool = true
+    private let showHistoryBadgeKey = "showHistoryBadge"
+    
+    // Track valid equation to save
     var hasValidEquationToSave: Bool {
-        !currentEquation.isEmpty && currentResult != "Invalid Equation"
+        // Basic validation
+        guard !currentEquation.isEmpty && currentResult != "Invalid Equation" else {
+            return false
+        }
+        
+        // Get the components of the equation
+        let components = parseEquationComponents(from: currentEquation)
+        
+        // Only save if there are multiple components (indicating a calculation)
+        // This handles all cases including negative numbers
+        return components.count > 1
     }
     
     init() {
         loadHistory()
+        loadHistoryViewCount()
+        loadShowHistoryBadge()
     }
     func deleteItems(_ items: [HistoryItem]) {
         for item in items {
@@ -58,9 +76,10 @@ class HistoryManager: ObservableObject {
         currentResult = result
     }
     
+    
     // Save the current equation to history
     func saveCurrentEquationToHistory() {
-        // Only save if we have a valid equation and result
+        // Only save if valid equation and result
         if hasValidEquationToSave {
             // Check if this equation is already in history (avoid duplicates)
             if !historyItems.contains(where: { $0.equation == currentEquation }) {
@@ -104,5 +123,40 @@ class HistoryManager: ObservableObject {
            let decoded = try? JSONDecoder().decode([HistoryItem].self, from: data) {
             historyItems = decoded
         }
+    }
+    
+    
+    func incrementHistoryViewCount() {
+        historyViewCount += 1
+        
+        // Hide badge after 2 views
+        if historyViewCount >= 2 {
+            showHistoryBadge = false
+        }
+        
+        // Save updated values
+        UserDefaults.standard.set(historyViewCount, forKey: historyViewCountKey)
+        UserDefaults.standard.set(showHistoryBadge, forKey: showHistoryBadgeKey)
+    }
+    
+    func loadHistoryViewCount() {
+        historyViewCount = UserDefaults.standard.integer(forKey: historyViewCountKey)
+    }
+    
+    func loadShowHistoryBadge() {
+        showHistoryBadge = UserDefaults.standard.bool(forKey: showHistoryBadgeKey)
+        
+        // Set the initial value if it doesn't exist yet
+        if !UserDefaults.standard.contains(key: showHistoryBadgeKey) {
+            showHistoryBadge = true
+            UserDefaults.standard.set(true, forKey: showHistoryBadgeKey)
+        }
+    }
+    
+}
+
+extension UserDefaults {
+    func contains(key: String) -> Bool {
+        return object(forKey: key) != nil
     }
 }
