@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Mixpanel
+import TipKit
 
 // MARK: - History Mode Enum
 enum HistoryMode: Int {
@@ -140,6 +141,8 @@ struct HistoryView: View {
     
     // Handle history item actions
     private func handleHistoryAction(item: HistoryItem, mode: HistoryMode) {
+        //mark history new feature tip as seen
+        FeatureTipsManager.shared.markFeatureAsSeen(.historyRow)
         switch mode {
         case .replace:
             onEquationSelected?(item.equation)
@@ -183,17 +186,18 @@ struct HistoryView: View {
             ForEach(sortedSectionKeys, id: \.self) { section in
                 if let items = historyByDate[section], !items.isEmpty {
                     Section(header: Text(section)) {
-                        ForEach(items) { item in
+                        // Convert items to an array of (index, item) tuples
+                        ForEach(Array(items.enumerated()), id: \.element.id) { (index, item) in
                             HistoryRow(
                                 equation: item.equation,
                                 result: item.result,
                                 onAction: { mode in
                                     handleHistoryAction(item: item, mode: mode)
-                                }
+                                },
+                                isFirstRow: (index == 0)
                             )
                         }
                         .onDelete { indexSet in
-                            // Swipe-to-delete functionality
                             deleteItemsFromSection(at: indexSet, in: section)
                         }
                     }
@@ -288,6 +292,10 @@ struct HistoryView: View {
                     secondaryButton: .cancel()
                 )
             }
+        }
+        .onAppear {
+            // Mark history as viewed
+            FeatureTipsManager.shared.markFeatureAsSeen(.history)
         }
     }
 }

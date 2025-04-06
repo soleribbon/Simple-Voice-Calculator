@@ -17,6 +17,12 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             List {
+                
+//                Section(header: Text("Testing")) {
+//                    Button("Reset History Row Tip") {
+//                        FeatureTipsManager.shared.resetFeatureTip(.historyRow)
+//                    }
+//                }
                 Section(header: Text("Quick Help")) {
                     
                     DisclosureGroup(isExpanded: $helpExpanded) {
@@ -147,13 +153,14 @@ struct SettingsView: View {
                     Toggle(isOn: $shouldSpeakTotal) {
                         Text("Announce Total")
                     }
+                    .tint(.blue)
                     .onChange(of: shouldSpeakTotal, perform: handleToggleChange)
                 }
                 
                 
                 Section(header: Text("Privacy")) {
                     DisclosureGroup(isExpanded: $privacyExpanded) {
-                        Text("We take privacy so seriously, we do not collect any information at all! Once a calculation is cleared, it is gone forever.")
+                        Text("Your calculation history remains 100% private, stored locally on your device. We only collect anonymous usage data to improve the app's performance and user experience.")
                         Text("*Speech data is sent to Apple to ensure transcription accuracy")
                             .font(.caption2)
                             .opacity(0.4)

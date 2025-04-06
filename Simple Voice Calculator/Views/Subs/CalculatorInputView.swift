@@ -46,7 +46,6 @@ struct CalculatorInputView: View {
                 }
                 .accessibilityLabel("(")
                 
-                // Rest of your buttons...
                 Button(action: {
                     impactLight.impactOccurred()
                     onInsertText(")")

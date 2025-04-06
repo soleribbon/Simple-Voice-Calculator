@@ -41,7 +41,7 @@ func replaceNumberWords(_ component: String) -> String {
 
 //Used for isValidExpression & parseEquationComponents
 func preprocessInputText(_ input: String) -> String {
-    // This will be your central place for all text preprocessing
+    // Central place for all text preprocessing
     var processedText = input.lowercased()
 
     let operatorMappings: [(String, String)] = [

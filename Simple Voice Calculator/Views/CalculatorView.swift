@@ -2,6 +2,7 @@ import SwiftUI
 import Speech
 import JavaScriptCore
 import Sentry
+import TipKit
 
 struct CalculatorView: View {
     @StateObject private var historyManager = HistoryManager()
@@ -75,8 +76,8 @@ struct CalculatorView: View {
                         // Show paywall modal or alert
                         showPaywallAlert()
                     } else {
-                        // Increment view count
-                        historyManager.incrementHistoryViewCount()
+                        // Mark history as viewed
+                        historyManager.markHistoryAsViewed()
                         isHistoryModalPresented = true
                     }
                 }) {
@@ -95,6 +96,8 @@ struct CalculatorView: View {
                     }
                 }
                 .accessibilityLabel("History")
+                .featureTip(.history)
+
 
                 Button(action: {
                     impactSoft.impactOccurred()
@@ -245,6 +248,19 @@ struct CalculatorView: View {
         }
         .onAppear {
             setupAudioAndSpeech()
+
+            NotificationCenter.default.addObserver(
+                forName: FeatureTipsManager.openFeatureNotification,
+                object: nil,
+                queue: .main
+            ) { [self] notification in
+                // Check if notification is for history feature
+                if let featureId = notification.object as? FeatureId, featureId == .history {
+                    // Open history view
+                    historyManager.markHistoryAsViewed()
+                    isHistoryModalPresented = true
+                }
+            }
         }
         .alert(isPresented: $permissionChecker.showAlert) {
             Alert(
@@ -272,7 +288,7 @@ struct CalculatorView: View {
 
         alert.addAction(UIAlertAction(title: "Subscribe", style: .default) { _ in
             // Handle subscription process
-            // You can launch your in-app purchase flow here
+            // Launch in-app purchase flow here
         })
 
         alert.addAction(UIAlertAction(title: "Not Now", style: .cancel))
@@ -479,7 +495,6 @@ extension CalculatorView {
             NSLocalizedString("subtract", comment: ""): "-",
             // Multiplication
             NSLocalizedString("times", comment: ""): "×",
-            NSLocalizedString("time", comment: ""): "×",
             NSLocalizedString("multiply", comment: ""): "×",
             NSLocalizedString("multiply by", comment: ""): "×",
             NSLocalizedString("multiplied by", comment: ""): "×",

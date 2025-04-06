@@ -54,6 +54,7 @@
 		5395DE4E2CAB02F90003F2E1 /* ClearEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5395DE4D2CAB02F90003F2E1 /* ClearEquationView.swift */; };
 		53A55B3B2D9AD92000407F62 /* TestMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A55B3A2D9AD92000407F62 /* TestMode.swift */; };
 		53A55B3D2D9C04FF00407F62 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A55B3C2D9C04FB00407F62 /* HistoryRow.swift */; };
+		53A55B3F2DA29E5100407F62 /* FeatureTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A55B3E2DA29E5100407F62 /* FeatureTips.swift */; };
 		53E2205C2CAEF03F00AC026B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 411F18F12A098A2F00086755 /* Localizable.strings */; };
 		53E2205D2CAEF04000AC026B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 411F18F12A098A2F00086755 /* Localizable.strings */; };
 		53EA86262CAED024005A9526 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B78AAB2A0820DC0057D9F9 /* WidgetKit.framework */; };
@@ -189,6 +190,7 @@
 		5395DE4D2CAB02F90003F2E1 /* ClearEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearEquationView.swift; sourceTree = "<group>"; };
 		53A55B3A2D9AD92000407F62 /* TestMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestMode.swift; sourceTree = "<group>"; };
 		53A55B3C2D9C04FB00407F62 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
+		53A55B3E2DA29E5100407F62 /* FeatureTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTips.swift; sourceTree = "<group>"; };
 		53EA86252CAED024005A9526 /* VoiceCalculatorComplicationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = VoiceCalculatorComplicationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		53EA86292CAED024005A9526 /* VoiceCalculatorComplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCalculatorComplication.swift; sourceTree = "<group>"; };
 		53EA862B2CAED025005A9526 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 				539354AC2BF39C8B006EB9D1 /* StoreKitStuff.swift */,
 				5392D63D2D948B0A00439720 /* HistoryModel.swift */,
 				53A55B3A2D9AD92000407F62 /* TestMode.swift */,
+				53A55B3E2DA29E5100407F62 /* FeatureTips.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -642,6 +645,7 @@
 				539354B12BF3B510006EB9D1 /* DonationButtonView.swift in Sources */,
 				413C1B7F29FFD5C20071DD19 /* OnboardingContentView.swift in Sources */,
 				5392D6422D95890000439720 /* CalculatorInputView.swift in Sources */,
+				53A55B3F2DA29E5100407F62 /* FeatureTips.swift in Sources */,
 				539354AD2BF39C8B006EB9D1 /* StoreKitStuff.swift in Sources */,
 				413C1B6E29F734AF0071DD19 /* Functions.swift in Sources */,
 				413C1B7229FABA0F0071DD19 /* AboutView.swift in Sources */,

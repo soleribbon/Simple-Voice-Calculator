@@ -24,6 +24,8 @@ struct HistoryRow: View {
     
     @State private var isPressed = false
     
+    var isFirstRow: Bool = false //tracking for new featureTip interaction
+    
     @Namespace private var animationNamespace
     
     var body: some View {
@@ -101,6 +103,9 @@ struct HistoryRow: View {
             )
             .scaleEffect(isPressed ? 0.97 : 1.0)
         }
+        .if(isFirstRow) { view in
+            view.featureTip(.historyRow)
+        }
         .simultaneousGesture(
             TapGesture()
                 .onEnded { _ in
@@ -132,5 +137,18 @@ struct HistoryRow: View {
                 )
         )
         .id(equation + result) // Unique identifier for each row
+        .onAppear{
+            FeatureTipsManager.shared.markFeatureAsSeen(.historyRow)
+        }
+    }
+}
+extension View {
+    @ViewBuilder
+    func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
     }
 }

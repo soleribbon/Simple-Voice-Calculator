@@ -24,12 +24,12 @@ class TestMode: ObservableObject {
     @Published var testsFinished = false
     @Published var passedCount = 0
     @Published var failedCount = 0
-
+    
     // Initialize with standard test cases
     init() {
         setupTestCases()
     }
-
+    
     // Setup all test cases
     func setupTestCases() {
         testCases = [
@@ -55,7 +55,7 @@ class TestMode: ObservableObject {
             TestCase(input: "1000-50×2+100÷5", expectedOutput: "920")
         ]
     }
-
+    
     // Reset all test results
     func resetTests() {
         for i in 0..<testCases.count {
@@ -68,13 +68,13 @@ class TestMode: ObservableObject {
         passedCount = 0
         failedCount = 0
     }
-
+    
     // Record a test result
     func recordTestResult(input: String, output: String) {
         if let index = testCases.firstIndex(where: { $0.input == input }) {
             testCases[index].actualOutput = output
             testCases[index].passed = output == testCases[index].expectedOutput
-
+            
             if testCases[index].passed {
                 passedCount += 1
             } else {
@@ -82,12 +82,12 @@ class TestMode: ObservableObject {
             }
         }
     }
-
+    
     // Check if current test case
     var hasCurrentTest: Bool {
         currentTestIndex < testCases.count
     }
-
+    
     // Get the current test case
     var currentTest: TestCase? {
         if hasCurrentTest {
@@ -95,7 +95,7 @@ class TestMode: ObservableObject {
         }
         return nil
     }
-
+    
     // Move to the next test
     func moveToNextTest() {
         if currentTestIndex < testCases.count - 1 {
@@ -105,7 +105,7 @@ class TestMode: ObservableObject {
             testingInProgress = false
         }
     }
-
+    
     // Start the test process
     func startTesting() {
         resetTests()

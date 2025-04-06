@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import TipKit
 
 // History item model
 struct HistoryItem: Identifiable, Codable {
@@ -47,30 +48,30 @@ class HistoryManager: ObservableObject {
         guard !currentEquation.isEmpty && currentResult != "Invalid Equation" else {
             return false
         }
-
+        
         // Get the components of the equation
         let components = parseEquationComponents(from: currentEquation)
-
+        
         // Case 1: Multiple components (indicating a calculation)
         if components.count > 1 {
             return true
         }
-
+        
         // Case 2: Check for operations inside parentheses like "(232-42)"
         if currentEquation.hasPrefix("(") && currentEquation.hasSuffix(")") {
             // Remove the outer parentheses
             let insideParentheses = String(currentEquation.dropFirst().dropLast())
-
+            
             // Look for operation symbols inside the parentheses
             if insideParentheses.contains(where: { "+-×÷*/".contains($0) }) {
                 return true
             }
         }
-
+        
         // If none of the conditions are met, don't save
         return false
     }
-
+    
     init() {
         loadHistory()
         loadHistoryViewCount()
@@ -101,9 +102,9 @@ class HistoryManager: ObservableObject {
                 let newItem = HistoryItem(equation: currentEquation, result: currentResult, date: Date())
                 historyItems.insert(newItem, at: 0)
                 
-                // Keep only the last 20 items to prevent excessive storage
-                if historyItems.count > 20 {
-                    historyItems = Array(historyItems.prefix(20))
+                // Keep only the last 25 items to prevent excessive storage
+                if historyItems.count > 25 {
+                    historyItems = Array(historyItems.prefix(25))
                 }
                 
                 saveHistory()
@@ -141,18 +142,6 @@ class HistoryManager: ObservableObject {
     }
     
     
-    func incrementHistoryViewCount() {
-        historyViewCount += 1
-        
-        // Hide badge after 2 views
-        if historyViewCount >= 2 {
-            showHistoryBadge = false
-        }
-        
-        // Save updated values
-        UserDefaults.standard.set(historyViewCount, forKey: historyViewCountKey)
-        UserDefaults.standard.set(showHistoryBadge, forKey: showHistoryBadgeKey)
-    }
     
     func loadHistoryViewCount() {
         historyViewCount = UserDefaults.standard.integer(forKey: historyViewCountKey)
@@ -166,6 +155,28 @@ class HistoryManager: ObservableObject {
             showHistoryBadge = true
             UserDefaults.standard.set(true, forKey: showHistoryBadgeKey)
         }
+    }
+    func incrementHistoryViewCount() {
+        historyViewCount += 1
+        
+        // Hide badge after 2 views
+        if historyViewCount >= 2 {
+            showHistoryBadge = false
+        }
+        
+        // Save updated values
+        UserDefaults.standard.set(historyViewCount, forKey: historyViewCountKey)
+        UserDefaults.standard.set(showHistoryBadge, forKey: showHistoryBadgeKey)
+    }
+    
+    // Update markHistoryAsViewed method
+    func markHistoryAsViewed() {
+        // Mark the history as viewed to dismiss tips
+        FeatureTipsManager.shared.markFeatureAsSeen(.history)
+        
+        // Update view count and badge
+        incrementHistoryViewCount()
+        
     }
     
 }

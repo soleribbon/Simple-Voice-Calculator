@@ -14,27 +14,35 @@ struct Simple_Voice_CalculatorApp: App {
     init() {
         setupSentry()
         setupMixpanel()
+        setupFeatureTips()
     }
     @AppStorage("isOnboarding") var isOnboarding = true
     var body: some Scene {
         WindowGroup {
             if isOnboarding {
                 OnboardingContainerView(isActualIntro: true)
-                
+
             } else {
                 CalculatorView()
                     .tint(Color("accentColor"))
+                    .task {
+                        // Configure TipKit in an async task
+                        await FeatureTipsManager.shared.configure()
+
+                        // Uncomment for testing
+                        // await TipManager.shared.resetTips()
+                    }
                 //.environment(\.locale, .init(identifier: "hi"))
             }
         }
     }
-    
-    
+
+
     private func setupSentry() {
         SentrySDK.start { options in
             options.dsn = "https://d0a92dbd3ff1cef3e4d5fb8b8c3e8ec8@o4507253468823552.ingest.us.sentry.io/4507253470330880"
             /*options.debug = true*/ // Uncomment for terminal debug prints
-            
+
             // Uncomment the following lines to add more data to your events
             // options.attachScreenshot = true // Adds a screenshot to error events
             options.attachViewHierarchy = true // Adds the view hierarchy to error events
@@ -47,5 +55,29 @@ struct Simple_Voice_CalculatorApp: App {
     }
     private func setupMixpanel() {
         Mixpanel.initialize(token: "b610cfbee5151bcf6894de086ca940b5", trackAutomaticEvents: false)
+    }
+
+    private func setupFeatureTips() {
+        // Register the history feature tip
+        FeatureTipsManager.shared.registerFeature(
+            id: .history,
+            title: "History - now available",
+            message: "Your calculation history is now available for quick access and reuse.",
+            iconName: "clock.arrow.circlepath",
+            action: {
+                NotificationCenter.default.post(
+                    name: FeatureTipsManager.openFeatureNotification,
+                    object: FeatureId.history
+                )
+            }
+        )
+        FeatureTipsManager.shared.registerFeature(
+            id: .historyRow,
+            title: "Tap Any Row for More Options",
+            message: "You can replace your current equation or perform math operations with history items.",
+            iconName: "hand.tap",
+            actionTitle: nil,
+            action: nil
+        )
     }
 }
