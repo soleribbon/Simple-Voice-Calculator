@@ -47,15 +47,30 @@ class HistoryManager: ObservableObject {
         guard !currentEquation.isEmpty && currentResult != "Invalid Equation" else {
             return false
         }
-        
+
         // Get the components of the equation
         let components = parseEquationComponents(from: currentEquation)
-        
-        // Only save if there are multiple components (indicating a calculation)
-        // This handles all cases including negative numbers
-        return components.count > 1
+
+        // Case 1: Multiple components (indicating a calculation)
+        if components.count > 1 {
+            return true
+        }
+
+        // Case 2: Check for operations inside parentheses like "(232-42)"
+        if currentEquation.hasPrefix("(") && currentEquation.hasSuffix(")") {
+            // Remove the outer parentheses
+            let insideParentheses = String(currentEquation.dropFirst().dropLast())
+
+            // Look for operation symbols inside the parentheses
+            if insideParentheses.contains(where: { "+-×÷*/".contains($0) }) {
+                return true
+            }
+        }
+
+        // If none of the conditions are met, don't save
+        return false
     }
-    
+
     init() {
         loadHistory()
         loadHistoryViewCount()
