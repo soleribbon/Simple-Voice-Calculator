@@ -12,7 +12,8 @@ struct EquationComponentsView: View {
     let onEdit: (Int) -> Void
     let onDelete: (Int) -> Void
     @Binding var scale: CGFloat
-    
+    let isRecording: Bool
+
     var body: some View {
         ScrollView(.vertical) {
             VStack(alignment: .trailing, spacing: 4) {
@@ -23,11 +24,13 @@ struct EquationComponentsView: View {
                     HStack {
                         Spacer()
                         Menu {
-                            Section {
-                                Button(action: {
-                                    onEdit(index)
-                                }) {
-                                    Label("Edit", systemImage: "pencil").accessibilityLabel("Edit")
+                            if !isRecording {
+                                Section {
+                                    Button(action: {
+                                        onEdit(index)
+                                    }) {
+                                        Label("Edit", systemImage: "pencil")
+                                    }
                                 }
                             }
                             Section {

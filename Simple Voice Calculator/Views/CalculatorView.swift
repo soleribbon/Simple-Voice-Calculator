@@ -127,7 +127,8 @@ struct CalculatorView: View {
                                 selectedComponentIndex = index
                                 deleteComponent(at: index)
                             },
-                            scale: $scale
+                            scale: $scale,
+                            isRecording: isRecording
                         )
                         .onChange(of: getEquationComponents().count) { _ in
                             withAnimation {

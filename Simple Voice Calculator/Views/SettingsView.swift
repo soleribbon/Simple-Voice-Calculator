@@ -18,11 +18,11 @@ struct SettingsView: View {
         NavigationView {
             List {
                 
-//                Section(header: Text("Testing")) {
-//                    Button("Reset History Row Tip") {
-//                        FeatureTipsManager.shared.resetFeatureTip(.historyRow)
-//                    }
-//                }
+                //                Section(header: Text("Testing")) {
+                //                    Button("Reset History Row Tip") {
+                //                        FeatureTipsManager.shared.resetFeatureTip(.historyRow)
+                //                    }
+                //                }
                 Section(header: Text("Quick Help")) {
                     
                     DisclosureGroup(isExpanded: $helpExpanded) {
