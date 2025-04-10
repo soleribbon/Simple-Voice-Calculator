@@ -14,12 +14,12 @@ struct AboutView: View {
                 VStack (alignment: .center){
 
 
-                    Image("Mic")
+                    Image("aboutImage")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 60, height: 60)
                         .font(.title2)
-                        .cornerRadius(10)
+                        
 
                     Text("Our Story")
                         .font(.title2.weight(.bold))

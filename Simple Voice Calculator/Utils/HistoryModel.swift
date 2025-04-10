@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import TipKit
+import Mixpanel
 
 // History item model
 struct HistoryItem: Identifiable, Codable {
@@ -36,7 +37,9 @@ class HistoryManager: ObservableObject {
     @Published var currentEquation: String = ""
     @Published var currentResult: String = ""
     
-    @Published var isRegUser: Bool = false // TOGGLE FOR TESTING false = subscriber
+    // TOGGLE FOR TESTING false = subscriber
+    @Published var isRegUser: Bool = false
+    
     @Published var historyViewCount: Int = 0
     private let historyViewCountKey = "historyViewCount"
     @Published var showHistoryBadge: Bool = true
@@ -179,6 +182,22 @@ class HistoryManager: ObservableObject {
         
     }
     
+}
+// Extension to add the history limit update method to HistoryManager
+extension HistoryManager {
+    func updateHistoryLimit(_ newLimit: Int) {
+        
+        UserDefaults.standard.set(newLimit, forKey: "historyLimit")
+        
+        // Trim existing history if needed
+        if historyItems.count > newLimit {
+            historyItems = Array(historyItems.prefix(newLimit))
+            saveHistory()
+        }
+        
+        // Track the event
+        Mixpanel.mainInstance().track(event: "changedHistoryLimit", properties: ["limit": newLimit])
+    }
 }
 
 extension UserDefaults {

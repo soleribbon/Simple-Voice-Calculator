@@ -10,6 +10,14 @@ struct SettingsView: View {
     private let productIdentifiers = ["CoffeeTip1", "CoffeeTip5", "CoffeeTip10"]
     @AppStorage("shouldSpeakTotal") var shouldSpeakTotal: Bool = false
     
+    @EnvironmentObject var historyManager: HistoryManager
+    
+    // History limit options for Pro users
+    private let historyLimitOptions = [25, 50, 100, 250]
+    @AppStorage("historyLimit") var historyLimit: Int = 25
+    
+    @State private var isShareSheetPresented = false
+    
     @ObservedObject var storeManager = StoreManager()
     @State private var introCoverShowing: Bool = false
     @State private var versionNumber: String = Bundle.main.releaseVersionNumber ?? "1.0"
@@ -17,14 +25,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             List {
-                
-                //                Section(header: Text("Testing")) {
-                //                    Button("Reset History Row Tip") {
-                //                        FeatureTipsManager.shared.resetFeatureTip(.historyRow)
-                //                    }
-                //                }
                 Section(header: Text("Quick Help")) {
-                    
                     DisclosureGroup(isExpanded: $helpExpanded) {
                         
                         VStack(alignment: .leading) {
@@ -70,7 +71,7 @@ struct SettingsView: View {
                         }
                         
                     } label: {
-                        HStack {
+                        HStack (alignment: .center) {
                             Image(systemName: "questionmark.circle")
                                 .foregroundColor(.accentColor)
                             Text("FAQ")
@@ -83,13 +84,30 @@ struct SettingsView: View {
                         
                     }, label: {
                         
-                        HStack {
+                        HStack (alignment: .center){
                             Image(systemName: "pencil.and.outline")
                                 .foregroundColor(.accentColor)
                             Text("Introduction Tutorial")
                             Spacer()
                         }
                     })
+                    
+                    Button(action: {
+                        // Track analytics
+                        Mixpanel.mainInstance().track(event: "sharedApp")
+                        
+                        // Present share sheet via state
+                        isShareSheetPresented = true
+                    }) {
+                        HStack(alignment: .center) {
+                            Image(systemName: "square.and.arrow.up")
+                                .foregroundColor(.accentColor)
+                            Text("Tell Friends")
+                            Spacer()
+                        }
+                    }
+                    .accessibilityLabel("Tell a Friend")
+                    
                 }
                 
                 Section(header: Text("About & Contact")) {
@@ -105,47 +123,74 @@ struct SettingsView: View {
                         
                         
                     }.accessibilityLabel("About Simple Voice Calculator")
+                    
+                    
+                    
                     Link(destination: URL(string: "mailto:raviheyne@gmail.com")!, label: {
                         HStack {
                             Text("💌")
                                 .foregroundColor(.accentColor)
-                            Text("Contact Developer")/*.foregroundColor(.blue)*/
+                            Text("Contact Developer")
                         }
                     }).accessibilityLabel("Contact Developer")
                     
-                    
-                    
-                    
-                    GroupBox {
-                        VStack (alignment: .center) {
-                            HStack (alignment: .center) {
-                                Text("☕️")
-                                    .foregroundColor(.accentColor)
-                                Text("Tip Developer a Coffee")
-                                    .bold()
-                                    .minimumScaleFactor(0.4)
-                            }
-                            .accessibilityLabel("Tip developer a coffee")
+                    if !historyManager.isRegUser {
+                        // Show Pro Badge for premium users
+                        HStack {
+                            Text("💎")
+                            Text("Your current plan:")
+                            Text("PRO")
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
+                                .background(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [Color.blue, Color.purple]),
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .clipShape(Capsule())
                             
-                            HStack(alignment: .center) {
-                                DonationButton(title: "1 Cup", color: .green, isProcessing: storeManager.is1CoffeePurchaseProcessing) {
-                                    storeManager.purchaseProduct(withIdentifier: "CoffeeTip1")
-                                }
-                                DonationButton(title: "5 Cups", color: .teal, isProcessing: storeManager.is5CoffeesPurchaseProcessing) {
-                                    storeManager.purchaseProduct(withIdentifier: "CoffeeTip5")
-                                }
-                                DonationButton(title: "10 Cups", color: .blue, isProcessing: storeManager.is10CoffeesPurchaseProcessing) {
-                                    storeManager.purchaseProduct(withIdentifier: "CoffeeTip10")
-                                }
-                            }
-                            Text("Simple Voice Calculator was made by students.")
-                                .font(.caption2)
-                                .opacity(0.4)
-                                .minimumScaleFactor(0.4)
-                                .padding(.top, 4)
                         }
-                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 6)
+                    } else {
+                        // Only show tip section for free users
+                        GroupBox {
+                            VStack (alignment: .center) {
+                                HStack (alignment: .center) {
+                                    Text("☕️")
+                                        .foregroundColor(.accentColor)
+                                    Text("Tip Developer a Coffee")
+                                        .bold()
+                                        .minimumScaleFactor(0.4)
+                                }
+                                .accessibilityLabel("Tip developer a coffee")
+                                
+                                HStack(alignment: .center) {
+                                    DonationButton(title: "1 Cup", color: .green, isProcessing: storeManager.is1CoffeePurchaseProcessing) {
+                                        storeManager.purchaseProduct(withIdentifier: "CoffeeTip1")
+                                    }
+                                    DonationButton(title: "5 Cups", color: .teal, isProcessing: storeManager.is5CoffeesPurchaseProcessing) {
+                                        storeManager.purchaseProduct(withIdentifier: "CoffeeTip5")
+                                    }
+                                    DonationButton(title: "10 Cups", color: .blue, isProcessing: storeManager.is10CoffeesPurchaseProcessing) {
+                                        storeManager.purchaseProduct(withIdentifier: "CoffeeTip10")
+                                    }
+                                }
+                                Text("Simple Voice Calculator was made by students.")
+                                    .font(.caption2)
+                                    .opacity(0.4)
+                                    .minimumScaleFactor(0.4)
+                                    .padding(.top, 4)
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
                     }
+                    
+                    
                     
                 }
                 
@@ -155,6 +200,19 @@ struct SettingsView: View {
                     }
                     .tint(.blue)
                     .onChange(of: shouldSpeakTotal, perform: handleToggleChange)
+                    
+                    // History Limit Picker for Pro users
+                    if !historyManager.isRegUser {
+                        Picker("History Limit", selection: $historyLimit) {
+                            ForEach(historyLimitOptions, id: \.self) { limit in
+                                Text("\(limit) equations").tag(limit)
+                            }
+                        }
+                        .onChange(of: historyLimit) { newValue in
+                            // Update history manager's limit
+                            historyManager.updateHistoryLimit(newValue)
+                        }
+                    }
                 }
                 
                 
@@ -236,6 +294,17 @@ struct SettingsView: View {
                     }
                 }
             }
+            .sheet(isPresented: $isShareSheetPresented) {
+                ShareSheet(activityItems: [
+                    "Check out Simple Voice Calculator - the easiest way to perform calculations using your voice!",
+                    URL(string: "https://apps.apple.com/app/simple-voice-calculator/id6448565084")!
+                ])
+                .onDisappear {
+                    // Reset the state when sheet is dismissed
+                    isShareSheetPresented = false
+                }
+                .presentationDetents([.medium])
+            }
         }
     }
     private func handleToggleChange(isOn: Bool) {
@@ -247,6 +316,7 @@ struct SettingsView: View {
             Mixpanel.mainInstance().track(event: "disabledTotalAnnouncement")
         }
     }
+    
 }
 
 extension Bundle {
@@ -257,5 +327,8 @@ extension Bundle {
         return infoDictionary?["CFBundleVersion"] as? String
     }
 }
+
+
+
 
 #Preview { SettingsView()}
