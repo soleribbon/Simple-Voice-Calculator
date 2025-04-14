@@ -50,7 +50,7 @@
 "Get Started" = "Inizia";
 "Skip Introduction" = "Salta introduzione";
 "Important Notes" = "Note importanti";
-"Only **+ - × ÷**  are supported" = "Sono supportati solo **+ - × ÷**";
+"Only **+ - × ÷ %**  are supported" = "Sono supportati solo **+ - × ÷ %**";
 "After pressing 'Stop Talking', your dictated equation will be added to the end of the input field." = "Dopo aver premuto 'Smetti di parlare', l'equazione dettata verrà aggiunta alla fine del campo di input.";
 "While voice dictation is enabled, you are unable to manually edit the input field." = "Mentre la dettatura vocale è abilitata, non è possibile modificare manualmente il campo di input.";
 "Ensure no alphabetical letters are included in your input." = "Assicurati che non ci siano lettere dell'alfabeto nel tuo input.";

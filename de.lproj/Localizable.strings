@@ -49,7 +49,7 @@
 "Get Started" = "Los geht's";
 "Skip Introduction" = "Einführung überspringen";
 "Important Notes" = "Wichtige Hinweise";
-"Only **+ - × ÷**  are supported" = "Nur **+ - × ÷** werden unterstützt";
+"Only **+ - × ÷ %**  are supported" = "Nur **+ - × ÷ %** werden unterstützt";
 "After pressing 'Stop Talking', your dictated equation will be added to the end of the input field." = "Nachdem Sie 'Sprechen beenden' gedrückt haben, wird Ihre diktierte Gleichung am Ende des Eingabefelds hinzugefügt.";
 "While voice dictation is enabled, you are unable to manually edit the input field." = "Während die Sprachdiktierung aktiviert ist, können Sie das Eingabefeld nicht manuell bearbeiten.";
 "Ensure no alphabetical letters are included in your input." = "Stellen Sie sicher, dass keine Buchstaben in Ihrer Eingabe enthalten sind.";

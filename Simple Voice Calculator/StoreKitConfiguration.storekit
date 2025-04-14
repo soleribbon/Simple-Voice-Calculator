@@ -1,4 +1,14 @@
 {
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
   "identifier" : "F5D55221",
   "nonRenewingSubscriptions" : [
 
@@ -54,7 +64,7 @@
     "_applicationInternalID" : "6448565084",
     "_developerTeamID" : "JPXSGQNS89",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 704405267.91840804,
+    "_lastSynchronizedDate" : 766246912.31931901,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
@@ -109,10 +119,140 @@
     ]
   },
   "subscriptionGroups" : [
+    {
+      "id" : "21666486",
+      "localizations" : [
 
+      ],
+      "name" : "Pro",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "3.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6744532920",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "The ultimate tools for voice calculation. ",
+              "displayName" : "Voice Calculator Pro (Monthly)",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "pro_monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Pro (Monthly)",
+          "subscriptionGroupID" : "21666486",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "2.99",
+          "familyShareable" : false,
+          "groupNumber" : 3,
+          "internalID" : "6744576871",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "The ultimate tools for voice calculation. ",
+              "displayName" : "Pro (Monthly)",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "pro_monthly_discounted",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Pro (Monthly) - One Time Offer",
+          "subscriptionGroupID" : "21666486",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "39.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "6744532804",
+          "introductoryOffer" : {
+            "internalID" : "6BBE400D",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "The ultimate tools for voice calculation. ",
+              "displayName" : "Voice Calculator Pro (Yearly) ",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "pro_yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Pro (Yearly)",
+          "subscriptionGroupID" : "21666486",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "29.99",
+          "familyShareable" : false,
+          "groupNumber" : 4,
+          "internalID" : "6744576933",
+          "introductoryOffer" : {
+            "internalID" : "25077D97",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "The ultimate tools for voice calculation. ",
+              "displayName" : "Voice Calculator Pro (Yearly) ",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "pro_yearly_discounted",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Pro (Yearly) - One Time Offer",
+          "subscriptionGroupID" : "21666486",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
   ],
   "version" : {
-    "major" : 3,
+    "major" : 4,
     "minor" : 0
   }
 }

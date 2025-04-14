@@ -52,7 +52,7 @@
 "**What does 'Invalid Equation' mean?**" = "**'잘못된 방정식'이란 무엇을 의미하나요?**";
 "**What does the 'Sym' button do?**" = "**'기호' 버튼은 무엇을 하나요?**";
 "**How do I edit my voice input?**" = "**음성 입력을 어떻게 편집하나요?**";
-"Only **+ - × ÷**  are supported" = "**+ - × ÷** 만 지원됩니다";
+"Only **+ - × ÷ %**  are supported" = "**+ - × ÷ %** 만 지원됩니다";
 "Total equals" = "총합은 %@";
 "Announce Total" = "총액 발표";
 "Preferences" = "환경 설정";

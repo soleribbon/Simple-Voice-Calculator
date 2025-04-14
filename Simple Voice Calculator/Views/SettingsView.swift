@@ -1,13 +1,17 @@
 
 import SwiftUI
 import Mixpanel
+import SuperwallKit
 
 struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State private var helpExpanded = false
     @State private var privacyExpanded = false
-    private let productIdentifiers = ["CoffeeTip1", "CoffeeTip5", "CoffeeTip10"]
+    private let productIdentifiers = ["CoffeeTip1", "CoffeeTip5", "CoffeeTip10",
+                                      "pro_monthly", "pro_yearly",
+                                      "pro_monthly_discounted", "pro_yearly_discounted"]
+    
     @AppStorage("shouldSpeakTotal") var shouldSpeakTotal: Bool = false
     
     @EnvironmentObject var historyManager: HistoryManager
@@ -18,66 +22,25 @@ struct SettingsView: View {
     
     @State private var isShareSheetPresented = false
     
-    @ObservedObject var storeManager = StoreManager()
+    @ObservedObject var storeManager = StoreManager.shared
     @State private var introCoverShowing: Bool = false
     @State private var versionNumber: String = Bundle.main.releaseVersionNumber ?? "1.0"
+    
+    @AppStorage("isRegUser") private var isRegUser: Bool = true
     
     var body: some View {
         NavigationView {
             List {
                 Section(header: Text("Quick Help")) {
-                    DisclosureGroup(isExpanded: $helpExpanded) {
-                        
-                        VStack(alignment: .leading) {
-                            Text("**What math operators are supported?**")
-                                .font(.body)
-                                .padding(.vertical)
-                            Text("Currently supported operators:")
-                                .font(.body)
-                            Text("+ - × ÷")
-                                .font(.body)
-                                .padding(.bottom)
-                        }
-                        
-                        
-                        VStack(alignment: .leading) {
-                            Text("**What does 'Invalid Equation' mean?**")
-                                .font(.body)
-                                .padding(.vertical)
-                            Text("Invalid Equation is presented when the textfield contains characters that are not valid in a mathematical equation or not currently supported.")
-                                .font(.body)
-                                .padding(.bottom)
-                            
-                        }
-                        VStack(alignment: .leading) {
-                            Text("**What does the 'Sym' button do?**")
-                                .font(.body)
-                                .padding(.vertical)
-                            Text("The Sym button can be used to insert a desired math symbol where your cursor is placed in the textfield.")
-                                .font(.body)
-                                .padding(.bottom)
-                            
-                        }
-                        
-                        
-                        VStack(alignment: .leading) {
-                            Text("**How do I edit my voice input?**")
-                                .font(.body)
-                                .padding(.vertical)
-                            Text("You can edit any component of your equation in the 'Equation Components' section. Just tap you desired components and it will be selected in your textfield. Make sure you do not have voice input enabled (button should say 'Start Talking').")
-                                .font(.body)
-                                .padding(.bottom)
-                            
-                        }
-                        
-                    } label: {
+                    
+                    NavigationLink(destination: FAQView())
+                    {
                         HStack (alignment: .center) {
                             Image(systemName: "questionmark.circle")
                                 .foregroundColor(.accentColor)
                             Text("FAQ")
-                            
                         }
-                    }
+                    }.accessibilityLabel("About Simple Voice Calculator")
                     
                     Button(action: {
                         introCoverShowing = true
@@ -114,7 +77,7 @@ struct SettingsView: View {
                     NavigationLink(destination: AboutView())
                     {
                         HStack {
-                            Text("ℹ️")
+                            Text("🎙️")
                                 .foregroundColor(.accentColor)
                             Text("About Simple Voice Calculator")
                             Spacer()
@@ -134,10 +97,39 @@ struct SettingsView: View {
                         }
                     }).accessibilityLabel("Contact Developer")
                     
-                    if !historyManager.isRegUser {
-                        // Show Pro Badge for premium users
+                    if isRegUser {
+                        Button(action: {
+                            Superwall.shared.register(placement: "campaign_trigger", feature: {
+                                // Called when purchase is successful
+                                // UserDefaults sets the isRegUser value directly
+                                UserDefaults.standard.set(false, forKey: "isRegUser")
+                                
+                                NotificationCenter.default.post(
+                                    name: NSNotification.Name("ProSubscriptionPurchased"),
+                                    object: nil,
+                                    userInfo: ["isNewPurchase": true]
+                                )
+                                
+                                // Launch task to check subscription status
+                                Task {
+                                    await StoreManager.shared.checkSubscriptionStatus()
+                                }
+                            })
+                            
+                        }) {
+                            HStack {
+                                Text("💎")
+                                    .foregroundColor(.accentColor)
+                                Text("Upgrade to PRO")
+                                
+                            }
+                        }
+                        .accessibilityLabel("Upgrade to Pro")
+                    }
+                    if !isRegUser {                        // Show Pro Badge for premium users
                         HStack {
                             Text("💎")
+                                .foregroundColor(.accentColor)
                             Text("Your current plan:")
                             Text("PRO")
                                 .font(.headline)
@@ -156,6 +148,12 @@ struct SettingsView: View {
                             
                         }
                         .padding(.vertical, 6)
+                        
+                        if let expirationDateString = storeManager.formatExpirationDate() {
+                            Text(expirationDateString)
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
+                        }
                     } else {
                         // Only show tip section for free users
                         GroupBox {
@@ -188,6 +186,7 @@ struct SettingsView: View {
                             }
                             .frame(maxWidth: .infinity)
                         }
+                        
                     }
                     
                     
@@ -196,23 +195,32 @@ struct SettingsView: View {
                 
                 Section(header: Text("Preferences")) {
                     Toggle(isOn: $shouldSpeakTotal) {
-                        Text("Announce Total")
+                        HStack (alignment: .center) {
+                            Image(systemName: "speaker.wave.2.bubble")
+                                .foregroundColor(.accentColor)
+                            Text("Announce Total")
+                            
+                        }
                     }
                     .tint(.blue)
                     .onChange(of: shouldSpeakTotal, perform: handleToggleChange)
                     
                     // History Limit Picker for Pro users
-                    if !historyManager.isRegUser {
-                        Picker("History Limit", selection: $historyLimit) {
-                            ForEach(historyLimitOptions, id: \.self) { limit in
-                                Text("\(limit) equations").tag(limit)
+                    if !isRegUser {
+                        HStack {
+                            Image(systemName: "clock")
+                                .foregroundColor(.accentColor)
+                            Picker("History Limit", selection: $historyLimit) {
+                                ForEach(historyLimitOptions, id: \.self) { limit in
+                                    Text("\(limit) equations").tag(limit)
+                                }
+                            }
+                            .onChange(of: historyLimit) { newValue in
+                                historyManager.updateHistoryLimit(newValue)
                             }
                         }
-                        .onChange(of: historyLimit) { newValue in
-                            // Update history manager's limit
-                            historyManager.updateHistoryLimit(newValue)
-                        }
                     }
+                    
                 }
                 
                 
@@ -231,6 +239,11 @@ struct SettingsView: View {
                         }
                     }
                 }
+                Button("Restore Purchases") {
+                    storeManager.restorePurchases()
+                }
+                .font(.footnote)
+                .foregroundColor(.blue)
                 
                 Section {
                     VStack(alignment: .leading, spacing: 2) {
@@ -245,6 +258,12 @@ struct SettingsView: View {
                 }
             }
             .onAppear {
+                // Check subscription status on appear and update UI
+                Task {
+                    await storeManager.checkSubscriptionStatus()
+                }
+                
+                // Refresh store products (ensures prices are up to date)
                 storeManager.startRequest(with: productIdentifiers)
             }
             .alert(isPresented: $storeManager.showAlert) {

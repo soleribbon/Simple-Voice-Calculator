@@ -52,7 +52,7 @@
 "After pressing 'Stop Talking', your dictated equation will be added to the end of the input field." = "Después de presionar 'Dejar de hablar', su ecuación dictada se agregará al final del campo de entrada.";
 "While voice dictation is enabled, you are unable to manually edit the input field." = "Mientras la dictación por voz esté habilitada, no podrá editar manualmente el campo de entrada.";
 "Ensure no alphabetical letters are included in your input." = "Asegúrese de que no haya letras del alfabeto en su entrada.";
-"Only **+ - × ÷**  are supported" = "Solo se admiten **+ - × ÷**";
+"Only **+ - × ÷ %**  are supported" = "Solo se admiten **+ - × ÷ %**";
 "Total equals" = "El total es %@";
 "Announce Total" = "Anunciar Total";
 "Preferences" = "Preferencias";

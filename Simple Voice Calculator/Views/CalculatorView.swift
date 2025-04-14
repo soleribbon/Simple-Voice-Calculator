@@ -2,25 +2,26 @@ import SwiftUI
 import Speech
 import JavaScriptCore
 import Sentry
+import SuperwallKit
 
 struct CalculatorView: View {
     @StateObject private var historyManager = HistoryManager()
     @Environment(\.scenePhase) private var scenePhase
-
+    
     @State private var textFieldValue = ""
     @State private var isRecording = false
     @State private var previousText = ""
     @State private var audioEngine = AVAudioEngine()
-
+    
     // Track deleted components by their content and sequence
     @State private var deletedComponentsMap = [String: Bool]()
-
-
+    
+    
     let supportedLanguages = ["en-US", "de-DE", "es-ES", "es-MX", "it-IT", "ko-KR", "hi-IN"]
     @State var currentLanguage = Locale.current.identifier.replacingOccurrences(of: "_", with: "-")
     @State private var speechRecognizer: SFSpeechRecognizer!
     private let speechSynthesizer = AVSpeechSynthesizer()
-
+    
     @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     @State private var recognitionTask: SFSpeechRecognitionTask?
     @State private var selectedComponentIndex: Int?
@@ -32,27 +33,27 @@ struct CalculatorView: View {
     @State private var recordScale: CGFloat = 1.0
     @State private var previousEquationLength: Int = 0
     @State private var previousComponents: [String] = []
-
+    
     //FOR TESTING
     @StateObject private var testMode = TestMode()
     @State private var testTimer: Timer? = nil
-
+    
     @State private var isProcessingText = false
-
+    
     @AppStorage("shouldSpeakTotal") var shouldSpeakTotal: Bool = false
-
+    
     @StateObject private var permissionChecker = PermissionChecker()
     @FocusState private var isTextFieldFocused: Bool
-
+    
     @State var recordLink: Bool = false
     @State var inputLink: Bool = false
-
+    
     //haptics
     let impactLight = UIImpactFeedbackGenerator(style: .light)
     let impactSoft = UIImpactFeedbackGenerator(style: .soft)
     let impactRecord = UIImpactFeedbackGenerator(style: .medium)
     let impactTotal = UIImpactFeedbackGenerator(style: .heavy)
-
+    
     var body: some View {
         VStack {
             Spacer()
@@ -63,7 +64,7 @@ struct CalculatorView: View {
                     .bold()
                     .accessibilityLabel("Simple Voice Calculator")
                 Spacer()
-
+                
                 Button(action: {
                     impactSoft.impactOccurred()
                     runTests()
@@ -73,24 +74,16 @@ struct CalculatorView: View {
                         .foregroundColor(testMode.testingInProgress ? .green : .primary)
                 }
                 .accessibilityLabel("Run Tests")
-
+                
                 Button(action: {
                     impactSoft.impactOccurred()
-
-                    if historyManager.isRegUser && historyManager.historyViewCount >= 3 {
-                        // Show paywall modal or alert
-                        showPaywallAlert()
-                    } else {
-                        // Mark history as viewed
-                        historyManager.markHistoryAsViewed()
-                        isHistoryModalPresented = true
-                    }
+                    showPaywallAlert()
                 }) {
                     ZStack(alignment: .topTrailing) {
                         Image(systemName: "clock.arrow.circlepath")
                             .font(.title2)
                             .foregroundColor(.primary)
-
+                        
                         // Notification badge
                         if historyManager.showHistoryBadge {
                             Circle()
@@ -102,8 +95,8 @@ struct CalculatorView: View {
                 }
                 .accessibilityLabel("History")
                 .featureTip(.history)
-
-
+                
+                
                 Button(action: {
                     impactSoft.impactOccurred()
                     isSettingsModalPresented = true
@@ -115,7 +108,7 @@ struct CalculatorView: View {
                 .accessibilityLabel("Settings")
             }
             .padding(.horizontal)
-
+            
             // Equation Components Group
             GroupBox {
                 GeometryReader { _ in
@@ -143,7 +136,7 @@ struct CalculatorView: View {
                                 }
                             }
                         }
-
+                        
                         if !isTextFieldFocused {
                             TotalDisplayView(
                                 totalValue: totalValue,
@@ -163,7 +156,7 @@ struct CalculatorView: View {
                     .opacity(0.3)
             }
             .padding(.horizontal)
-
+            
             // Input Section
             CalculatorInputView(
                 textFieldValue: $textFieldValue,
@@ -180,13 +173,13 @@ struct CalculatorView: View {
                 // Avoid reprocessing when text is being programmatically updated
                 guard !isProcessingText else { return }
                 isProcessingText = true
-
+                
                 // Process on background thread
                 DispatchQueue.global(qos: .userInteractive).async {
                     let components = getEquationComponents()
                     let joined = components.joined(separator: "")
                     let isValid = isValidExpression(newValue)
-
+                    
                     DispatchQueue.main.async {
                         textFieldValue = joined
                         if isValid {
@@ -199,9 +192,9 @@ struct CalculatorView: View {
                 }
             }
             .padding(.horizontal)
-
-
-
+            
+            
+            
             // Recording Button
             HStack {
                 RecordButton(action: {
@@ -255,7 +248,7 @@ struct CalculatorView: View {
         }
         .onAppear {
             setupAudioAndSpeech()
-
+            
             NotificationCenter.default.addObserver(
                 forName: FeatureTipsManager.openFeatureNotification,
                 object: nil,
@@ -288,33 +281,30 @@ struct CalculatorView: View {
             cleanupAudioSession()
         }
     }
-
+    
     func showPaywallAlert() {
-        let alert = UIAlertController(
-            title: "Premium Feature",
-            message: "The History feature is available with the premium subscription. Would you like to upgrade now?",
-            preferredStyle: .alert
-        )
-
-        alert.addAction(UIAlertAction(title: "Subscribe", style: .default) { _ in
-            // Handle subscription process
-            // Launch in-app purchase flow here
+        historyManager.markHistoryAsViewed()
+        
+        Superwall.shared.register(placement: "campaign_trigger", feature: {
+            // Called when purchase is successful
+            // UserDefaults sets the isRegUser value directly
+            UserDefaults.standard.set(false, forKey: "isRegUser")
+            
+            
+            // Launch task to check subscription status
+            Task {
+                await StoreManager.shared.checkSubscriptionStatus()
+            }
+            
+            self.isHistoryModalPresented = true
         })
-
-        alert.addAction(UIAlertAction(title: "Not Now", style: .cancel))
-
-        // Present the alert
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let rootViewController = windowScene.windows.first?.rootViewController {
-            rootViewController.present(alert, animated: true)
-        }
     }
-
-
+    
+    
     // Setup audio and speech on app appear
     private func setupAudioAndSpeech() {
         permissionChecker.checkPermissions()
-
+        
         //TRANSLATING SYSTEM LANGUAGE TO SF SPEECH LANGUAGE
         let languageMappings: [String: String] = [
             "de-US": "de-DE",
@@ -324,17 +314,17 @@ struct CalculatorView: View {
             "ko-US": "ko-KR",
             "hi-US": "hi-IN"
         ]
-
+        
         if let mappedLanguage = languageMappings[currentLanguage] {
             currentLanguage = mappedLanguage
         }
-
+        
         if !supportedLanguages.contains(currentLanguage) {
             currentLanguage = "en-US"
         }
-
+        
         speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: currentLanguage))
-
+        
         //configuring playback from main speaker, not just top one
         do {
             let audioSession = AVAudioSession.sharedInstance()
@@ -355,7 +345,7 @@ struct CalculatorView: View {
         }
     }
     private func cleanupAudioSession() {
-
+        
         // Deactivate audio session when view disappears
         do {
             try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
@@ -363,48 +353,48 @@ struct CalculatorView: View {
             print("Error deactivating audio session: \(error)")
         }
     }
-
+    
     // Wrapper for getEquationComponents function to make code cleaner
     func getEquationComponents() -> [String] {
         return parseEquationComponents(from: textFieldValue)
     }
 }
 extension CalculatorView {
-
+    
     func runTests() {
         // Already running tests
         if testMode.testingInProgress {
             return
         }
-
+        
         // Reset and start tests
         testMode.startTesting()
-
+        
         // Cancel any existing timer
         testTimer?.invalidate()
-
+        
         // Create a new timer that fires every 0.3 seconds
         testTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { [self] _ in
             if let currentTest = testMode.currentTest {
                 // Set the text field to the current test input
                 textFieldValue = currentTest.input
-
+                
                 // Force calculation
                 calculateTotalValue()
-
+                
                 // Quick delay to ensure calculation completes
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     // Record the test result
                     testMode.recordTestResult(input: currentTest.input, output: totalValue)
-
+                    
                     // Move to the next test
                     testMode.moveToNextTest()
-
+                    
                     // If all tests are complete, stop the timer and print results
                     if testMode.testsFinished {
                         self.testTimer?.invalidate()
                         self.testTimer = nil
-
+                        
                         // Print test results to console
                         print("Tests completed: \(testMode.passedCount) passed, \(testMode.failedCount) failed")
                         for test in testMode.testCases {
@@ -412,7 +402,7 @@ extension CalculatorView {
                                 print("Failed: \(test.input) → Expected: \(test.expectedOutput), Got: \(test.actualOutput)")
                             }
                         }
-
+                        
                         // Clear the calculator for normal use
                         textFieldValue = ""
                         totalValue = ""
@@ -425,7 +415,7 @@ extension CalculatorView {
             }
         }
     }
-
+    
     func handleWidgetDeepLink(_ url: URL) {
         if url.absoluteString == "calculator:///recordLink"{
             startRecording()
@@ -437,7 +427,7 @@ extension CalculatorView {
             }
         }
     }
-
+    
     func findTextField(in view: UIView) -> UITextField? {
         for subview in view.subviews {
             if let textField = subview as? UITextField {
@@ -449,32 +439,32 @@ extension CalculatorView {
         }
         return nil
     }
-
+    
     func getWindowScene() -> UIWindowScene? {
         return UIApplication.shared.connectedScenes
             .first { $0.activationState == .foregroundActive && $0 is UIWindowScene } as? UIWindowScene
     }
-
+    
     func selectComponentInTextField() {
         guard let index = selectedComponentIndex else { return }
         let components = getEquationComponents()
         guard index < components.count else { return }
-
+        
         let selectedComponent = components[index]
         var position = 0
-
+        
         // Iterate through the components before the selected one
         for i in 0..<index {
             // Add the length of each component to the position
             position += components[i].count
         }
-
+        
         // Find the TextField in the app's window
         if let windowScene = getWindowScene(),
            let textField = findTextField(in: windowScene.windows.first!) {
             // Make the TextField the first responder (give it focus)
             textField.becomeFirstResponder()
-
+            
             // Calculate the start and end positions of the selected component in the TextField
             if let startPosition = textField.position(from: textField.beginningOfDocument, offset: position),
                let endPosition = textField.position(from: startPosition, offset: selectedComponent.count) {
@@ -535,34 +525,34 @@ extension CalculatorView {
             NSLocalizedString("recording", comment: ""): "",
             NSLocalizedString("record", comment: ""): ""
         ]
-
+        
         // Process the input text
         var processedInput = input.lowercased()
-
+        
         // Apply word replacements
         for (word, symbol) in wordMapping {
             processedInput = processedInput.replacingOccurrences(of: word, with: symbol)
         }
-
+        
         // Remove spaces
         processedInput = processedInput.replacingOccurrences(of: " ", with: "")
-
+        
         return processedInput
     }
-
-
+    
+    
     func speakTotal(_ total: String) {
         let languageCode = currentLanguage
         let totalString = String(format: NSLocalizedString("Total equals %@", comment: ""), total)
         let utterance = AVSpeechUtterance(string: totalString)
-
+        
         // Set max volume
         utterance.volume = 1.0
-
+        
         // Adjust rate and pitch for clarity
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.9
         utterance.pitchMultiplier = 1.1
-
+        
         if let voice = AVSpeechSynthesisVoice(language: languageCode) {
             utterance.voice = voice
         } else {
@@ -570,34 +560,34 @@ extension CalculatorView {
             SentrySDK.capture(message: "Invalid language code: \(languageCode). Falling back to default voice.")
             utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
         }
-
+        
         DispatchQueue.main.async {
             speechSynthesizer.speak(utterance)
         }
     }
-
+    
     func startRecording() {
         if recognitionTask != nil {
             recognitionTask?.cancel()
             recognitionTask = nil
         }
-
+        
         // Stop any ongoing speech playback
         if speechSynthesizer.isSpeaking {
             speechSynthesizer.stopSpeaking(at: .immediate)
         }
-
-
+        
+        
         previousEquationLength = textFieldValue.count
         previousComponents = getEquationComponents()
-
+        
         previousText = textFieldValue
-
+        
         DispatchQueue.main.async {
             isRecording = true
         }
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-
+        
         guard let recognitionRequest = recognitionRequest else {
             SentrySDK.capture(message: "SFSpeechAudioBufferRecognitionRequest error")
             DispatchQueue.main.async {
@@ -608,22 +598,22 @@ extension CalculatorView {
             }
             return
         }
-
+        
         let inputNode = audioEngine.inputNode
-
+        
         if(inputNode.inputFormat(forBus: 0).channelCount == 0){
             NSLog("Not enough available inputs!")
             return
         }
-
+        
         recognitionRequest.shouldReportPartialResults = true
-
+        
         recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
             if let result = result {
                 // Get the raw transcription with spaces preserved
                 let rawTranscriptionWithSpaces = result.bestTranscription.formattedString
-
-
+                
+                
                 // Check for clear command first, before any other processing
                 let clearPattern = "\\bclear\\b"
                 if rawTranscriptionWithSpaces.range(of: clearPattern, options: [.regularExpression, .caseInsensitive]) != nil {
@@ -633,27 +623,27 @@ extension CalculatorView {
                         self.textFieldValue = ""
                         self.previousText = ""
                         self.deletedComponentsMap.removeAll()
-
+                        
                         // Stop recording after clearing
                         self.stopRecording(completion: {})
                     }
                     return
                 }
-
-
+                
+                
                 // Process for equation first, before checking for stop commands
                 var processedEquation = self.processVoiceInput(rawTranscriptionWithSpaces)
-
-
+                
+                
                 // Handle deleted components if there are any
                 if !self.deletedComponentsMap.isEmpty {
                     // Start with the previous components for reference
                     let previousComponents = self.previousComponents
-
+                    
                     // Parse the current full transcription
                     let fullEquation = self.previousText + processedEquation
                     let combinedComponents = parseEquationComponents(from: fullEquation)
-
+                    
                     // Create a map of the absolute positions of each component for reference
                     var componentPositions = [Int]()
                     var currentPos = 0
@@ -661,38 +651,38 @@ extension CalculatorView {
                         componentPositions.append(currentPos)
                         currentPos += component.count
                     }
-
+                    
                     // Filter components, being extra careful with operators
                     var filteredComponents = [String]()
                     let previousComponentsCount = previousComponents.count
-
+                    
                     for i in 0..<combinedComponents.count {
                         let component = combinedComponents[i]
                         let absPosition = componentPositions[i]
-
+                        
                         // Determine if this component was part of the previous recording
                         let isFromPreviousRecording = i < previousComponentsCount
-
+                        
                         // Need to be extra careful to check both position and value
                         let isOperator = ["+", "-", "×", "÷"].contains(where: { component.hasPrefix($0) })
-
+                        
                         // Check against our deletion tracking map with multiple strategies
                         let shouldSkip = self.deletedComponentsMap.keys.contains { key in
                             // 1. Exact position and content match
                             if key.hasPrefix("exact_\(absPosition)_\(component.count)_") && key.hasSuffix(component) {
                                 return true
                             }
-
+                            
                             // 2. For operators, check specialized operator position tracking
                             if isOperator && key == "op_pos_\(i)_\(component)" {
                                 return true
                             }
-
+                            
                             // 3. Index-based deletion for components from previous recording
                             if isFromPreviousRecording && key.hasPrefix("idx_\(i)_") && key.hasSuffix(component) {
                                 return true
                             }
-
+                            
                             // 4. Context-based matching (surrounding components)
                             if key.hasPrefix("ctx_") {
                                 let prevComp = i > 0 ? combinedComponents[i-1] : ""
@@ -700,32 +690,32 @@ extension CalculatorView {
                                 let contextKey = "ctx_\(prevComp)_\(component)_\(nextComp)"
                                 return key == contextKey
                             }
-
+                            
                             // 5. Content-based matching for non-operators (safer)
                             if !isOperator && key == "num_\(component)" {
                                 return true
                             }
-
+                            
                             // 6. Special rule: if deleted this operator at this position before
                             if isOperator && isFromPreviousRecording {
                                 // Check if deleted this specific operator at this position
                                 let opPosKey = "op_pos_\(i)_\(component)"
                                 return self.deletedComponentsMap[opPosKey] == true
                             }
-
+                            
                             return false
                         }
-
+                        
                         if !shouldSkip {
                             filteredComponents.append(component)
                         } else {
                             print("Skipping component: '\(component)' at index \(i), position \(absPosition)")
                         }
                     }
-
+                    
                     // Reconstruct equation from filtered components
                     let filteredEquation = filteredComponents.joined()
-
+                    
                     // Extract just the new transcription part
                     if filteredEquation.hasPrefix(self.previousText) && filteredEquation.count >= self.previousText.count {
                         let startIndex = filteredEquation.index(filteredEquation.startIndex,
@@ -737,7 +727,7 @@ extension CalculatorView {
                         self.previousText = ""  // Reset previous context
                     }
                 }
-
+                
                 // Check for stop commands in the raw transcription (with spaces)
                 let stopCommands = ["stop", "recording", "end", "finish", "done"]
                 let containsStopCommand = stopCommands.contains { command in
@@ -745,19 +735,19 @@ extension CalculatorView {
                     let pattern = "\\b\(command)\\b"
                     return rawTranscriptionWithSpaces.range(of: pattern, options: [.regularExpression, .caseInsensitive]) != nil
                 }
-
+                
                 var hasDetectedStopCommand = false
                 var lastValidEquation = ""
-
+                
                 // If a valid equation, save it
                 if isValidExpression(processedEquation) {
                     lastValidEquation = processedEquation
                 }
-
+                
                 if containsStopCommand && !hasDetectedStopCommand {
                     // Set flag to avoid multiple stop actions
                     hasDetectedStopCommand = true
-
+                    
                     // Use the last valid equation processed
                     DispatchQueue.main.async {
                         // Update with the last valid equation before stopping
@@ -767,7 +757,7 @@ extension CalculatorView {
                             // Fall back to processing without the stop command
                             // Get the transcription before the stop command
                             var filteredTranscription = rawTranscriptionWithSpaces.lowercased()
-
+                            
                             // Find and remove all stop commands
                             for command in stopCommands {
                                 let pattern = "\\b\(command)\\b"
@@ -775,16 +765,16 @@ extension CalculatorView {
                                     filteredTranscription = String(filteredTranscription[..<range.lowerBound])
                                 }
                             }
-
+                            
                             // Process this final transcription without the stop command
                             let finalProcessedText = self.processVoiceInput(filteredTranscription)
-
+                            
                             // Only update if it's a valid expression
                             if isValidExpression(finalProcessedText) {
                                 self.textFieldValue = self.previousText + finalProcessedText
                             }
                         }
-
+                        
                         // Stop recording after updating the text field
                         self.stopRecording(completion: {})
                     }
@@ -795,40 +785,40 @@ extension CalculatorView {
                     }
                 }
             }
-
+            
             if error != nil {
                 self.audioEngine.stop()
                 inputNode.removeTap(onBus: 0)
-
+                
                 recognitionRequest.endAudio()
                 self.recognitionRequest = nil
                 self.recognitionTask = nil
             }
         }
-
+        
         let recordingFormat = inputNode.inputFormat(forBus: 0)
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, when) in
             recognitionRequest.append(buffer)
         }
-
+        
         audioEngine.prepare()
-
+        
         do {
             try audioEngine.start()
         } catch {
             // Proper error handling without crashing
             SentrySDK.capture(message: "Audio engine start error: \(error.localizedDescription)")
             print("Could not start the audio engine: \(error.localizedDescription)")
-
+            
             // Cleanup
             audioEngine.inputNode.removeTap(onBus: 0)
-
+            
             // Reset recognition components
             recognitionTask?.cancel()
             recognitionTask = nil
             self.recognitionRequest?.endAudio()
             self.recognitionRequest = nil
-
+            
             // Update UI
             DispatchQueue.main.async {
                 self.isRecording = false
@@ -839,23 +829,23 @@ extension CalculatorView {
             return
         }
     }
-
+    
     func stopRecording(completion: @escaping () -> Void) {
         recognitionRequest?.endAudio()
         recognitionTask?.finish()
         recognitionTask = nil
-
+        
         audioEngine.inputNode.removeTap(onBus: 0)
         audioEngine.stop()
         audioEngine.reset() //just for good measure
-
+        
         DispatchQueue.main.async {
             isRecording = false
             textFieldValue = getEquationComponents().joined(separator: "")
-
+            
             // Clear deletion tracking when done
             deletedComponentsMap.removeAll()
-
+            
             // Check if text field has focus before setting cursor position
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 if let windowScene = self.getWindowScene(),
@@ -865,7 +855,7 @@ extension CalculatorView {
                     let endPosition = textField.endOfDocument
                     textField.selectedTextRange = textField.textRange(from: endPosition, to: endPosition)
                 }
-
+                
                 // Speak total if needed
                 if self.shouldSpeakTotal && !self.totalValue.isEmpty && self.totalValue != "Invalid Equation" {
                     self.speakTotal(self.totalValue)
@@ -874,51 +864,51 @@ extension CalculatorView {
         }
         completion()
     }
-
-
+    
+    
     func deleteComponent(at index: Int) {
         var components = getEquationComponents()
         if components.indices.contains(index) {
             // Track the deleted component if recording
             if isRecording {
                 let deletedComponent = components[index]
-
+                
                 // Store both the component and its absolute position in the text
                 var absolutePosition = 0
                 for i in 0..<index {
                     absolutePosition += components[i].count
                 }
-
+                
                 // 1. Store by exact position and content
                 deletedComponentsMap["exact_\(absolutePosition)_\(deletedComponent.count)_\(deletedComponent)"] = true
-
+                
                 // 2. Store by relative index in the components array
                 deletedComponentsMap["idx_\(index)_\(deletedComponent)"] = true
-
+                
                 // 3. Store by content with type marker (for operators vs numbers)
                 var typePrefix = "num_"
                 if ["+", "-", "×", "÷"].contains(where: { deletedComponent.hasPrefix($0) }) {
                     typePrefix = "op_"
                 }
                 deletedComponentsMap["\(typePrefix)\(deletedComponent)"] = true
-
+                
                 // 4. Context with surrounding components (more specific)
                 let prevComponent = index > 0 ? components[index-1] : ""
                 let nextComponent = index < components.count - 1 ? components[index+1] : ""
                 deletedComponentsMap["ctx_\(prevComponent)_\(deletedComponent)_\(nextComponent)"] = true
-
+                
                 // 5. Special case for operators with position info
                 if ["+", "-", "×", "÷"].contains(where: { deletedComponent.hasPrefix($0) }) {
                     deletedComponentsMap["op_pos_\(index)_\(deletedComponent)"] = true
                 }
-
-
+                
+                
             }
-
+            
             // Remove the component as usual
             components.remove(at: index)
             textFieldValue = components.joined(separator: "")
-
+            
             if isValidExpression(textFieldValue) {
                 calculateTotalValue()
             } else {
@@ -930,7 +920,7 @@ extension CalculatorView {
             }
         }
     }
-
+    
     func clearTextField() {
         if totalValue != "Invalid Equation" {
             historyManager.saveCurrentEquationToHistory()
@@ -939,13 +929,13 @@ extension CalculatorView {
         previousText = ""
         deletedComponentsMap.removeAll()
     }
-
+    
     func updateTextFieldValue() {
         guard let windowScene = getWindowScene(),
               let textField = findTextField(in: windowScene.windows.first!) else { return }
         textFieldValue = textField.text ?? ""
     }
-
+    
     private func insertText(_ text: String) {
         // Check if trying to add an invalid symbol at the start of an empty equation
         if textFieldValue.isEmpty && ["×", "÷", "+", "%"].contains(text) {
@@ -953,15 +943,15 @@ extension CalculatorView {
             // Don't add the character
             return
         }
-
+        
         // Make sure on the main thread
         DispatchQueue.main.async {
             guard let windowScene = self.getWindowScene(),
                   let textField = self.findTextField(in: windowScene.windows.first!) else { return }
-
+            
             // Check if text field has focus
             let hasFocus = textField.isFirstResponder
-
+            
             if hasFocus {
                 // If focused, use the current cursor position
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
@@ -977,7 +967,7 @@ extension CalculatorView {
             }
         }
     }
-
+    
     // New helper method to handle the actual insertion
     private func performTextInsertionAtCursor(textField: UITextField, text: String) {
         // If there's no valid selection range, append to the end without changing focus
@@ -987,31 +977,31 @@ extension CalculatorView {
             textField.text = self.textFieldValue
             return
         }
-
+        
         // Calculate new cursor position after insertion
         let cursorPosition = textField.offset(from: textField.beginningOfDocument, to: selectedRange.start) + text.count
-
+        
         // Insert the given text at the current cursor position
         textField.replace(selectedRange, withText: text)
-
+        
         // Restore cursor position after the inserted text
         if let newPosition = textField.position(from: textField.beginningOfDocument, offset: cursorPosition) {
             textField.selectedTextRange = textField.textRange(from: newPosition, to: newPosition)
         }
-
+        
         // Update textFieldValue manually to ensure state is consistent
         textFieldValue = textField.text ?? ""
     }
-
+    
     func calculateTotalValue() {
         DispatchQueue.global(qos: .userInitiated).async {
             let components = getEquationComponents()
             let trimmedExpression = prepareExpressionForEvaluation(components: components)
-
+            
             DispatchQueue.main.async {
                 if let result = ExpressionSolver.solveExpression(trimmedExpression) {
                     totalValue = formatCalculationResult(result: result)
-
+                    
                     // Only save valid equations to history
                     if !textFieldValue.isEmpty && totalValue != "Invalid Equation" {
                         historyManager.updateCurrentEquation(equation: textFieldValue, result: totalValue)

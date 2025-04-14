@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+// (History or Favorites)
+enum HistoryViewMode {
+    case history
+    case favorites
+}
+
 // Simple button style for menu items
 struct HighlightButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
@@ -17,17 +23,19 @@ struct HighlightButtonStyle: ButtonStyle {
     }
 }
 
-struct HistoryRow: View {
+struct HistoryORFavRow: View {
     var equation: String
     var result: String
     var onAction: (HistoryMode) -> Void
-    
+    var onToggleFavorite: () -> Void
+    var isFavorite: Bool
+
     @State private var isPressed = false
-    
+
     var isFirstRow: Bool = false //tracking for new featureTip interaction
-    
+
     @Namespace private var animationNamespace
-    
+
     var body: some View {
         Menu {
             Section(header: Text("Insert into Current Equation")) {
@@ -38,7 +46,7 @@ struct HistoryRow: View {
                 } label: {
                     Label("Replace", systemImage: "rectangle.2.swap")
                 }
-                
+
                 // Add option
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
@@ -46,7 +54,7 @@ struct HistoryRow: View {
                 } label: {
                     Label("Add", systemImage: "plus")
                 }
-                
+
                 // Subtract option
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
@@ -54,7 +62,7 @@ struct HistoryRow: View {
                 } label: {
                     Label("Subtract", systemImage: "minus")
                 }
-                
+
                 // Multiply option
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
@@ -62,7 +70,7 @@ struct HistoryRow: View {
                 } label: {
                     Label("Multiply", systemImage: "multiply")
                 }
-                
+
                 // Divide option
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
@@ -71,17 +79,38 @@ struct HistoryRow: View {
                     Label("Divide", systemImage: "divide")
                 }
             }
+
+            Section {
+                // Favorite/Unfavorite option
+                Button {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    onToggleFavorite()
+                } label: {
+                    if isFavorite {
+                        Label("Remove from Favorites", systemImage: "heart.fill")
+                    } else {
+                        Label("Add to Favorites", systemImage: "heart")
+                    }
+                }
+            }
         } label: {
             HStack {
+                if isFavorite {
+                    Image(systemName: "heart.fill")
+                        .font(.footnote)
+                        .foregroundColor(.red)
+                        .padding(.trailing, 4)
+                }
+
                 Text(equation)
                     .foregroundColor(.primary)
                     .padding(.vertical, 8)
                     .font(.subheadline)
                     .fixedSize(horizontal: false, vertical: true)
                     .opacity(0.3)
-                
+
                 Spacer()
-                
+
                 HStack {
                     Text("=")
                         .foregroundColor(.primary)
@@ -109,12 +138,10 @@ struct HistoryRow: View {
         .simultaneousGesture(
             TapGesture()
                 .onEnded { _ in
-                    //                    UIImpactFeedbackGenerator(style: .medium).impactOccurred(intensity: 0.7)
                     withAnimation(.spring(response: 0.2, dampingFraction: 0.6)) {
                         isPressed = true
                     }
-                    
-                    
+
                     withAnimation(.spring(response: 0.2, dampingFraction: 0.6).delay(0.2)) {
                         isPressed = false
                     }
@@ -136,12 +163,13 @@ struct HistoryRow: View {
                     )
                 )
         )
-        .id(equation + result) // Unique identifier for each row
+        .id(equation + result + (isFavorite ? "fav" : "")) // Unique identifier for each row that changes with favorite state
         .onAppear{
             FeatureTipsManager.shared.markFeatureAsSeen(.historyRow)
         }
     }
 }
+
 extension View {
     @ViewBuilder
     func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {

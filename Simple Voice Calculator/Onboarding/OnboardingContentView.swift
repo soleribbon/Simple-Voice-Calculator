@@ -156,7 +156,7 @@ struct OnboardingContentView: View {
                                 Spacer()
                             }.padding()
                             VStack (alignment: .center){
-                                Text(LocalizedStringKey("Only **+ - × ÷**  are supported"))
+                                Text(LocalizedStringKey("Only **+ - × ÷ %**  are supported"))
                                     .multilineTextAlignment(.center)
                                     .font(.body)
                                     .foregroundColor(.white)

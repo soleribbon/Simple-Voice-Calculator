@@ -52,7 +52,7 @@
 "**What does 'Invalid Equation' mean?**" = "**What does 'Invalid Equation' mean?**";
 "**What does the 'Sym' button do?**" = "**What does the 'Sym' button do?**";
 "**How do I edit my voice input?**" = "**How do I edit my voice input?**";
-"Only **+ - × ÷**  are supported" = "Only **+ - × ÷** are supported";
+"Only **+ - × ÷ %**  are supported" = "Only **+ - × ÷ %** are supported";
 "Total equals" = "Total equals %@";
 "Announce Total" = "Announce Total";
 "Preferences" = "Preferences";

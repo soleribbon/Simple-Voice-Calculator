@@ -52,7 +52,7 @@
 "**What does 'Invalid Equation' mean?**" = "**'अवैध समीकरण' का क्या मतलब है?**";
 "**What does the 'Sym' button do?**" = "**'सिम' बटन क्या करता है?**";
 "**How do I edit my voice input?**" = "**मैं अपने ध्वनि इनपुट को कैसे संपादित कर सकता हूँ?**";
-"Only **+ - × ÷**  are supported" = "केवल **+ - × ÷** समर्थित हैं";
+"Only **+ - × ÷ %**  are supported" = "केवल **+ - × ÷ %** समर्थित हैं";
 "Total equals" = "कुल योग है %@";
 "Announce Total" = "कुल घोषणा करें";
 "Preferences" = "प्राथमिकताएँ";

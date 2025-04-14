@@ -51,14 +51,16 @@ enum HistoryMode: Int {
     }
 }
 
-
 // MARK: - History Manager Extensions
 extension HistoryManager {
-    func clearAllHistory() {
+    func clearAllHistory(favoritesManager: FavoritesManager) {
         historyItems = []
         currentEquation = ""
         currentResult = ""
         saveHistory()
+        
+        // Sync with favorites
+        favoritesManager.syncWithHistory(historyItems: historyItems)
     }
     
     // Get items older than yesterday
@@ -75,12 +77,16 @@ struct HistoryView: View {
     // MARK: Properties
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var historyManager: HistoryManager
+    @StateObject private var favoritesManager = FavoritesManager()
+    
+    @State private var viewMode: HistoryViewMode = .history
     @State private var showingClearConfirmation = false
     @State private var clearButtonScale: CGFloat = 1.0
     
     // Haptic feedback
     let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
     let impactClear = UIImpactFeedbackGenerator(style: .heavy)
+    let impactLight = UIImpactFeedbackGenerator(style: .light)
     
     // Handle when an equation is selected from history
     var onEquationSelected: ((String) -> Void)?
@@ -92,7 +98,10 @@ struct HistoryView: View {
         let calendar = Calendar.current
         var groupedItems: [String: [HistoryItem]] = [:]
         
-        for item in historyManager.historyItems {
+        // Use appropriate items based on view mode
+        let items = viewMode == .history ? historyManager.historyItems : favoritesManager.favoriteItems
+        
+        for item in items {
             let sectionTitle: String
             
             if calendar.isDateInToday(item.date) {
@@ -135,7 +144,7 @@ struct HistoryView: View {
             let itemsToDelete = offsets.map { items[$0] }
             
             // Remove items from history manager
-            historyManager.deleteItems(itemsToDelete)
+            historyManager.deleteItems(itemsToDelete, favoritesManager: favoritesManager)
         }
     }
     
@@ -168,8 +177,14 @@ struct HistoryView: View {
         presentationMode.wrappedValue.dismiss()
     }
     
-    // MARK: Empty State View
-    private var emptyStateView: some View {
+    // Toggle favorite status of an item
+    private func toggleFavorite(item: HistoryItem) {
+        impactLight.impactOccurred()
+        favoritesManager.toggleFavorite(item: item)
+    }
+    
+    // MARK: Empty State Views
+    private var emptyHistoryView: some View {
         VStack(spacing: 4) {
             Text("No calculation history yet")
                 .font(.headline)
@@ -180,20 +195,35 @@ struct HistoryView: View {
         }
     }
     
-    // MARK: History List View
-    private var historyListView: some View {
+    private var emptyFavoritesView: some View {
+        VStack(spacing: 4) {
+            Text("No favorites yet")
+                .font(.headline)
+                .foregroundColor(.secondary)
+            Text("Your favorites will appear here")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
+    }
+    
+    // MARK: List Views
+    private var contentListView: some View {
         List {
             ForEach(sortedSectionKeys, id: \.self) { section in
                 if let items = historyByDate[section], !items.isEmpty {
                     Section(header: Text(section)) {
                         // Convert items to an array of (index, item) tuples
                         ForEach(Array(items.enumerated()), id: \.element.id) { (index, item) in
-                            HistoryRow(
+                            HistoryORFavRow(
                                 equation: item.equation,
                                 result: item.result,
                                 onAction: { mode in
                                     handleHistoryAction(item: item, mode: mode)
                                 },
+                                onToggleFavorite: {
+                                    toggleFavorite(item: item)
+                                },
+                                isFavorite: favoritesManager.isFavorite(item),
                                 isFirstRow: (index == 0)
                             )
                         }
@@ -217,7 +247,6 @@ struct HistoryView: View {
             Spacer()
             
             HStack {
-                
                 // Clear button
                 Button(action: {
                     withAnimation(.spring(response: 0.2, dampingFraction: 0.6)) {
@@ -232,7 +261,7 @@ struct HistoryView: View {
                 }) {
                     HStack {
                         Image(systemName: "trash")
-                        Text("Clear History")
+                        Text(viewMode == .history ? "Clear History" : "Clear Favorites")
                     }
                     .ActionButtons(isRecording: false, bgColor: Color.orange)
                 }
@@ -244,15 +273,46 @@ struct HistoryView: View {
                         .background(Color(UIColor.systemBackground))
                         .blur(radius: 30)
                         .padding(-15)
-                    
                 )
                 
                 Spacer()
             }
             .padding(.bottom)
-            
             .padding(.horizontal)
+        }
+    }
+    
+    private var navigationTitleMenu: some View {
+        Menu {
+            Button(action: {
+                impactFeedback.impactOccurred()
+                viewMode = .history
+            }) {
+                Label("History", systemImage: "clock.arrow.circlepath")
+                if viewMode == .history {
+                    Image(systemName: "checkmark")
+                }
+            }
             
+            Button(action: {
+                impactFeedback.impactOccurred()
+                viewMode = .favorites
+            }) {
+                Label("Favorites", systemImage: "heart.fill")
+                if viewMode == .favorites {
+                    Image(systemName: "checkmark")
+                }
+            }
+        } label: {
+            HStack(spacing: 4) {
+                Text(viewMode == .history ? "History" : "Favorites")
+                    .font(.title)
+                    .fontWeight(.bold)
+                Image(systemName: "chevron.down")
+                    .fontWeight(.semibold)
+                    .imageScale(.medium)
+                    .foregroundColor(.secondary)
+            }
         }
     }
     
@@ -260,15 +320,25 @@ struct HistoryView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                if historyManager.historyItems.isEmpty {
-                    emptyStateView
+                if viewMode == .history && historyManager.historyItems.isEmpty {
+                    emptyHistoryView
+                    
+                } else if viewMode == .favorites && favoritesManager.favoriteItems.isEmpty {
+                    emptyFavoritesView
+                    
                 } else {
-                    historyListView
+                    contentListView .padding(.top, -40)
                     bottomControlsView
                 }
             }
-            .navigationTitle("History")
+            .navigationBarTitleDisplayMode(.automatic)
+            .navigationTitle("")
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    navigationTitleMenu
+                    
+                }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         presentationMode.wrappedValue.dismiss()
@@ -281,12 +351,18 @@ struct HistoryView: View {
             }
             .alert(isPresented: $showingClearConfirmation) {
                 Alert(
-                    title: Text("Clear History"),
-                    message: Text("Are you sure you want to clear all calculation history?"),
+                    title: Text(viewMode == .history ? "Clear History" : "Clear Favorites"),
+                    message: Text(viewMode == .history
+                                  ? "Are you sure you want to clear all calculation history?"
+                                  : "Are you sure you want to clear all favorites?"),
                     primaryButton: .destructive(Text("Clear")) {
                         withAnimation {
                             impactClear.impactOccurred()
-                            historyManager.clearAllHistory()
+                            if viewMode == .history {
+                                historyManager.clearAllHistory(favoritesManager: favoritesManager)
+                            } else {
+                                favoritesManager.clearAllFavorites()
+                            }
                         }
                     },
                     secondaryButton: .cancel()
