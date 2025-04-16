@@ -53,7 +53,9 @@ enum HistoryMode: Int {
 
 // MARK: - History Manager Extensions
 extension HistoryManager {
+    // Modify clearAllHistory in HistoryManager.swift extension
     func clearAllHistory(favoritesManager: FavoritesManager) {
+        // Always clear local items
         historyItems = []
         currentEquation = ""
         currentResult = ""
@@ -61,7 +63,17 @@ extension HistoryManager {
         
         // Sync with favorites
         favoritesManager.syncWithHistory(historyItems: historyItems)
+        
+        // Try to sync if possible - immediately
+        Task(priority: .userInitiated) {
+            if await CloudKitManager.shared.shouldSync() {
+                // Clear all cloud records
+                await CloudKitManager.shared.clearAllRecords(ofType: "HistoryItem")
+            }
+        }
     }
+    
+    
     
     // Get items older than yesterday
     var olderItems: [HistoryItem] {
@@ -78,6 +90,8 @@ struct HistoryView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var historyManager: HistoryManager
     @StateObject private var favoritesManager = FavoritesManager()
+    
+    @StateObject private var cloudKitManager = CloudKitManager.shared
     
     @State private var viewMode: HistoryViewMode = .history
     @State private var showingClearConfirmation = false
@@ -182,6 +196,9 @@ struct HistoryView: View {
         impactLight.impactOccurred()
         favoritesManager.toggleFavorite(item: item)
     }
+    
+    
+    
     
     // MARK: Empty State Views
     private var emptyHistoryView: some View {
@@ -340,13 +357,25 @@ struct HistoryView: View {
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.primary)
-                            .font(.body)
+                    
+                    HStack{
+                        //                        DEBUG FOR CLOUD SYNCING
+                        //                        if !historyManager.isRegUser && cloudKitManager.isSyncing {
+                        //                                ProgressView()
+                        //                                    .progressViewStyle(CircularProgressViewStyle(tint: Color.blue))
+                        //                                    .padding(.trailing, 4)
+                        //                        }
+                        
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.primary)
+                                .font(.body)
+                        }
+                        
                     }
+                    
                 }
             }
             .alert(isPresented: $showingClearConfirmation) {
@@ -372,7 +401,34 @@ struct HistoryView: View {
         .onAppear {
             // Mark history as viewed
             FeatureTipsManager.shared.markFeatureAsSeen(.history)
+            
+            // Check for sync if user is PRO - but only if not already syncing
+            if !historyManager.isRegUser && !historyManager.isSyncing && !cloudKitManager.isSyncing {
+                Task {
+                    // First check internet connectivity via CloudKit availability
+                    let isCloudAvailable = await cloudKitManager.checkAccountStatus()
+                    let shouldSync = await cloudKitManager.shouldSync()
+                    
+                    if isCloudAvailable && shouldSync {
+                        print("HistoryView appeared - performing sync")
+                        
+                        // If just synced recently, don't trigger another full sync
+                        let lastSyncInterval = cloudKitManager.lastSyncDate?.timeIntervalSinceNow ?? -3600
+                        if lastSyncInterval < -10 { // Only sync if last sync was more than 10 seconds ago
+                            
+                            // Then sync both history and favorites
+                            await historyManager.syncWithCloud()
+                            await favoritesManager.syncWithCloud()
+                        }
+                    } else {
+                        print("Offline mode or sync not available - using local data only")
+                        // When offline, still show local data for PRO users
+                    }
+                }
+            }
         }
+        
+        
     }
 }
 

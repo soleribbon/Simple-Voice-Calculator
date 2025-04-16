@@ -64,16 +64,16 @@ struct CalculatorView: View {
                     .bold()
                     .accessibilityLabel("Simple Voice Calculator")
                 Spacer()
-                
-                Button(action: {
-                    impactSoft.impactOccurred()
-                    runTests()
-                }) {
-                    Image(systemName: testMode.testingInProgress ? "checkmark.seal.fill" : "checkmark.seal")
-                        .font(.title2)
-                        .foregroundColor(testMode.testingInProgress ? .green : .primary)
-                }
-                .accessibilityLabel("Run Tests")
+//                TEST BUTTON
+//                Button(action: {
+//                    impactSoft.impactOccurred()
+//                    runTests()
+//                }) {
+//                    Image(systemName: testMode.testingInProgress ? "checkmark.seal.fill" : "checkmark.seal")
+//                        .font(.title2)
+//                        .foregroundColor(testMode.testingInProgress ? .green : .primary)
+//                }
+//                .accessibilityLabel("Run Tests")
                 
                 Button(action: {
                     impactSoft.impactOccurred()
@@ -245,6 +245,7 @@ struct CalculatorView: View {
                 }
             )
             .environmentObject(historyManager)
+            
         }
         .onAppear {
             setupAudioAndSpeech()
@@ -285,22 +286,66 @@ struct CalculatorView: View {
     func showPaywallAlert() {
         historyManager.markHistoryAsViewed()
         
-        Superwall.shared.register(placement: "campaign_trigger", feature: {
-            // Called when purchase is successful
-            // UserDefaults sets the isRegUser value directly
-            UserDefaults.standard.set(false, forKey: "isRegUser")
+        // Use Task to properly handle async checks
+        Task {
+            // Check subscription status from StoreKit directly
+            await StoreManager.shared.checkSubscriptionStatus()
             
+            // Get the most up-to-date subscription status
+            let isPro = StoreManager.shared.isSubscriptionActive
             
-            // Launch task to check subscription status
-            Task {
-                await StoreManager.shared.checkSubscriptionStatus()
+            // Now handle the view presentation based on subscription status
+            await MainActor.run {
+                if isPro {
+                    // PRO users always get direct access to history
+                    self.isHistoryModalPresented = true
+                } else {
+                    // For non-PRO users, check connectivity
+                    Task {
+                        // Check if SuperWall is available (requires connectivity)
+                        let canAccessSuperwall = Superwall.isInitialized
+                        
+                        // Check if network is available via CloudKit
+                        let isCloudAvailable = await CloudKitManager.shared.checkAccountStatus()
+                        
+                        await MainActor.run {
+                            if isCloudAvailable && canAccessSuperwall {
+                                // Online with SuperWall available - show paywall
+                                Superwall.shared.register(placement: "campaign_trigger", feature: {
+                                    // Refresh subscription status after purchase
+                                    Task {
+                                        await StoreManager.shared.checkSubscriptionStatus()
+                                    }
+                                    
+                                    // Show history modal if purchase was successful
+                                    self.isHistoryModalPresented = true
+                                })
+                            } else {
+                                // Offline scenario - show an alert explaining the situation
+                                let alertTitle = "History"
+                                let alertMessage = "The History feature requires a PRO subscription. Please connect to the internet to upgrade."
+                                
+                                // Show the alert
+                                let alertController = UIAlertController(
+                                    title: alertTitle,
+                                    message: alertMessage,
+                                    preferredStyle: .alert
+                                )
+                                
+                                alertController.addAction(UIAlertAction(title: "OK", style: .default))
+                                
+                                // Present the alert
+                                if let windowScene = getWindowScene(),
+                                   let rootViewController = windowScene.windows.first?.rootViewController {
+                                    rootViewController.present(alertController, animated: true)
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            
-            self.isHistoryModalPresented = true
-        })
+        }
     }
-    
-    
     // Setup audio and speech on app appear
     private func setupAudioAndSpeech() {
         permissionChecker.checkPermissions()
@@ -922,12 +967,20 @@ extension CalculatorView {
     }
     
     func clearTextField() {
-        if totalValue != "Invalid Equation" {
+        // Only try to save if there's something valid to save
+        if !textFieldValue.isEmpty && totalValue != "Invalid Equation" && totalValue != "" {
+            // Force save to history before clearing
+            historyManager.updateCurrentEquation(equation: textFieldValue, result: totalValue)
+            
+            // Call saveCurrentEquationToHistory directly to ensure it's immediately saved
             historyManager.saveCurrentEquationToHistory()
         }
+        
         textFieldValue = ""
         previousText = ""
+        totalValue = ""
         deletedComponentsMap.removeAll()
+        
     }
     
     func updateTextFieldValue() {

@@ -142,6 +142,7 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
     }
 }
 
+@MainActor
 class PurchaseModel: ObservableObject {
     let productIdentifiers = ["CoffeeTip1", "CoffeeTip5", "CoffeeTip10"]
     

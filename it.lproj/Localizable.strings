@@ -37,8 +37,8 @@
 "Thank you for your donation!" = "Grazie per la tua donazione!";
 "Donation failed..." = "Donazione non riuscita...";
 "Settings" = "Impostazioni";
-"Your calculation history remains 100% private, stored locally on your device. We only collect anonymous usage data to improve the app's performance and user experience." = "La cronologia dei calcoli rimane al 100% privata, archiviata localmente sul tuo dispositivo. Raccogliamo solo dati di utilizzo anonimi per migliorare le prestazioni e l'esperienza dell'app.";
-"*Speech data is sent to Apple to ensure transcription accuracy" = "*I dati vocali vengono inviati ad Apple per garantire l'accuratezza della trascrizione";
+"Your calculation history remains 100% private, stored locally and on Apple iCloud servers. We only collect anonymous usage data to improve the app's performance and user experience." = "La tua cronologia dei calcoli rimane al 100% privata, archiviata localmente e sui server Apple iCloud. Raccogliamo solo dati anonimi sull'utilizzo per migliorare le prestazioni dell’app e l’esperienza utente.";
+
 "Welcome to \nSimple Voice Calculator" = "Benvenuto su \nSimple Voice Calculator";
 "Quick Setup" = "Impostazione rapida";
 "This is where the magic happens." = "Qui avviene la magia.";

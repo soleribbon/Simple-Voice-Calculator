@@ -18,8 +18,11 @@ struct Simple_Voice_CalculatorApp: App {
         setupFeatureTips()
         setupSubscriptions()
         setupSuperwall()
+        setupCloudKitSync()
     }
     @AppStorage("isOnboarding") var isOnboarding = true
+    @Environment(\.scenePhase) var scenePhase
+    
     var body: some Scene {
         WindowGroup {
             if isOnboarding {
@@ -38,7 +41,40 @@ struct Simple_Voice_CalculatorApp: App {
                     .onOpenURL { url in
                         Superwall.shared.handleDeepLink(url) // previewing
                     }
+                
+                
                 //.environment(\.locale, .init(identifier: "hi"))
+            }
+        }.onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+                // App came to foreground, check if need to sync
+                Task {
+                    // Check if user is PRO and was previously offline
+                    let isProUser = !UserDefaults.standard.bool(forKey: "isRegUser")
+                    if isProUser {
+                        // Check cloud status
+                        let isCloudAvailable = await CloudKitManager.shared.checkAccountStatus()
+                        
+                        // If we're coming online and no recent sync, schedule a background sync
+                        let lastSyncTime = CloudKitManager.shared.lastSyncDate?.timeIntervalSinceNow ?? -86400
+                        if isCloudAvailable && lastSyncTime < -3600 { // No sync in the last hour
+                            print("App returned to foreground - scheduling background sync")
+                            
+                            // Delay slightly to avoid impacting app responsiveness
+                            try? await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds delay
+                            
+                            // Perform a background sync if still in foreground
+                            if scenePhase == .active {
+                                await CloudKitManager.shared.forceFullSync()
+                            }
+                        }
+                    }
+                }
+            } else if newPhase == .background {
+                // When app moves to background, ensure any pending calculations are saved
+                // This ensures history is updated even if the app is terminated
+                let historyManager = HistoryManager()
+                historyManager.saveCurrentEquationToHistory()
             }
         }
     }
@@ -52,6 +88,41 @@ struct Simple_Voice_CalculatorApp: App {
                                          "pro_monthly", "pro_yearly",
                                          "pro_monthly_discounted", "pro_yearly_discounted"])
     }
+    
+    
+    private func setupCloudKitSync() {
+        // Initialize CloudKit sync
+        Task {
+            // Check subscription status immediately
+            await StoreManager.shared.checkSubscriptionStatus()
+            
+            // Log diagnostics regardless of connectivity
+            await CloudKitManager.shared.logCloudKitDiagnostics()
+            
+            // Check if user is PRO (using StoreKit's status)
+            let isPro = StoreManager.shared.isSubscriptionActive
+            
+            // Only PRO users need CloudKit
+            if isPro {
+                // Check connectivity separately
+                let isCloudAvailable = await CloudKitManager.shared.checkAccountStatus()
+                
+                if isCloudAvailable {
+                    print("Performing initial CloudKit sync...")
+                    
+                    // Then do the full sync
+                    await CloudKitManager.shared.forceFullSync()
+                    
+                    print("Initial CloudKit sync completed")
+                } else {
+                    print("CloudKit not available - will sync later when online")
+                }
+            } else {
+                print("CloudKit sync not enabled - user is not PRO")
+            }
+        }
+    }
+    
     
     private func setupSentry() {
         SentrySDK.start { options in

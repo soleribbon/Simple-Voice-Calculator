@@ -39,7 +39,7 @@
 		5353CC8D2AE00CDD00A4A2F9 /* ExpressionSolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CC8C2AE00CDD00A4A2F9 /* ExpressionSolver.m */; };
 		5375AF132C4872C500A50830 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5375AF122C4872C500A50830 /* SettingsView.swift */; };
 		5392D63C2D9483BF00439720 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5392D63B2D9483BF00439720 /* HistoryView.swift */; };
-		5392D63E2D948B0A00439720 /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5392D63D2D948B0A00439720 /* HistoryModel.swift */; };
+		5392D63E2D948B0A00439720 /* HistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5392D63D2D948B0A00439720 /* HistoryManager.swift */; };
 		5392D6402D9588E500439720 /* EquationComponentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5392D63F2D9588E500439720 /* EquationComponentsView.swift */; };
 		5392D6422D95890000439720 /* CalculatorInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5392D6412D95890000439720 /* CalculatorInputView.swift */; };
 		5392D6442D95891D00439720 /* TotalDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5392D6432D95891D00439720 /* TotalDisplayView.swift */; };
@@ -59,6 +59,8 @@
 		53A55B462DA9528E00407F62 /* SuperwallKit in Frameworks */ = {isa = PBXBuildFile; productRef = 53A55B452DA9528E00407F62 /* SuperwallKit */; };
 		53A55B482DAC74E900407F62 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A55B472DAC74E900407F62 /* FavoritesManager.swift */; };
 		53A55B4D2DAD23A900407F62 /* FAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A55B4C2DAD23A900407F62 /* FAQView.swift */; };
+		53A55B502DAD617400407F62 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A55B4F2DAD617400407F62 /* CloudKitManager.swift */; };
+		53A55B5C2DAEE22400407F62 /* TombstoneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A55B5B2DAEE22400407F62 /* TombstoneManager.swift */; };
 		53E2205C2CAEF03F00AC026B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 411F18F12A098A2F00086755 /* Localizable.strings */; };
 		53E2205D2CAEF04000AC026B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 411F18F12A098A2F00086755 /* Localizable.strings */; };
 		53EA86262CAED024005A9526 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B78AAB2A0820DC0057D9F9 /* WidgetKit.framework */; };
@@ -181,7 +183,7 @@
 		5353CC8C2AE00CDD00A4A2F9 /* ExpressionSolver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExpressionSolver.m; sourceTree = "<group>"; };
 		5375AF122C4872C500A50830 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5392D63B2D9483BF00439720 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
-		5392D63D2D948B0A00439720 /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
+		5392D63D2D948B0A00439720 /* HistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryManager.swift; sourceTree = "<group>"; };
 		5392D63F2D9588E500439720 /* EquationComponentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationComponentsView.swift; sourceTree = "<group>"; };
 		5392D6412D95890000439720 /* CalculatorInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorInputView.swift; sourceTree = "<group>"; };
 		5392D6432D95891D00439720 /* TotalDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalDisplayView.swift; sourceTree = "<group>"; };
@@ -198,6 +200,9 @@
 		53A55B422DA832B200407F62 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		53A55B472DAC74E900407F62 /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
 		53A55B4C2DAD23A900407F62 /* FAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQView.swift; sourceTree = "<group>"; };
+		53A55B4E2DAD614600407F62 /* Simple Voice Calculator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Simple Voice Calculator.entitlements"; sourceTree = "<group>"; };
+		53A55B4F2DAD617400407F62 /* CloudKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
+		53A55B5B2DAEE22400407F62 /* TombstoneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TombstoneManager.swift; sourceTree = "<group>"; };
 		53EA86252CAED024005A9526 /* VoiceCalculatorComplicationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = VoiceCalculatorComplicationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		53EA86292CAED024005A9526 /* VoiceCalculatorComplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCalculatorComplication.swift; sourceTree = "<group>"; };
 		53EA862B2CAED025005A9526 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -278,6 +283,7 @@
 		4111E81A29F455E7003FA99C /* Simple Voice Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				53A55B4E2DAD614600407F62 /* Simple Voice Calculator.entitlements */,
 				5353CC892AE00C8F00A4A2F9 /* ExpressionObjC */,
 				411F18EC2A09895800086755 /* Simple-Voice-Calculator-Info.plist */,
 				4111E82129F455E8003FA99C /* Preview Content */,
@@ -378,9 +384,11 @@
 		539354AB2BF39C6B006EB9D1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				413C1B6D29F734AF0071DD19 /* Functions.swift */,
-				5392D63D2D948B0A00439720 /* HistoryModel.swift */,
+				53A55B4F2DAD617400407F62 /* CloudKitManager.swift */,
+				53A55B5B2DAEE22400407F62 /* TombstoneManager.swift */,
+				5392D63D2D948B0A00439720 /* HistoryManager.swift */,
 				53A55B472DAC74E900407F62 /* FavoritesManager.swift */,
+				413C1B6D29F734AF0071DD19 /* Functions.swift */,
 				53A55B3A2D9AD92000407F62 /* TestMode.swift */,
 				53A55B3E2DA29E5100407F62 /* FeatureTips.swift */,
 			);
@@ -658,6 +666,7 @@
 			files = (
 				413C1B7029F9BB390071DD19 /* SettingsView.swift in Sources */,
 				5328E4212D2DA63300913D09 /* RecordButtonView.swift in Sources */,
+				53A55B502DAD617400407F62 /* CloudKitManager.swift in Sources */,
 				413C1B6C29F6DEBB0071DD19 /* CalculatorView.swift in Sources */,
 				5353CC8D2AE00CDD00A4A2F9 /* ExpressionSolver.m in Sources */,
 				5392D63C2D9483BF00439720 /* HistoryView.swift in Sources */,
@@ -667,6 +676,7 @@
 				539354B12BF3B510006EB9D1 /* DonationButtonView.swift in Sources */,
 				413C1B7F29FFD5C20071DD19 /* OnboardingContentView.swift in Sources */,
 				5392D6422D95890000439720 /* CalculatorInputView.swift in Sources */,
+				53A55B5C2DAEE22400407F62 /* TombstoneManager.swift in Sources */,
 				53A55B3F2DA29E5100407F62 /* FeatureTips.swift in Sources */,
 				539354AD2BF39C8B006EB9D1 /* StoreKitStuff.swift in Sources */,
 				413C1B6E29F734AF0071DD19 /* Functions.swift in Sources */,
@@ -677,7 +687,7 @@
 				5392D6442D95891D00439720 /* TotalDisplayView.swift in Sources */,
 				53A55B3B2D9AD92000407F62 /* TestMode.swift in Sources */,
 				5392D6402D9588E500439720 /* EquationComponentsView.swift in Sources */,
-				5392D63E2D948B0A00439720 /* HistoryModel.swift in Sources */,
+				5392D63E2D948B0A00439720 /* HistoryManager.swift in Sources */,
 				413C1B7D29FFD5AF0071DD19 /* OnboardingContainerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -896,6 +906,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Simple Voice Calculator/Simple Voice Calculator.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -937,6 +948,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Simple Voice Calculator/Simple Voice Calculator.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -976,7 +988,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JPXSGQNS89;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Voice Calculator Widget/Info.plist";
@@ -987,7 +999,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.2;
+				MARKETING_VERSION = 2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator.Voice-Calculator-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1003,7 +1015,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JPXSGQNS89;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Voice Calculator Widget/Info.plist";
@@ -1014,7 +1026,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.2;
+				MARKETING_VERSION = 2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator.Voice-Calculator-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1032,7 +1044,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Simple Voice Calculator Watch Edition Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = JPXSGQNS89;
 				ENABLE_PREVIEWS = YES;
@@ -1048,7 +1060,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator.watchkitapp";
 				PRODUCT_NAME = "Voice Calculator";
 				SDKROOT = watchos;
@@ -1069,7 +1081,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Simple Voice Calculator Watch Edition Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = JPXSGQNS89;
 				ENABLE_PREVIEWS = YES;
@@ -1085,7 +1097,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator.watchkitapp";
 				PRODUCT_NAME = "Voice Calculator";
 				SDKROOT = watchos;
@@ -1118,7 +1130,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator.watchkitapp.VoiceCalculatorComplication";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1152,7 +1164,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raviheyne.Simple-Voice-Calculator.watchkitapp.VoiceCalculatorComplication";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;

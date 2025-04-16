@@ -1,4 +1,3 @@
-
 import SwiftUI
 import Mixpanel
 import SuperwallKit
@@ -16,8 +15,13 @@ struct SettingsView: View {
     
     @EnvironmentObject var historyManager: HistoryManager
     
+    //CloudKit
+    @StateObject private var cloudKitManager = CloudKitManager.shared
+    @State private var syncStatusMessage: String = ""
+    @State private var showSyncStatus: Bool = false
+    
     // History limit options for Pro users
-    private let historyLimitOptions = [25, 50, 100, 250]
+    private let historyLimitOptions = [25, 50, 100]
     @AppStorage("historyLimit") var historyLimit: Int = 25
     
     @State private var isShareSheetPresented = false
@@ -26,7 +30,9 @@ struct SettingsView: View {
     @State private var introCoverShowing: Bool = false
     @State private var versionNumber: String = Bundle.main.releaseVersionNumber ?? "1.0"
     
-    @AppStorage("isRegUser") private var isRegUser: Bool = true
+    private var isRegUser: Bool {
+        return StoreManager.shared.isRegUser
+    }
     
     var body: some View {
         NavigationView {
@@ -101,8 +107,6 @@ struct SettingsView: View {
                         Button(action: {
                             Superwall.shared.register(placement: "campaign_trigger", feature: {
                                 // Called when purchase is successful
-                                // UserDefaults sets the isRegUser value directly
-                                UserDefaults.standard.set(false, forKey: "isRegUser")
                                 
                                 NotificationCenter.default.post(
                                     name: NSNotification.Name("ProSubscriptionPurchased"),
@@ -130,7 +134,7 @@ struct SettingsView: View {
                         HStack {
                             Text("💎")
                                 .foregroundColor(.accentColor)
-                            Text("Your current plan:")
+                            Text("Your current mode is")
                             Text("PRO")
                                 .font(.headline)
                                 .fontWeight(.bold)
@@ -210,15 +214,68 @@ struct SettingsView: View {
                         HStack {
                             Image(systemName: "clock")
                                 .foregroundColor(.accentColor)
-                            Picker("History Limit", selection: $historyLimit) {
-                                ForEach(historyLimitOptions, id: \.self) { limit in
-                                    Text("\(limit) equations").tag(limit)
+                            VStack(alignment: .leading) {
+                                Picker("History Limit", selection: $historyLimit) {
+                                    ForEach(historyLimitOptions, id: \.self) { limit in
+                                        Text("\(limit) equations").tag(limit)
+                                    }
+                                }
+                                .onChange(of: historyLimit) { newValue in
+                                    historyManager.updateHistoryLimit(newValue)
                                 }
                             }
-                            .onChange(of: historyLimit) { newValue in
-                                historyManager.updateHistoryLimit(newValue)
+                        }
+                        
+                        //CloudKit
+                        HStack {
+                            Image(systemName: "icloud")
+                                .foregroundColor(.accentColor)
+                            
+                            VStack(alignment: .leading) {
+                                Text("Sync Across Devices")
+                                
+                                if let lastSyncDate = cloudKitManager.lastSyncDate {
+                                    Text("Last synced: \(formattedDate(lastSyncDate))")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                            
+                            Spacer()
+                            
+                            if cloudKitManager.isSyncing {
+                                ProgressView()
+                                    .padding(.horizontal)
+                            } else {
+                                Button(action: {
+                                    // Perform manual sync
+                                    Task {
+                                        // Check if iCloud is available
+                                        if await cloudKitManager.checkAccountStatus() {
+                                            // Trigger sync in history and favorites managers
+                                            historyManager.performManualSync()
+                                            // Get reference to favorites manager
+                                            let favoritesManager = FavoritesManager()
+                                            favoritesManager.performManualSync()
+                                            
+                                            syncStatusMessage = "Sync complete"
+                                        } else {
+                                            syncStatusMessage = "Unable to sync. Please check your internet connection and try again when online."
+                                        }
+                                        showSyncStatus = true
+                                    }
+                                }) {
+                                    Image(systemName: "arrow.clockwise")
+                                        .foregroundColor(.accentColor)
+                                }
+                                .disabled(cloudKitManager.isSyncing)
                             }
                         }
+                        .alert(isPresented: $showSyncStatus) {
+                            Alert(title: Text("Sync Status"), message: Text(syncStatusMessage), dismissButton: .default(Text("OK")))
+                        }
+                        
+                        
                     }
                     
                 }
@@ -226,10 +283,7 @@ struct SettingsView: View {
                 
                 Section(header: Text("Privacy")) {
                     DisclosureGroup(isExpanded: $privacyExpanded) {
-                        Text("Your calculation history remains 100% private, stored locally on your device. We only collect anonymous usage data to improve the app's performance and user experience.")
-                        Text("*Speech data is sent to Apple to ensure transcription accuracy")
-                            .font(.caption2)
-                            .opacity(0.4)
+                        Text("Your calculation history remains 100% private, stored locally and on Apple iCloud servers. We only collect anonymous usage data to improve the app's performance and user experience.")
                         
                     } label: {
                         HStack {
@@ -261,6 +315,11 @@ struct SettingsView: View {
                 // Check subscription status on appear and update UI
                 Task {
                     await storeManager.checkSubscriptionStatus()
+                    
+                    //CloudKit - don't sync when opening settings right now, maybe later enable but annoying
+                    //                    if await cloudKitManager.shouldSync() {
+                    //                        historyManager.checkAndPerformSync()
+                    //                    }
                 }
                 
                 // Refresh store products (ensures prices are up to date)
@@ -326,6 +385,15 @@ struct SettingsView: View {
             }
         }
     }
+    
+    // Helper function to format date
+    private func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter.string(from: date)
+    }
+    
     private func handleToggleChange(isOn: Bool) {
         if isOn {
             
@@ -335,6 +403,8 @@ struct SettingsView: View {
             Mixpanel.mainInstance().track(event: "disabledTotalAnnouncement")
         }
     }
+    
+    
     
 }
 

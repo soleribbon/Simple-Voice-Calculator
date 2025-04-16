@@ -165,6 +165,13 @@ func parseEquationComponents(from textFieldValue: String) -> [String] {
 
     }
 
+    for i in 0..<components.count {
+        if components[i].contains("%") {
+            components[i] = processPercentSigns(in: components[i])
+        }
+    }
+
+
     return components
 }
 
@@ -412,7 +419,7 @@ class PermissionChecker: ObservableObject {
 
 
 
-
+@MainActor
 class PurchaseModel: ObservableObject {
     let productIdentifiers = ["CoffeeTip1", "CoffeeTip5", "CoffeeTip10"]
 

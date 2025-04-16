@@ -33,8 +33,7 @@
 "Thank you for your donation!" = "기부에 감사드립니다!";
 "Donation failed..." = "기부 실패...";
 "Settings" = "설정";
-"Your calculation history remains 100% private, stored locally on your device. We only collect anonymous usage data to improve the app's performance and user experience." = "계산 기록은 100% 개인정보 보호되며 기기에 로컬로 저장됩니다. 앱의 성능과 사용자 경험을 개선하기 위해 익명의 사용 데이터만 수집합니다.";
-"*Speech data is sent to Apple to ensure transcription accuracy" = "*전사의 정확성을 보장하기 위해 음성 데이터가 Apple로 전송됩니다";
+"Your calculation history remains 100% private, stored locally and on Apple iCloud servers. We only collect anonymous usage data to improve the app's performance and user experience." = "사용자의 계산 기록은 100% 비공개로 유지되며, 로컬 및 Apple iCloud 서버에 저장됩니다. 앱의 성능과 사용자 경험을 개선하기 위해 익명 사용 데이터를 수집합니다.";
 "Welcome to \nSimple Voice Calculator" = "간단한 음성 계산기에 \n오신 것을 환영합니다";
 "Quick Setup" = "빠른 설정";
 "This is where the magic happens." = "이곳에서 마법이 일어납니다.";
