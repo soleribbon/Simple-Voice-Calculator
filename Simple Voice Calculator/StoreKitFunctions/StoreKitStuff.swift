@@ -25,21 +25,21 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
     @Published var is1CoffeePurchaseProcessing = false
     @Published var is5CoffeesPurchaseProcessing = false
     @Published var is10CoffeesPurchaseProcessing = false
-
+    
     // MARK: - Subscription Properties
     @Published var isSubscriptionActive: Bool = false
     private var transactionListener: Task<Void, Error>? = nil
     private(set) var subscriptionExpirationDate: Date?
-
+    
     // MARK: - Shared Instance
     static let shared = StoreManager()
     private var request: SKProductsRequest!
-
+    
     // MARK: - Initialization
     override init() {
         super.init()
         SKPaymentQueue.default().add(self)
-
+        
         // Notification observer for Superwall subscription
         NotificationCenter.default.addObserver(
             self,
@@ -47,46 +47,46 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
             name: NSNotification.Name("ProSubscriptionPurchased"),
             object: nil
         )
-
+        
         setupSubscriptionMonitoring()
-
+        
         // Immediately check subscription status on launch
         Task {
             await checkSubscriptionStatus()
         }
     }
-
-
+    
+    
     @objc func handleProPurchase(_ notification: Notification) {
         // Check if notification includes a flag indicating this is a new purchase
         if let userInfo = notification.userInfo,
            let isNewPurchase = userInfo["isNewPurchase"] as? Bool,
            isNewPurchase {
-
+            
             // Only show thank you message for new purchases
             showProSubscriptionThanks()
         }
-
+        
         // Always update subscription status
         Task {
             await checkSubscriptionStatus()
         }
     }
-
+    
     private func setupSubscriptionMonitoring() {
         // Start listening for subscription changes
         transactionListener = createTransactionListener()
-
+        
         // Check subscription status immediately
         Task {
             await checkSubscriptionStatus()
         }
     }
-
+    
     deinit {
         transactionListener?.cancel()
     }
-
+    
     // MARK: - Product Fetching
     func startRequest(with identifiers: [String]) {
         let productIdentifiers = Set(identifiers)
@@ -94,13 +94,13 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
         request.delegate = self
         request.start()
     }
-
+    
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         DispatchQueue.main.async {
             self.products = response.products
         }
     }
-
+    
     // MARK: - Payment Queue
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction in transactions {
@@ -114,11 +114,11 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
             }
         }
     }
-
+    
     private func handlePurchasedTransaction(_ transaction: SKPaymentTransaction) {
         DispatchQueue.main.async {
             self.showAlert = true
-
+            
             switch transaction.payment.productIdentifier {
             case "CoffeeTip1":
                 self.is1CoffeePurchaseProcessing = false
@@ -143,22 +143,22 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
                 self.alertMessage = "Purchase successful!"
                 print("Unknown product identifier: \(transaction.payment.productIdentifier)")
             }
-
+            
             // Prompt for review
             if let windowScene = UIApplication.shared.connectedScenes
                 .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
                 SKStoreReviewController.requestReview(in: windowScene)
             }
         }
-
+        
         SKPaymentQueue.default().finishTransaction(transaction)
     }
-
+    
     func showProSubscriptionThanks() {
         DispatchQueue.main.async {
             self.showAlert = true
             self.alertMessage = "Thank you for your support! Enjoy PRO Mode ✨"
-
+            
             // Prompt for review
             if let windowScene = UIApplication.shared.connectedScenes
                 .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
@@ -166,12 +166,12 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
             }
         }
     }
-
+    
     private func handleFailedTransaction(_ transaction: SKPaymentTransaction) {
         DispatchQueue.main.async {
             if let error = transaction.error as NSError?, error.code != SKError.paymentCancelled.rawValue {
                 self.showAlert = true
-
+                
                 // Use the correct message for donations vs. subscriptions
                 if ["CoffeeTip1", "CoffeeTip5", "CoffeeTip10"].contains(transaction.payment.productIdentifier) {
                     self.alertMessage = "Donation failed - Please try again."
@@ -181,7 +181,7 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
             } else {
                 print("Transaction canceled by user")
             }
-
+            
             // Reset the processing flag based on the product identifier
             switch transaction.payment.productIdentifier {
             case "CoffeeTip1":
@@ -194,14 +194,14 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
                 print("Reset processing for: \(transaction.payment.productIdentifier)")
             }
         }
-
+        
         SKPaymentQueue.default().finishTransaction(transaction)
     }
-
+    
     // MARK: - Purchase Methods
     func purchaseProduct(withIdentifier productIdentifier: String) {
         resetPurchaseProcessingFlags()
-
+        
         // Based on the productIdentifier, set the corresponding processing flag to true
         switch productIdentifier {
         case "CoffeeTip1":
@@ -213,7 +213,7 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
         default:
             print("Processing purchase for: \(productIdentifier)")
         }
-
+        
         if let product = products.first(where: { $0.productIdentifier == productIdentifier }) {
             let payment = SKPayment(product: product)
             SKPaymentQueue.default().add(payment)
@@ -224,13 +224,13 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
             alertMessage = "Product not found."
         }
     }
-
+    
     private func resetPurchaseProcessingFlags() {
         is1CoffeePurchaseProcessing = false
         is5CoffeesPurchaseProcessing = false
         is10CoffeesPurchaseProcessing = false
     }
-
+    
     // MARK: - StoreKit 2 Subscription Handling
     private func createTransactionListener() -> Task<Void, Error> {
         return Task.detached {
@@ -253,12 +253,12 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
             }
         }
     }
-
+    
     func checkSubscriptionStatus() async {
         // Use task-local variables to track results
         var foundActiveSubscription = false
         var newExpirationDate: Date? = nil
-
+        
         // Get all current entitlements (active purchases)
         for await verification in StoreKit.Transaction.currentEntitlements {
             // Only process verified transactions
@@ -279,20 +279,20 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
                 continue
             }
         }
-
+        
         // Now capture the final values before passing to MainActor
         let finalActive = foundActiveSubscription
         let finalExpDate = newExpirationDate
-
+        
         // Only update the published property once, after all verification is complete
         await MainActor.run {
             // Only notify if there's an actual change
             let statusChanged = (self.isSubscriptionActive != finalActive)
-
+            
             // Update properties
             self.isSubscriptionActive = finalActive
             self.subscriptionExpirationDate = finalExpDate
-
+            
             // Post notification only if status actually changed
             if statusChanged {
                 NotificationCenter.default.post(
@@ -303,7 +303,7 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
             }
         }
     }
-
+    
     func restorePurchases() {
         // Wrap the async call in a Task
         Task {
@@ -317,27 +317,27 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
             }
         }
     }
-
+    
     // MARK: - Convenience Methods
     func formatExpirationDate() -> String? {
         guard let date = subscriptionExpirationDate else { return nil }
-
+        
         let df = DateFormatter()
         df.dateStyle = .long          // e.g. “Apr 30, 2025”
         df.timeStyle = .none
-
+        
         let dateString = df.string(from: date)
-
+        
         return String(
             format: NSLocalizedString("SUBSCRIPTION_RENEWS_ON",
                                       comment: "Label preceding renewal date"),
             dateString)
     }
-
+    
     var isRegUser: Bool {
         return !isSubscriptionActive
     }
-
-
+    
+    
 }
 

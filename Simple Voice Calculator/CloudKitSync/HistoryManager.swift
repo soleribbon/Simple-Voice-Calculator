@@ -356,7 +356,6 @@ extension HistoryManager {
         
         // Let the user know about sync being limited if they selected a higher value
         if newLimit > cloudStorageLimit {
-            // This could be handled via a one-time alert or tip if desired
             print("User selected \(newLimit) history items, but only \(cloudStorageLimit) will sync")
         }
     }

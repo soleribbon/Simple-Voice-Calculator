@@ -287,7 +287,7 @@ struct SettingsView: View {
                         Text("*Speech data is sent to Apple to ensure transcription accuracy")
                             .font(.caption2)
                             .opacity(0.4)
-
+                        
                     } label: {
                         HStack {
                             Image(systemName: "shield")

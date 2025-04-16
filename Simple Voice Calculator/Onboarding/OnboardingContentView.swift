@@ -35,10 +35,10 @@ struct OnboardingContentView: View {
     
     // Animation state
     @State private var buttonScale: CGFloat = 1.0
-
+    
     //Only for settings-access modal dismissal
     @Environment(\.presentationMode) var presentationMode
-
+    
     var isLastFeature: Bool {
         feature.id == features.last?.id
     }
@@ -253,7 +253,7 @@ struct OnboardingContentView: View {
             Button(action: {
                 let impactMed = UIImpactFeedbackGenerator(style: .medium)
                 impactMed.impactOccurred()
-
+                
                 if actualIntro {
                     // For first-time users, set onboarding flag to false
                     withAnimation {

@@ -47,7 +47,7 @@ class CloudKitManager: ObservableObject {
             let status = try await container.accountStatus()
             
             // Log the status for debugging
-//            print("CloudKit account status: \(status.rawValue)")
+            //            print("CloudKit account status: \(status.rawValue)")
             
             // Only consider available as a success
             return status == .available

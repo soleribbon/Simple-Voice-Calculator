@@ -13,7 +13,7 @@ struct FAQView: View {
     // Track which question is expanded
     @State private var expandedIndex: Int? = nil
     
-
+    
     private func localizedFAQTitle(_ english: String) -> LocalizedStringKey {
         // 1 exact key?
         if NSLocalizedString(english, comment: "") != english {
@@ -27,7 +27,7 @@ struct FAQView: View {
         // 3 fallback – show the English string
         return LocalizedStringKey(english)
     }
-
+    
     private let faqItems: [(question: String, answerView: AnyView)] = [
         (
             "What math operators are supported?",
@@ -144,7 +144,7 @@ struct FAQView: View {
                             isExpanded: Binding(
                                 get: { expandedIndex == index },
                                 set: { expandedIndex = $0 ? index : nil }
-
+                                
                             )
                         ) {
                             // The “answer” (wrapped in AnyView above)
