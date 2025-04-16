@@ -284,7 +284,10 @@ struct SettingsView: View {
                 Section(header: Text("Privacy")) {
                     DisclosureGroup(isExpanded: $privacyExpanded) {
                         Text("Your calculation history remains 100% private, stored locally and on Apple iCloud servers. We only collect anonymous usage data to improve the app's performance and user experience.")
-                        
+                        Text("*Speech data is sent to Apple to ensure transcription accuracy")
+                            .font(.caption2)
+                            .opacity(0.4)
+
                     } label: {
                         HStack {
                             Image(systemName: "shield")
@@ -373,8 +376,13 @@ struct SettingsView: View {
                 }
             }
             .sheet(isPresented: $isShareSheetPresented) {
-                ShareSheet(activityItems: [
+                
+                let shareMessage = NSLocalizedString(
                     "Check out Simple Voice Calculator - the easiest way to perform calculations using your voice!",
+                    comment: "Text content for sharing the app"
+                )
+                ShareSheet(activityItems: [
+                    shareMessage,
                     URL(string: "https://apps.apple.com/app/simple-voice-calculator/id6448565084")!
                 ])
                 .onDisappear {

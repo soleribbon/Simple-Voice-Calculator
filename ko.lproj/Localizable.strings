@@ -1,62 +1,538 @@
-// Korean
-"Simple Voice Calculator" = "Simple Voice Calculator";
-"TOTAL:" = "합계:";
-"Enter equation" = "방정식 입력";
-"Input Equation" = "방정식 입력";
-"Voice Input" = "음성 입력";
-"+ Insert" = "+ 삽입";
+/* (No Comment) */
 "- Insert" = "- 삽입";
-"× Insert" = "× 삽입";
-"÷ Insert" = "÷ 삽입";
-"Sym" = "기호";
-"Clear" = "지우기";
-"Start Talking" = "말하기 시작";
-"Stop Talking" = "말하기 중지";
-"Equation Components" = "방정식 구성 요소";
-"Introduction Tutorial" = "소개 튜토리얼";
-"Quick Help" = "빠른 도움말";
-"About & Contact" = "소개 및 연락처";
-"About Simple Voice Calculator" = "간단한 음성 계산기 소개";
-"Contact Developer" = "개발자 연락처";
-"Tip Developer a Coffee" = "개발자에게 커피 팁을 주세요";
-"Simple Voice Calculator was made by students." = "간단한 음성 계산기는 학생들이 만들었습니다.";
-"Privacy" = "개인정보 보호";
-"Version" = "버전";
-"Cup" = "컵";
-"Cups" = "컵들";
-"**What math operators are supported?**" = "**지원하는 수학 연산자는 무엇인가요?**";
-"Currently supported operators:" = "현재 지원되는 연산자:";
-"Invalid Equation is presented when the textfield contains characters that are not valid in a mathematical equation or not currently supported." = "수학적 방정식에서 유효하지 않거나 현재 지원되지 않는 문자가 텍스트 필드에 있을 때 '잘못된 방정식'이 표시됩니다.";
-"The Sym button can be used to insert a desired math symbol where your cursor is placed in the textfield." = "'기호' 버튼을 사용하여 커서가 위치한 텍스트 필드에 원하는 수학 기호를 삽입할 수 있습니다.";
-"You can edit any component of your equation in the 'Equation Components' section. Just tap your desired component and it will be selected in your textfield. Make sure you do not have voice input enabled (button should say 'Start Talking')." = "'방정식 구성 요소' 섹션에서 방정식의 모든 구성 요소를 편집할 수 있습니다. 원하는 구성 요소를 탭하면 텍스트 필드에 선택됩니다. 음성 입력이 활성화되어 있지 않아야 합니다 (버튼은 '말하기 시작'이라고 표시되어야 함).";
-"Simple Voice Calculator began with a clear purpose: to make math **easier and more accessible** for everyone. Recognizing that typing complex equations or tapping small buttons can be challenging—especially on smaller screens—we developed an intuitive alternative. With easy voice input and instant editing capabilities, Simple Voice Calculator offers a natural and inclusive experience, transforming the way we interact with math in everyday life." = "Simple Voice Calculator는 모두가 더 쉽고 편하게 수학을 할 수 있도록 하는 명확한 목표에서 시작되었습니다. 복잡한 수식을 입력하거나 작은 버튼을 터치하는 것이—특히 작은 화면에서는—불편할 수 있다는 점을 인지하고 직관적인 대안을 개발했습니다. 간단한 음성 입력과 즉각적인 수정 기능을 통해 Simple Voice Calculator는 자연스럽고 포용적인 경험을 제공하며, 일상생활에서 수학과 상호작용하는 방식을 혁신합니다.";
-"Thank you for your donation!" = "기부에 감사드립니다!";
-"Donation failed..." = "기부 실패...";
-"Settings" = "설정";
-"Your calculation history remains 100% private, stored locally and on Apple iCloud servers. We only collect anonymous usage data to improve the app's performance and user experience." = "사용자의 계산 기록은 100% 비공개로 유지되며, 로컬 및 Apple iCloud 서버에 저장됩니다. 앱의 성능과 사용자 경험을 개선하기 위해 익명 사용 데이터를 수집합니다.";
-"Welcome to \nSimple Voice Calculator" = "간단한 음성 계산기에 \n오신 것을 환영합니다";
-"Quick Setup" = "빠른 설정";
-"This is where the magic happens." = "이곳에서 마법이 일어납니다.";
-"Continue" = "계속";
-"Easily edit any component of your equation." = "방정식의 어떤 구성 요소도 쉽게 편집하세요.";
+
+/* (No Comment) */
 "'Invalid Equation' means your input was invalid. Check your equation." = "'잘못된 방정식'은 입력이 유효하지 않았음을 의미합니다. 방정식을 확인하세요.";
-"Help is always available." = "도움말은 항상 이용 가능합니다.";
-"Now, time to calculate." = "이제, 계산할 시간입니다.";
-"Get Started" = "시작하기";
-"Skip Introduction" = "소개 건너뛰기";
-"Important Notes" = "중요한 노트";
-"After pressing 'Stop Talking', your dictated equation will be added to the end of the input field." = "'말하기 중지'를 누른 후에는, 말한 방정식이 입력 필드의 끝에 추가됩니다.";
-"While voice dictation is enabled, you are unable to manually edit the input field." = "음성 인식이 활성화된 동안에는 입력 필드를 수동으로 편집할 수 없습니다.";
-"Ensure no alphabetical letters are included in your input." = "입력에 알파벳 문자가 포함되지 않도록 하십시오.";
-"**What does 'Invalid Equation' mean?**" = "**'잘못된 방정식'이란 무엇을 의미하나요?**";
-"**What does the 'Sym' button do?**" = "**'기호' 버튼은 무엇을 하나요?**";
+
+/* No comment provided by engineer. */
+"(" = "(";
+
+/* No comment provided by engineer. */
+")" = ")";
+
+/* (No Comment) */
 "**How do I edit my voice input?**" = "**음성 입력을 어떻게 편집하나요?**";
-"Only **+ - × ÷ %**  are supported" = "**+ - × ÷ %** 만 지원됩니다";
-"Total equals" = "총합은 %@";
+
+/* (No Comment) */
+"**What does 'Invalid Equation' mean?**" = "**'잘못된 방정식'이란 무엇을 의미하나요?**";
+
+/* (No Comment) */
+"**What does the 'Sym' button do?**" = "**'기호' 버튼은 무엇을 하나요?**";
+
+/* (No Comment) */
+"**What math operators are supported?**" = "**지원하는 수학 연산자는 무엇인가요?**";
+
+"**What is PRO Mode?**"                            = "**PRO 모드란 무엇인가요?**";
+"**How do I use parentheses in equations?**"       = "**방정식에서 괄호는 어떻게 사용하나요?**";
+"**How do I cancel my PRO subscription?**"         = "**PRO 구독을 취소하려면 어떻게 하나요?**";
+"**I have another question...**"                   = "**다른 질문이 있습니다...**";
+
+
+/* No comment provided by engineer. */
+"%lld equations" = "%lld 방정식";
+
+/* No comment provided by engineer. */
+"• **Favorites** – Save your most-used equations for easy retrieval." = "• **선호 항목** - 가장 많이 사용하는 방정식을 저장하여 쉽게 검색하세요.";
+
+/* No comment provided by engineer. */
+"• **History** – Quickly access and reuse past equations. You can apply past totals to your current equation with any operator." = "• **역사** - 과거의 연립방정식에 빠르게 접근하고 재사용할 수 있습니다. 과거의 합계를 현재의 연립방정식에 모든 연산자로 적용할 수 있습니다.";
+
+/* No comment provided by engineer. */
+"• **iCloud Sync** – Keep your equation history and favorites consistent across all devices." = "• **iCloud 동기화** - 모든 기기에서 방정식 기록과 즐겨찾기를 일관되게 유지하세요.";
+
+/* No comment provided by engineer. */
+"• **Siri Support** (coming soon) – Perform accurate calculations with Siri." = "• **시리 지원** (곧 출시 예정) - 시리를 사용하여 정확한 계산 수행하기.";
+
+/* No comment provided by engineer. */
+"+ - × ÷" = "+ - × ÷";
+
+/* (No Comment) */
+"+ Insert" = "+ 삽입";
+
+/* (No Comment) */
+"÷ Insert" = "÷ 삽입";
+
+/* (No Comment) */
+"× Insert" = "× 삽입";
+
+/* No comment provided by engineer. */
+"=" = "=";
+
+/* (No Comment) */
+"About & Contact" = "소개 및 연락처";
+
+/* (No Comment) */
+"About Simple Voice Calculator" = "간단한 음성 계산기 소개";
+
+/* No comment provided by engineer. */
+"add" = "더하기";
+
+/* No comment provided by engineer. */
+"Add" = "더하기";
+
+/* No comment provided by engineer. */
+"Add to Favorites" = "즐겨찾기에 추가";
+
+/* No comment provided by engineer. */
+"Advances to the next screen" = "다음 화면으로 이동";
+
+/* (No Comment) */
+"After pressing 'Stop Talking', your dictated equation will be added to the end of the input field." = "'말하기 중지'를 누른 후에는, 말한 방정식이 입력 필드의 끝에 추가됩니다.";
+
+/* (No Comment) */
 "Announce Total" = "총액 발표";
+
+/* No comment provided by engineer. */
+"Are you sure you want to clear all calculation history?" = "모든 계산 기록을 지우시겠습니까?";
+
+/* No comment provided by engineer. */
+"Are you sure you want to clear all favorites?" = "모든 즐겨찾기를 지우시겠습니까?";
+
+/* No comment provided by engineer. */
+"clear" = "명백한";
+
+/* (No Comment) */
+"Clear" = "지우기";
+
+/* WatchOS */
+"Clear Equation" = "방정식 지우기";
+
+/* No comment provided by engineer. */
+"Clear Favorites" = "즐겨찾기 지우기";
+
+/* No comment provided by engineer. */
+"Clear History" = "삭제 기록";
+
+/* No comment provided by engineer. */
+"close bracket" = "닫는 괄호";
+
+/* No comment provided by engineer. */
+"close parenthesis" = "닫는 괄호";
+
+/* No comment provided by engineer. */
+"closing bracket" = "닫는 괄호";
+
+/* No comment provided by engineer. */
+"Completes the introduction and opens the calculator" = "소개를 완료하고 계산기를 엽니다.";
+
+/* (No Comment) */
+"Contact Developer" = "개발자 연락처";
+
+/* (No Comment) */
+"Continue" = "계속";
+
+/* (No Comment) */
+"Cup" = "컵";
+
+/* (No Comment) */
+"Cups" = "컵들";
+
+/* (No Comment) */
+"Currently supported operators:" = "현재 지원되는 연산자:";
+
+/* No comment provided by engineer. */
+"Currently supported operators:\n+ - × ÷ %" = "현재 지원되는 연산자:\n+ - × ÷ %";
+
+/* No comment provided by engineer. */
+"Delete" = "삭제";
+
+/* No comment provided by engineer. */
+"divide" = "나누다";
+
+/* No comment provided by engineer. */
+"Divide" = "나누다";
+
+/* No comment provided by engineer. */
+"divide by" = "나누기";
+
+/* No comment provided by engineer. */
+"divideby" = "나누기";
+
+/* Word for division operator */
+"divided by" = "나누어진";
+
+/* Word for division operator without spaces */
+"dividedby" = "나누어진";
+
+/* (No Comment) */
+"Donation failed..." = "기부 실패...";
+
+/* No comment provided by engineer. */
+"done" = "다 됐어";
+
+/* (No Comment) */
+"Easily edit any component of your equation." = "방정식의 어떤 구성 요소도 쉽게 편집하세요.";
+
+/* No comment provided by engineer. */
+"Edit" = "편집";
+
+/* No comment provided by engineer. */
+"eight" = "여덟";
+
+/* No comment provided by engineer. */
+"Email Developer" = "이메일 개발자";
+
+/* No comment provided by engineer. */
+"end" = "끝";
+
+/* (No Comment) */
+"Ensure no alphabetical letters are included in your input." = "입력에 알파벳 문자가 포함되지 않도록 하십시오.";
+
+/* (No Comment) */
+"Enter equation" = "방정식 입력";
+
+/* No comment provided by engineer. */
+"equals" = "같음 (gat-eum)";
+
+/* (No Comment) */
+"Equation Components" = "방정식 구성 요소";
+
+/* No comment provided by engineer. */
+"FAQ" = "자주 묻는 질문";
+
+/* No comment provided by engineer. */
+"Favorites" = "좋아요";
+
+/* No comment provided by engineer. */
+"Find out more here" = "여기서 더 자세히 알아보세요.";
+
+/* No comment provided by engineer. */
+"finish" = "끝내세요";
+
+/* No comment provided by engineer. */
+"five" = "다섯 (daseot)";
+
+/* No comment provided by engineer. */
+"four" = "네";
+
+/* No comment provided by engineer. */
+"Frequent Questions" = "자주 묻는 질문";
+
+/* (No Comment) */
+"Get Started" = "시작하기";
+
+/* (No Comment) */
+"Help is always available." = "도움말은 항상 이용 가능합니다.";
+
+/* No comment provided by engineer. */
+"History" = "역사";
+
+/* No comment provided by engineer. */
+"History Limit" = "역사 제한";
+
+/* No comment provided by engineer. */
+"History Now Available" = "역사 지금 이용 가능합니다";
+
+/* No comment provided by engineer. */
+"Illustration for %@" = "%@을(를) 위한 일러스트레이션";
+
+/* (No Comment) */
+"Important Notes" = "중요한 노트";
+
+/* (No Comment) */
+"Input Equation" = "방정식 입력";
+
+/* No comment provided by engineer. */
+"Input equations instantly." = "즉시 방정식을 입력하십시오.";
+
+/* No comment provided by engineer. */
+"Insert into Current Equation" = "현재 방정식에 삽입하세요";
+
+/* (No Comment) */
+"Introduction Tutorial" = "소개 튜토리얼";
+
+/* (No Comment) */
+"Invalid Equation is presented when the textfield contains characters that are not valid in a mathematical equation or not currently supported." = "수학적 방정식에서 유효하지 않거나 현재 지원되지 않는 문자가 텍스트 필드에 있을 때 '잘못된 방정식'이 표시됩니다.";
+
+/* No comment provided by engineer. */
+"Last synced: %@" = "마지막 동기화: %@";
+
+/* No comment provided by engineer. */
+"left bracket" = "왼쪽 대괄호";
+
+/* No comment provided by engineer. */
+"MADE BY VITO SOFTWARE" = "VITO 소프트웨어에서 제작";
+
+/* No comment provided by engineer. */
+"minus" = "마이너스";
+
+/* No comment provided by engineer. */
+"Minus Insert" = "마이너스 삽입";
+
+/* Word for multiplication operator */
+"multiplied by" = "곱하기";
+
+/* Word for multiplication operator without spaces */
+"multipliedby" = "곱해진";
+
+/* No comment provided by engineer. */
+"multiply" = "곱하기";
+
+/* No comment provided by engineer. */
+"Multiply" = "곱하다";
+
+/* Word for multiplication operator */
+"multiply by" = "곱하기";
+
+/* No comment provided by engineer. */
+"nine" = "아홉";
+
+/* No comment provided by engineer. */
+"No calculation history yet" = "아직 계산 기록이 없습니다.";
+
+/* No comment provided by engineer. */
+"No favorites yet" = "아직 즐겨찾기가 없습니다.";
+
+/* (No Comment) */
+"Now, time to calculate." = "이제, 계산할 시간입니다.";
+
+/* No comment provided by engineer. */
+"OK" = "알았어";
+
+/* No comment provided by engineer. */
+"Onboarding screen %lld of %lld" = "온보딩 화면 %lld 중 %lld";
+
+/* No comment provided by engineer. */
+"one" = "하나";
+
+/* (No Comment) */
+"Only **+ - × ÷ %** are supported" = "**+ - × ÷ %** 만 지원됩니다";
+
+/* No comment provided by engineer. */
+"open bracket" = "열리는 괄호";
+
+/* No comment provided by engineer. */
+"open parenthesis" = "열린 괄호";
+
+/* No comment provided by engineer. */
+"opening bracket" = "여는 괄호";
+
+/* No comment provided by engineer. */
+"or" = "또는";
+
+/* No comment provided by engineer. */
+"Our Story" = "우리 이야기";
+
+/* Word for division operator */
+"over" = "분의";
+
+/* No comment provided by engineer. */
+"percent" = "퍼센트";
+
+/* No comment provided by engineer. */
+"plus" = "플러스";
+
+/* (No Comment) */
 "Preferences" = "환경 설정";
 
-//WatchOS
-"Clear Equation" = "방정식 지우기";
-"Tip a Coffee" = "커피 팁 주기";
+/* (No Comment) */
+"Privacy" = "개인정보 보호";
+
+/* No comment provided by engineer. */
+"PRO" = "PRO";
+
+/* No comment provided by engineer. */
+"PRO Mode includes the following features:" = "PRO Mode에는 다음 기능이 포합됩니다:";
+
+/* (No Comment) */
+"Quick Help" = "빠른 도움말";
+
+/* (No Comment) */
+"Quick Setup" = "빠른 설정";
+
+/* No comment provided by engineer. */
+"record" = "기록";
+
+/* (No Comment) */
 "Record Equation" = "방정식 기록";
+
+/* No comment provided by engineer. */
+"recording" = "녹음";
+
+/* No comment provided by engineer. */
+"Remove from Favorites" = "즐겨찾기에서 제거";
+
+/* No comment provided by engineer. */
+"Replace" = "대체하다";
+
+/* No comment provided by engineer. */
+"Restore Purchases" = "구매 복원";
+
+/* No comment provided by engineer. */
+"right bracket" = "우 괄호";
+
+/* (No Comment) */
+"Settings" = "설정";
+
+/* No comment provided by engineer. */
+"seven" = "칠 (chil)";
+
+/* English */
+"Simple Voice Calculator" = "Simple Voice Calculator";
+
+/* (No Comment) */
+"Simple Voice Calculator began with a clear purpose: to make math **easier and more accessible** for everyone. Recognizing that typing complex equations or tapping small buttons can be challenging—especially on smaller screens—we developed an intuitive alternative. With easy voice input and instant editing capabilities, Simple Voice Calculator offers a natural and inclusive experience, transforming the way we interact with math in everyday life." = "Simple Voice Calculator는 모두가 더 쉽고 편하게 수학을 할 수 있도록 하는 명확한 목표에서 시작되었습니다. 복잡한 수식을 입력하거나 작은 버튼을 터치하는 것이—특히 작은 화면에서는—불편할 수 있다는 점을 인지하고 직관적인 대안을 개발했습니다. 간단한 음성 입력과 즉각적인 수정 기능을 통해 Simple Voice Calculator는 자연스럽고 포용적인 경험을 제공하며, 일상생활에서 수학과 상호작용하는 방식을 혁신합니다.";
+
+/* (No Comment) */
+"Simple Voice Calculator was made by students." = "간단한 음성 계산기는 학생들이 만들었습니다.";
+
+/* No comment provided by engineer. */
+"six" = "여섯 (yoseot)";
+
+/* (No Comment) */
+"Skip Introduction" = "소개 건너뛰기";
+
+/* No comment provided by engineer. */
+"Skips the introduction and goes directly to the calculator" = "소개를 건너뛰고 계산기로 바로 이동합니다.";
+
+/* (No Comment) */
+"Start Talking" = "말하기 시작";
+
+/* No comment provided by engineer. */
+"stop" = "그만 해주세요";
+
+/* (No Comment) */
+"Stop Talking" = "말하기 중지";
+
+/* No comment provided by engineer. */
+"subtract" = "빼다";
+
+/* No comment provided by engineer. */
+"Subtract" = "빼다";
+
+/* No comment provided by engineer. */
+"Swipe left to go to the next screen, or use the buttons below" = "다음 화면으로 가려면 왼쪽으로 스와이프하거나 아래 버튼을 사용하십시오";
+
+/* (No Comment) */
+"Sym" = "기호";
+
+/* No comment provided by engineer. */
+"Sync Across Devices" = "기기 간 동기화";
+
+/* No comment provided by engineer. */
+"Sync Status" = "싱크 상태";
+
+/* No comment provided by engineer. */
+"Tap Any Row for More Options" = "더 많은 옵션을 보려면 아무 행을 누르세요";
+
+/* No comment provided by engineer. */
+"Tell a Friend" = "친구에게 알리기";
+
+/* No comment provided by engineer. */
+"Tell Friends" = "친구들에게 알려주세요.";
+
+/* (No Comment) */
+"Thank you for your donation!" = "기부에 감사드립니다!";
+
+/* (No Comment) */
+"The Sym button can be used to insert a desired math symbol where your cursor is placed in the textfield." = "'기호' 버튼을 사용하여 커서가 위치한 텍스트 필드에 원하는 수학 기호를 삽입할 수 있습니다.";
+
+/* (No Comment) */
+"This is where the magic happens." = "이곳에서 마법이 일어납니다.";
+
+/* No comment provided by engineer. */
+"three" = "세";
+
+/* Word for multiplication operator */
+"times" = "곱하기";
+
+/* (No Comment) */
+"Tip a Coffee" = "커피 팁 주기";
+
+/* No comment provided by engineer. */
+"Tip developer a coffee" = "개발자에게 커피 한 잔 쏘기";
+
+/* (No Comment) */
+"Tip Developer a Coffee" = "개발자에게 커피 팁을 주세요";
+
+/* No comment provided by engineer. */
+"TOTAL" = "합계";
+
+/* (No Comment) */
+"Total equals" = "총합은 %@";
+
+/* No comment provided by engineer. */
+"Total equals %@" = "총계는 %@ 입니다.";
+
+/* (No Comment) */
+"TOTAL:" = "합계:";
+
+/* No comment provided by engineer. */
+"TOTAL: %@" = "합계:  %@";
+
+/* No comment provided by engineer. */
+"Track and reuse your past calculations!" = "지난 계산을 추적하고 재사용하세요!";
+
+/* No comment provided by engineer. */
+"two" = "두";
+
+/* No comment provided by engineer. */
+"Upgrade to Pro" = "프로로 업그레이드하세요.";
+
+/* No comment provided by engineer. */
+"Upgrade to PRO" = "PRO로 업그레이드";
+
+/* (No Comment) */
+"Version" = "버전";
+
+/* No comment provided by engineer. */
+"VITO SOFTWARE" = "VITO SOFTWARE";
+
+/* No comment provided by engineer. */
+"Voice Calculator" = "Voice Calculator";
+
+/* No comment provided by engineer. */
+"Voice Calculator Widget" = "Voice Calculator Widget";
+
+/* (No Comment) */
+"Voice Input" = "음성 입력";
+
+/* No comment provided by engineer. */
+"Voice-powered calculations." = "음성 기반 계산.";
+
+/* No comment provided by engineer. */
+"We value all your feedback. If you have a question not covered here, please feel free to reach out anytime for help or additional information." = "우리는 모든 피드백을 소중히 여깁니다. 여기서 다뤄지지 않은 질문이 있으시면 언제든지 도움이나 추가 정보를 요청해 주세요.";
+
+/* (No Comment) */
+"Welcome to \nSimple Voice Calculator" = "간단한 음성 계산기에 \n오신 것을 환영합니다";
+
+/* (No Comment) */
+"While voice dictation is enabled, you are unable to manually edit the input field." = "음성 인식이 활성화된 동안에는 입력 필드를 수동으로 편집할 수 없습니다.";
+
+/* No comment provided by engineer. */
+"You can cancel your PRO subscription by visiting your App Store subscription settings." = "PRO 구독을 취소하려면 앱 스토어 구독 설정을 방문하십시오.";
+
+/* No comment provided by engineer. */
+"You can easily input equations with parentheses simply by saying 'open parenthesis' or 'open bracket' and 'close parenthesis' or 'close bracket' while recording. Always make sure to include a closing parenthesis, or you may end up with an invalid equation." = "녹음할 때 단순히 '여는 괄호' 또는 '여는 대괄호' 및 '닫는 괄호' 또는 '닫는 대괄호'라고 말하여 괄호가 있는 방정식을 쉽게 입력할 수 있습니다. 항상 닫는 괄호를 포함해야 하며, 그렇지 않으면 잘못된 방정식이 될 수 있습니다.";
+
+/* No comment provided by engineer. */
+"You can edit any component of your equation in the 'Equation Components' section. Just tap you desired components and it will be selected in your textfield. Make sure you do not have voice input enabled (button should say 'Start Talking')." = "당신은 '방정식 구성요소' 섹션에서 방정식의 어떤 요소든 편집할 수 있습니다. 원하는 요소를 탭하면 텍스트 필드에서 선택됩니다. 음성 입력이 활성화되어 있지 않은지 확인하세요 (버튼이 '말하기 시작'이라고 나와야 함).";
+
+/* (No Comment) */
+"You can edit any component of your equation in the 'Equation Components' section. Just tap your desired component and it will be selected in your textfield. Make sure you do not have voice input enabled (button should say 'Start Talking')." = "'방정식 구성 요소' 섹션에서 방정식의 모든 구성 요소를 편집할 수 있습니다. 원하는 구성 요소를 탭하면 텍스트 필드에 선택됩니다. 음성 입력이 활성화되어 있지 않아야 합니다 (버튼은 '말하기 시작'이라고 표시되어야 함).";
+
+/* No comment provided by engineer. */
+"You can replace your current equation or perform math operations with history items." = "당신은 현재 방정식을 대체하거나 연산을 수행할 수 있습니다.";
+
+/* (No Comment) */
+"Your calculation history remains 100% private, stored locally and on Apple iCloud servers. We only collect anonymous usage data to improve the app's performance and user experience." = "사용자의 계산 기록은 100% 비공개로 유지되며, 로컬 및 Apple iCloud 서버에 저장됩니다. 앱의 성능과 사용자 경험을 개선하기 위해 익명 사용 데이터를 수집합니다.";
+
+/* No comment provided by engineer. */
+"Your calculations will appear here" = "귀하의 계산 결과가 여기에 표시됩니다";
+
+/* No comment provided by engineer. */
+"Your current mode is" = "당신의 현재 모드는";
+
+/* No comment provided by engineer. */
+"Your favorites will appear here" = "당신의 즐겨찾기가 여기에 표시됩니다";
+
+/* No comment provided by engineer. */
+"zero" = "영";
+
+"TODAY" = "오늘";
+"YESTERDAY" = "어제";
+"Your subscription renews on " = "구독은 다음 날짜에 갱신됩니다: ";
+"Check out Simple Voice Calculator - the easiest way to perform calculations using your voice!" = "Simple Voice Calculator를 확인해 보세요 – 목소리로 계산하는 가장 쉬운 방법입니다!";
+"What math operators are supported?" = "어떤 수학 연산자가 지원되나요?";
+"SUBSCRIPTION_RENEWS_ON" = "구독은 %@에 갱신됩니다";
+"*Speech data is sent to Apple to ensure transcription accuracy" = "*음성 데이터는 전사 정확도를 향상하기 위해 Apple로 전송됩니다";

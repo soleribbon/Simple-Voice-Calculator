@@ -1,0 +1,6 @@
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "이 앱은 마이크를 사용하여 오디오를 텍스트로 변환합니다.";
+
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "이 앱은 키보드 대신 주요 입력으로 음성 인식을 사용합니다.";
+

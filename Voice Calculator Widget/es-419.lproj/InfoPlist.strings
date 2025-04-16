@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Voice Calculator Widget";
+
+/* Bundle name */
+"CFBundleName" = "Voice Calculator WidgetExtension";
+

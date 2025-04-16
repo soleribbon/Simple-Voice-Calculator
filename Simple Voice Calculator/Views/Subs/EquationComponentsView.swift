@@ -13,7 +13,7 @@ struct EquationComponentsView: View {
     let onDelete: (Int) -> Void
     @Binding var scale: CGFloat
     let isRecording: Bool
-
+    
     var body: some View {
         ScrollView(.vertical) {
             VStack(alignment: .trailing, spacing: 4) {

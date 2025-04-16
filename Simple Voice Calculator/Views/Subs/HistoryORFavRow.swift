@@ -29,13 +29,13 @@ struct HistoryORFavRow: View {
     var onAction: (HistoryMode) -> Void
     var onToggleFavorite: () -> Void
     var isFavorite: Bool
-
+    
     @State private var isPressed = false
-
+    
     var isFirstRow: Bool = false //tracking for new featureTip interaction
-
+    
     @Namespace private var animationNamespace
-
+    
     var body: some View {
         Menu {
             Section(header: Text("Insert into Current Equation")) {
@@ -46,7 +46,7 @@ struct HistoryORFavRow: View {
                 } label: {
                     Label("Replace", systemImage: "rectangle.2.swap")
                 }
-
+                
                 // Add option
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
@@ -54,7 +54,7 @@ struct HistoryORFavRow: View {
                 } label: {
                     Label("Add", systemImage: "plus")
                 }
-
+                
                 // Subtract option
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
@@ -62,7 +62,7 @@ struct HistoryORFavRow: View {
                 } label: {
                     Label("Subtract", systemImage: "minus")
                 }
-
+                
                 // Multiply option
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
@@ -70,7 +70,7 @@ struct HistoryORFavRow: View {
                 } label: {
                     Label("Multiply", systemImage: "multiply")
                 }
-
+                
                 // Divide option
                 Button {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
@@ -79,7 +79,7 @@ struct HistoryORFavRow: View {
                     Label("Divide", systemImage: "divide")
                 }
             }
-
+            
             Section {
                 // Favorite/Unfavorite option
                 Button {
@@ -101,16 +101,16 @@ struct HistoryORFavRow: View {
                         .foregroundColor(.red)
                         .padding(.trailing, 4)
                 }
-
+                
                 Text(equation)
                     .foregroundColor(.primary)
                     .padding(.vertical, 8)
                     .font(.subheadline)
                     .fixedSize(horizontal: false, vertical: true)
                     .opacity(0.3)
-
+                
                 Spacer()
-
+                
                 HStack {
                     Text("=")
                         .foregroundColor(.primary)
@@ -141,7 +141,7 @@ struct HistoryORFavRow: View {
                     withAnimation(.spring(response: 0.2, dampingFraction: 0.6)) {
                         isPressed = true
                     }
-
+                    
                     withAnimation(.spring(response: 0.2, dampingFraction: 0.6).delay(0.2)) {
                         isPressed = false
                     }

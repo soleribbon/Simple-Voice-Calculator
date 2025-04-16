@@ -35,7 +35,10 @@ struct OnboardingContentView: View {
     
     // Animation state
     @State private var buttonScale: CGFloat = 1.0
-    
+
+    //Only for settings-access modal dismissal
+    @Environment(\.presentationMode) var presentationMode
+
     var isLastFeature: Bool {
         feature.id == features.last?.id
     }
@@ -127,17 +130,17 @@ struct OnboardingContentView: View {
                 // Haptic feedback
                 let impactMed = UIImpactFeedbackGenerator(style: .medium)
                 impactMed.impactOccurred()
-
+                
                 // Just shrink the button
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
                     buttonScale = 0.95
                 }
-
+                
                 // Navigate after a short delay
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                     withAnimation {
                         currentPage = featureIndex + 1
-
+                        
                         // Reset button scale
                         buttonScale = 1.0
                     }
@@ -147,7 +150,7 @@ struct OnboardingContentView: View {
                 HStack(spacing: 8) {
                     Text(LocalizedStringKey(feature.buttonText))
                         .bold()
-
+                    
                     Image(systemName: "arrow.right")
                         .font(.system(size: 16, weight: .bold))
                 }
@@ -166,7 +169,7 @@ struct OnboardingContentView: View {
                 .scaleEffect(buttonScale)
             }
             .accessibilityHint("Advances to the next screen")
-
+            
             
             // Skip option
             if actualIntro {
@@ -250,8 +253,15 @@ struct OnboardingContentView: View {
             Button(action: {
                 let impactMed = UIImpactFeedbackGenerator(style: .medium)
                 impactMed.impactOccurred()
-                withAnimation {
-                    isOnboarding = false
+
+                if actualIntro {
+                    // For first-time users, set onboarding flag to false
+                    withAnimation {
+                        isOnboarding = false
+                    }
+                } else {
+                    // For users viewing from settings, dismiss the sheet
+                    presentationMode.wrappedValue.dismiss()
                 }
             }) {
                 Text(LocalizedStringKey(feature.buttonText))

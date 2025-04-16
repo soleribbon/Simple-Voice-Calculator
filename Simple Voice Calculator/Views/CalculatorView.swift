@@ -64,16 +64,16 @@ struct CalculatorView: View {
                     .bold()
                     .accessibilityLabel("Simple Voice Calculator")
                 Spacer()
-//                TEST BUTTON
-//                Button(action: {
-//                    impactSoft.impactOccurred()
-//                    runTests()
-//                }) {
-//                    Image(systemName: testMode.testingInProgress ? "checkmark.seal.fill" : "checkmark.seal")
-//                        .font(.title2)
-//                        .foregroundColor(testMode.testingInProgress ? .green : .primary)
-//                }
-//                .accessibilityLabel("Run Tests")
+                //                TEST BUTTON
+                //                Button(action: {
+                //                    impactSoft.impactOccurred()
+                //                    runTests()
+                //                }) {
+                //                    Image(systemName: testMode.testingInProgress ? "checkmark.seal.fill" : "checkmark.seal")
+                //                        .font(.title2)
+                //                        .foregroundColor(testMode.testingInProgress ? .green : .primary)
+                //                }
+                //                .accessibilityLabel("Run Tests")
                 
                 Button(action: {
                     impactSoft.impactOccurred()
@@ -520,56 +520,73 @@ extension CalculatorView {
     func processVoiceInput(_ input: String) -> String {
         // Define word-to-symbol mappings
         print(input)
-        let wordMapping: [String: String] = [
-            NSLocalizedString("zero", comment: ""): "0",
-            NSLocalizedString("one", comment: ""): "1",
-            NSLocalizedString("two", comment: ""): "2",
-            NSLocalizedString("three", comment: ""): "3",
-            NSLocalizedString("four", comment: ""): "4",
-            NSLocalizedString("five", comment: ""): "5",
-            NSLocalizedString("six", comment: ""): "6",
-            NSLocalizedString("seven", comment: ""): "7",
-            NSLocalizedString("eight", comment: ""): "8",
-            NSLocalizedString("nine", comment: ""): "9",
-            // Addition
-            NSLocalizedString("plus", comment: ""): "+",
-            NSLocalizedString("add", comment: ""): "+",
-            // Subtraction
-            NSLocalizedString("minus", comment: ""): "-",
-            NSLocalizedString("subtract", comment: ""): "-",
-            // Multiplication
-            NSLocalizedString("times", comment: ""): "×",
-            NSLocalizedString("multiply", comment: ""): "×",
-            NSLocalizedString("multiply by", comment: ""): "×",
-            NSLocalizedString("multiplied by", comment: ""): "×",
-            NSLocalizedString("multipliedby", comment: ""): "×",
-            // Division
-            NSLocalizedString("divide by", comment: ""): "÷",
-            NSLocalizedString("divideby", comment: ""): "÷",
-            NSLocalizedString("divide", comment: ""): "÷",
-            NSLocalizedString("dividedby", comment: ""): "÷",
-            NSLocalizedString("divided by", comment: ""): "÷",
-            NSLocalizedString("over", comment: ""): "÷",
-            // Parentheses
-            NSLocalizedString("open bracket", comment: ""): "(",
-            NSLocalizedString("close bracket", comment: ""): ")",
-            NSLocalizedString("opening bracket", comment: ""): "(",
-            NSLocalizedString("closing bracket", comment: ""): ")",
-            NSLocalizedString("left bracket", comment: ""): "(",
-            NSLocalizedString("right bracket", comment: ""): ")",
-            NSLocalizedString("open parenthesis", comment: ""): "(",
-            NSLocalizedString("close parenthesis", comment: ""): ")",
-            NSLocalizedString("percent", comment: ""): "%",
-            NSLocalizedString("equals", comment: ""): "=",
-            // Filter out command words so they don't appear in the equation
-            NSLocalizedString("clear", comment: ""): "",
-            NSLocalizedString("stop", comment: ""): "",
-            NSLocalizedString("done", comment: ""): "",
-            NSLocalizedString("finish", comment: ""): "",
-            NSLocalizedString("end", comment: ""): "",
-            NSLocalizedString("recording", comment: ""): "",
-            NSLocalizedString("record", comment: ""): ""
-        ]
+        
+        // Build dictionary safely to prevent duplicate keys
+        var wordMapping = [String: String]()
+        
+        // Helper function to safely add key-value pairs
+        func addMapping(key: String, value: String) {
+            let localizedKey = NSLocalizedString(key, comment: "")
+            wordMapping[localizedKey] = value
+        }
+        
+        // Numbers
+        addMapping(key: "zero", value: "0")
+        addMapping(key: "one", value: "1")
+        addMapping(key: "two", value: "2")
+        addMapping(key: "three", value: "3")
+        addMapping(key: "four", value: "4")
+        addMapping(key: "five", value: "5")
+        addMapping(key: "six", value: "6")
+        addMapping(key: "seven", value: "7")
+        addMapping(key: "eight", value: "8")
+        addMapping(key: "nine", value: "9")
+        
+        // Addition
+        addMapping(key: "plus", value: "+")
+        addMapping(key: "add", value: "+")
+        
+        // Subtraction
+        addMapping(key: "minus", value: "-")
+        addMapping(key: "subtract", value: "-")
+        
+        // Multiplication
+        addMapping(key: "times", value: "×")
+        addMapping(key: "multiply", value: "×")
+        addMapping(key: "multiply by", value: "×")
+        addMapping(key: "multiplied by", value: "×")
+        addMapping(key: "multipliedby", value: "×")
+        
+        // Division
+        addMapping(key: "divide by", value: "÷")
+        addMapping(key: "divideby", value: "÷")
+        addMapping(key: "divide", value: "÷")
+        addMapping(key: "dividedby", value: "÷")
+        addMapping(key: "divided by", value: "÷")
+        addMapping(key: "over", value: "÷")
+        
+        // Parentheses
+        addMapping(key: "open bracket", value: "(")
+        addMapping(key: "close bracket", value: ")")
+        addMapping(key: "opening bracket", value: "(")
+        addMapping(key: "closing bracket", value: ")")
+        addMapping(key: "left bracket", value: "(")
+        addMapping(key: "right bracket", value: ")")
+        addMapping(key: "open parenthesis", value: "(")
+        addMapping(key: "close parenthesis", value: ")")
+        
+        // Other symbols
+        addMapping(key: "percent", value: "%")
+        addMapping(key: "equals", value: "=")
+        
+        // Filter words
+        addMapping(key: "clear", value: "")
+        addMapping(key: "stop", value: "")
+        addMapping(key: "done", value: "")
+        addMapping(key: "finish", value: "")
+        addMapping(key: "end", value: "")
+        addMapping(key: "recording", value: "")
+        addMapping(key: "record", value: "")
         
         // Process the input text
         var processedInput = input.lowercased()

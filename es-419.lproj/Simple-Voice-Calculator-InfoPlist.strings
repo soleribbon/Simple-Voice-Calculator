@@ -1,0 +1,12 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Voice Calculator";
+
+/* Bundle name */
+"CFBundleName" = "Simple Voice Calculator";
+
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "Esta aplicación utiliza tu micrófono para convertir audio en texto.";
+
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Esta aplicación utiliza el reconocimiento de voz como entrada principal, en lugar de un teclado.";
+

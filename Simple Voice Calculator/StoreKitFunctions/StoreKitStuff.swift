@@ -255,52 +255,61 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
     }
 
     func checkSubscriptionStatus() async {
-        do {
-            // Reset status first
-            await MainActor.run {
-                self.isSubscriptionActive = false
-                self.subscriptionExpirationDate = nil
-            }
+        // Use task-local variables to track results
+        var foundActiveSubscription = false
+        var newExpirationDate: Date? = nil
 
-            // Get all current entitlements (active purchases)
-            for await verification in StoreKit.Transaction.currentEntitlements {
-                // Only process verified transactions
-                switch verification {
-                case .verified(let transaction):
-                    // Check if this is a subscription
-                    if transaction.productType == .autoRenewable {
-                        // Check if the subscription is still valid (not expired)
-                        if let expirationDate = transaction.expirationDate,
-                           expirationDate > Date() {
-                            // Active subscription found
-                            await MainActor.run {
-                                self.isSubscriptionActive = true
-                                self.subscriptionExpirationDate = expirationDate
-
-                                // Post notification for any observers
-                                NotificationCenter.default.post(
-                                    name: NSNotification.Name("SubscriptionStatusChanged"),
-                                    object: nil,
-                                    userInfo: ["isSubscriptionActive": self.isSubscriptionActive]
-                                )
-                            }
-                            break
-                        }
+        // Get all current entitlements (active purchases)
+        for await verification in StoreKit.Transaction.currentEntitlements {
+            // Only process verified transactions
+            switch verification {
+            case .verified(let transaction):
+                // Check if this is a subscription
+                if transaction.productType == .autoRenewable {
+                    // Check if the subscription is still valid (not expired)
+                    if let expirationDate = transaction.expirationDate,
+                       expirationDate > Date() {
+                        // Active subscription found
+                        foundActiveSubscription = true
+                        newExpirationDate = expirationDate
+                        break
                     }
-                case .unverified:
-                    continue
                 }
+            case .unverified:
+                continue
             }
-        } catch {
-            print("Failed to check subscription status: \(error.localizedDescription)")
+        }
+
+        // Now capture the final values before passing to MainActor
+        let finalActive = foundActiveSubscription
+        let finalExpDate = newExpirationDate
+
+        // Only update the published property once, after all verification is complete
+        await MainActor.run {
+            // Only notify if there's an actual change
+            let statusChanged = (self.isSubscriptionActive != finalActive)
+
+            // Update properties
+            self.isSubscriptionActive = finalActive
+            self.subscriptionExpirationDate = finalExpDate
+
+            // Post notification only if status actually changed
+            if statusChanged {
+                NotificationCenter.default.post(
+                    name: NSNotification.Name("SubscriptionStatusChanged"),
+                    object: nil,
+                    userInfo: ["isSubscriptionActive": self.isSubscriptionActive]
+                )
+            }
         }
     }
+
     func restorePurchases() {
         // Wrap the async call in a Task
         Task {
             do {
                 // Trigger app store sync
-                try await StoreKit.AppStore.sync()
+                try await AppStore.sync()
                 // Check status again after sync
                 await checkSubscriptionStatus()
             } catch {
@@ -313,17 +322,22 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
     func formatExpirationDate() -> String? {
         guard let date = subscriptionExpirationDate else { return nil }
 
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
+        let df = DateFormatter()
+        df.dateStyle = .long          // e.g. “Apr 30, 2025”
+        df.timeStyle = .none
 
-        return "Your subscription renews on \(formatter.string(from: date))"
+        let dateString = df.string(from: date)
+
+        return String(
+            format: NSLocalizedString("SUBSCRIPTION_RENEWS_ON",
+                                      comment: "Label preceding renewal date"),
+            dateString)
     }
 
     var isRegUser: Bool {
         return !isSubscriptionActive
     }
 
-    
+
 }
 

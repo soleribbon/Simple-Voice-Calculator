@@ -148,7 +148,7 @@ class FeatureTipsManager: ObservableObject {
 extension View {
     /// Apply a feature tip only if it hasn’t been seen
     func featureTip(_ featureId: FeatureId) -> AnyView {
-    #if canImport(TipKit) && swift(>=5.9)
+#if canImport(TipKit) && swift(>=5.9)
         if #available(iOS 17.0, *) {
             if FeatureTipsManager.shared.shouldShowTip(for: featureId) {
                 return AnyView(TipKitViewModifier(featureId: featureId).modify(self))
@@ -158,9 +158,9 @@ extension View {
         } else {
             return AnyView(self)
         }
-    #else
+#else
         return AnyView(self)
-    #endif
+#endif
     }
 }
 

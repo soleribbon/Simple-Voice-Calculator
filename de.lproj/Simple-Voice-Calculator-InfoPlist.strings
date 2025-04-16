@@ -1,0 +1,6 @@
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "Diese App verwendet Ihr Mikrofon, um Audio in Text umzuwandeln.";
+
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Diese App verwendet Spracherkennung als primären Eingabeweg, anstelle einer Tastatur.";
+

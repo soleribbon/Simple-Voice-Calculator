@@ -58,7 +58,7 @@ struct Simple_Voice_CalculatorApp: App {
                         // If we're coming online and no recent sync, schedule a background sync
                         let lastSyncTime = CloudKitManager.shared.lastSyncDate?.timeIntervalSinceNow ?? -86400
                         if isCloudAvailable && lastSyncTime < -3600 { // No sync in the last hour
-                            print("App returned to foreground - scheduling background sync")
+//                            print("App returned to foreground - scheduling background sync")
                             
                             // Delay slightly to avoid impacting app responsiveness
                             try? await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds delay

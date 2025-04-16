@@ -1,62 +1,541 @@
-// Hindi
-"Simple Voice Calculator" = "Simple Voice Calculator";
-"TOTAL:" = "कुल:";
-"Enter equation" = "समीकरण दर्ज करें";
-"Input Equation" = "समीकरण दर्ज करें";
-"Voice Input" = "ध्वनि प्रविष्टि";
-"+ Insert" = "+ डालें";
+/* (No Comment) */
 "- Insert" = "- डालें";
-"× Insert" = "× डालें";
-"÷ Insert" = "÷ डालें";
-"Sym" = "चिह्न";
-"Clear" = "साफ करें";
-"Start Talking" = "बात करना शुरू करें";
-"Stop Talking" = "बात करना बंद करें";
-"Equation Components" = "समीकरण घटक";
-"Introduction Tutorial" = "परिचय ट्यूटोरियल";
-"Quick Help" = "त्वरित सहायता";
-"About & Contact" = "के बारे में और संपर्क";
-"About Simple Voice Calculator" = "सरल ध्वनि कैलक्यूलेटर के बारे में";
-"Contact Developer" = "डेवलपर से संपर्क करें";
-"Tip Developer a Coffee" = "डेवलपर को एक कॉफी के लिए टिप दें";
-"Simple Voice Calculator was made by students." = "सरल ध्वनि कैलक्यूलेटर को छात्रों ने बनाया है।";
-"Privacy" = "गोपनीयता";
-"Version" = "संस्करण";
-"Cup" = "कप";
-"Cups" = "कप";
-"**What math operators are supported?**" = "**कौन से गणित ऑपरेटर समर्थित हैं?**";
-"Currently supported operators:" = "वर्तमान में समर्थित ऑपरेटर:";
-"Invalid Equation is presented when the textfield contains characters that are not valid in a mathematical equation or not currently supported." = "अवैध समीकरण प्रस्तुत किया जाता है जब टेक्स्टफ़ील्ड में वैध गणितीय समीकरण या वर्तमान में समर्थित नहीं होने वाले अक्षर होते हैं।";
-"The Sym button can be used to insert a desired math symbol where your cursor is placed in the textfield." = "सिम बटन का उपयोग टेक्स्टफ़ील्ड में आपके कर्सर स्थानित होने पर एक चयनित गणितीय प्रतीक डालने के लिए किया जा सकता है।";
-"You can edit any component of your equation in the 'Equation Components' section. Just tap your desired component and it will be selected in your textfield. Make sure you do not have voice input enabled (button should say 'Start Talking')." = "'समीकरण घटक' खंड में आप अपने समीकरण के किसी भी घटक को संपादित कर सकते हैं। बस अपने इच्छित घटकों को टैप करें और यह आपके टेक्स्टफ़ील्ड में चयनित हो जाएगा। सुनिश्चित करें कि आपके पास ध्वनि प्रविष्टि सक्षम नहीं है (बटन पर 'बात करना शुरू करें' लिखा होना चाहिए)।";
-"Simple Voice Calculator began with a clear purpose: to make math **easier and more accessible** for everyone. Recognizing that typing complex equations or tapping small buttons can be challenging—especially on smaller screens—we developed an intuitive alternative. With easy voice input and instant editing capabilities, Simple Voice Calculator offers a natural and inclusive experience, transforming the way we interact with math in everyday life." = "सिंपल वॉयस कैलकुलेटर एक स्पष्ट उद्देश्य के साथ शुरू हुआ: सभी के लिए गणित को आसान और अधिक सुलभ बनाना। हमने महसूस किया कि जटिल समीकरण टाइप करना या छोटे बटनों को दबाना—खासकर छोटी स्क्रीन पर—कठिन हो सकता है, इसलिए हमने एक सहज विकल्प विकसित किया। आसान आवाज़ इनपुट और तुरंत एडिट करने की सुविधा के साथ, सिंपल वॉयस कैलकुलेटर एक स्वाभाविक और समावेशी अनुभव प्रदान करता है, जो हमारे रोज़मर्रा के जीवन में गणित के साथ बातचीत के तरीके को बदल रहा है।";
-"Thank you for your donation!" = "आपके दान के लिए धन्यवाद!";
-"Donation failed..." = "दान विफल हो गया...";
-"Settings" = "सेटिंग्स";
-"Your calculation history remains 100% private, stored locally and on Apple iCloud servers. We only collect anonymous usage data to improve the app's performance and user experience." = "आपका गणना इतिहास 100% निजी रहता है और स्थानीय रूप से तथा Apple iCloud सर्वरों पर संग्रहीत होता है। हम केवल गुमनाम उपयोग डेटा एकत्र करते हैं, जिससे ऐप के प्रदर्शन और उपयोगकर्ता अनुभव में सुधार हो सके।";
-"Welcome to \nSimple Voice Calculator" = "सादा आवाज़ कैलकुलेटर में आपका स्वागत है \n";
-"Quick Setup" = "त्वरित सेटअप";
-"This is where the magic happens." = "यहाँ जादू होता है।";
-"Continue" = "जारी रखें";
-"Easily edit any component of your equation." = "आसानी से अपनी समीकरण के किसी भी घटक को संपादित करें।";
+
+/* (No Comment) */
 "'Invalid Equation' means your input was invalid. Check your equation." = "'अवैध समीकरण' का अर्थ है कि आपका इनपुट अमान्य था। अपने समीकरण की जांच करें।";
-"Help is always available." = "मदद हमेशा उपलब्ध है।";
-"Now, time to calculate." = "अब, गणना करने का समय है।";
-"Get Started" = "शुरू करें";
-"Skip Introduction" = "परिचय छोड़ें";
-"Important Notes" = "महत्वपूर्ण नोट्स";
-"After pressing 'Stop Talking', your dictated equation will be added to the end of the input field." = "'बोलना बंद करें' दबाने के बाद, आपके निर्दिष्ट समीकरण को इनपुट फ़ील्ड के अंत में जोड़ा जाएगा।";
-"While voice dictation is enabled, you are unable to manually edit the input field." = "जब आवाज़ टाइपिंग सक्षम होती है, तब आप इनपुट फ़ील्ड को मैन्युअल रूप से संपादित नहीं कर सकते हैं।";
-"Ensure no alphabetical letters are included in your input." = "अपने इनपुट में कोई भी वर्णमाला के पत्र शामिल न करें।";
-"**What does 'Invalid Equation' mean?**" = "**'अवैध समीकरण' का क्या मतलब है?**";
-"**What does the 'Sym' button do?**" = "**'सिम' बटन क्या करता है?**";
+
+/* No comment provided by engineer. */
+"(" = "(";
+
+/* No comment provided by engineer. */
+")" = ")";
+
+/* (No Comment) */
 "**How do I edit my voice input?**" = "**मैं अपने ध्वनि इनपुट को कैसे संपादित कर सकता हूँ?**";
-"Only **+ - × ÷ %**  are supported" = "केवल **+ - × ÷ %** समर्थित हैं";
-"Total equals" = "कुल योग है %@";
+
+/* (No Comment) */
+"**What does 'Invalid Equation' mean?**" = "**'अवैध समीकरण' का क्या मतलब है?**";
+
+/* (No Comment) */
+"**What does the 'Sym' button do?**" = "**'सिम' बटन क्या करता है?**";
+
+/* (No Comment) */
+"**What math operators are supported?**" = "**कौन से गणित ऑपरेटर समर्थित हैं?**";
+
+"**What is PRO Mode?**"                            = "**PRO मोड क्या है?**";
+"**How do I use parentheses in equations?**"       = "**समीकरणों में कोष्ठकों का उपयोग कैसे करें?**";
+"**How do I cancel my PRO subscription?**"         = "**मैं अपनी PRO सदस्यता कैसे रद्द करूँ?**";
+"**I have another question...**"                   = "**मेरे पास एक और प्रश्न है...**";
+
+
+/* No comment provided by engineer. */
+"%lld equations" = "%lld समीकरण";
+
+/* No comment provided by engineer. */
+"• **Favorites** – Save your most-used equations for easy retrieval." = "• **पसंदीदा** - अपनी सबसे अधिक प्रयोग की गई समीक्षा को सहज खोज के लिए सुरक्षित करें।";
+
+/* No comment provided by engineer. */
+"• **History** – Quickly access and reuse past equations. You can apply past totals to your current equation with any operator." = "• **इतिहास** - पिछले समीकरणों को तेजी से एक्सेस और पुनः उपयोग करें। आप किसी भी ऑपरेटर के साथ अपने वर्तमान समीकरण पर पिछले योगों को लागू कर सकते हैं।";
+
+/* No comment provided by engineer. */
+"• **iCloud Sync** – Keep your equation history and favorites consistent across all devices." = "• **आईक्लाउड सिंक** - अपने समीकरण इतिहास और पसंदीदा को सभी उपकरणों पर सुनिश्चित रखें।";
+
+/* No comment provided by engineer. */
+"• **Siri Support** (coming soon) – Perform accurate calculations with Siri." = "• **सिरी सपोर्ट** (जल्द ही आ रहा है) - सिरी के साथ सटीक गणना करें।";
+
+/* No comment provided by engineer. */
+"+ - × ÷" = "+ - × ÷";
+
+/* (No Comment) */
+"+ Insert" = "+ डालें";
+
+/* (No Comment) */
+"÷ Insert" = "÷ डालें";
+
+/* (No Comment) */
+"× Insert" = "× डालें";
+
+/* No comment provided by engineer. */
+"=" = "=";
+
+/* No comment provided by engineer. */
+"💌" = "💌";
+
+/* (No Comment) */
+"About & Contact" = "के बारे में और संपर्क";
+
+/* (No Comment) */
+"About Simple Voice Calculator" = "सरल ध्वनि कैलक्यूलेटर के बारे में";
+
+/* No comment provided by engineer. */
+"add" = "जोड़ें";
+
+/* No comment provided by engineer. */
+"Add" = "जोड़ें";
+
+/* No comment provided by engineer. */
+"Add to Favorites" = "पसंदीदा में जोड़ें";
+
+/* No comment provided by engineer. */
+"Advances to the next screen" = "अगले स्क्रीन की ओर बढ़ें।";
+
+/* (No Comment) */
+"After pressing 'Stop Talking', your dictated equation will be added to the end of the input field." = "'बोलना बंद करें' दबाने के बाद, आपके निर्दिष्ट समीकरण को इनपुट फ़ील्ड के अंत में जोड़ा जाएगा।";
+
+/* (No Comment) */
 "Announce Total" = "कुल घोषणा करें";
+
+/* No comment provided by engineer. */
+"Are you sure you want to clear all calculation history?" = "क्या आप सुनिश्चित हैं कि आप सभी गणना इतिहास को साफ करना चाहते हैं?";
+
+/* No comment provided by engineer. */
+"Are you sure you want to clear all favorites?" = "क्या आप सुनिश्चित हैं कि आप सभी पसंदीदा हटाना चाहते हैं?";
+
+/* No comment provided by engineer. */
+"clear" = "साफ़ करें";
+
+/* (No Comment) */
+"Clear" = "साफ करें";
+
+/* WatchOS */
+"Clear Equation" = "समीकरण साफ़ करें";
+
+/* No comment provided by engineer. */
+"Clear Favorites" = "पसंदीदा हटाएं";
+
+/* No comment provided by engineer. */
+"Clear History" = "स्पष्ट इतिहास";
+
+/* No comment provided by engineer. */
+"close bracket" = "बंद कोड़";
+
+/* No comment provided by engineer. */
+"close parenthesis" = "बंद कोष्ठक";
+
+/* No comment provided by engineer. */
+"closing bracket" = "बंद कोष्ठक";
+
+/* No comment provided by engineer. */
+"Completes the introduction and opens the calculator" = "परिचय पूरा करता है और कैलकुलेटर खोलता है।";
+
+/* (No Comment) */
+"Contact Developer" = "डेवलपर से संपर्क करें";
+
+/* (No Comment) */
+"Continue" = "जारी रखें";
+
+/* (No Comment) */
+"Cup" = "कप";
+
+/* (No Comment) */
+"Cups" = "कप";
+
+/* (No Comment) */
+"Currently supported operators:" = "वर्तमान में समर्थित ऑपरेटर:";
+
+/* No comment provided by engineer. */
+"Currently supported operators:\n+ - × ÷ %" = "वर्तमान में समर्थित ऑपरेटर:\n+ - × ÷ %";
+
+/* No comment provided by engineer. */
+"Delete" = "हटाएं";
+
+/* No comment provided by engineer. */
+"divide" = "बाँटें";
+
+/* No comment provided by engineer. */
+"Divide" = "बाँटें";
+
+/* No comment provided by engineer. */
+"divide by" = "से भाग करें";
+
+/* No comment provided by engineer. */
+"divideby" = "सेभागकरें";
+
+/* Word for division operator */
+"divided by" = "से विभाजित";
+
+/* Word for division operator without spaces */
+"dividedby" = "सेविभाजित";
+
+/* (No Comment) */
+"Donation failed..." = "दान विफल हो गया...";
+
+/* No comment provided by engineer. */
+"done" = "किया गया है।";
+
+/* (No Comment) */
+"Easily edit any component of your equation." = "आसानी से अपनी समीकरण के किसी भी घटक को संपादित करें।";
+
+/* No comment provided by engineer. */
+"Edit" = "संपादित करें";
+
+/* No comment provided by engineer. */
+"eight" = "आठ";
+
+/* No comment provided by engineer. */
+"Email Developer" = "ईमेल डेवलपर";
+
+/* No comment provided by engineer. */
+"end" = "अंत";
+
+/* (No Comment) */
+"Ensure no alphabetical letters are included in your input." = "अपने इनपुट में कोई भी वर्णमाला के पत्र शामिल न करें।";
+
+/* (No Comment) */
+"Enter equation" = "समीकरण दर्ज करें";
+
+/* No comment provided by engineer. */
+"equals" = "बराबर";
+
+/* (No Comment) */
+"Equation Components" = "समीकरण घटक";
+
+/* No comment provided by engineer. */
+"FAQ" = "पूछे जाने वाले प्रश्न";
+
+/* No comment provided by engineer. */
+"Favorites" = "पसंदीदा";
+
+/* No comment provided by engineer. */
+"Find out more here" = "यहाँ और अधिक जानें";
+
+/* No comment provided by engineer. */
+"finish" = "समाप्त";
+
+/* No comment provided by engineer. */
+"five" = "पांच";
+
+/* No comment provided by engineer. */
+"four" = "चार";
+
+/* No comment provided by engineer. */
+"Frequent Questions" = "आम सवाल";
+
+/* (No Comment) */
+"Get Started" = "शुरू करें";
+
+/* (No Comment) */
+"Help is always available." = "मदद हमेशा उपलब्ध है।";
+
+/* No comment provided by engineer. */
+"History" = "इतिहास";
+
+/* No comment provided by engineer. */
+"History Limit" = "इतिहास सीमा";
+
+/* No comment provided by engineer. */
+"History Now Available" = "इतिहास अब उपलब्ध है";
+
+/* No comment provided by engineer. */
+"Illustration for %@" = "%@ के लिए चित्रण";
+
+/* (No Comment) */
+"Important Notes" = "महत्वपूर्ण नोट्स";
+
+/* (No Comment) */
+"Input Equation" = "समीकरण दर्ज करें";
+
+/* No comment provided by engineer. */
+"Input equations instantly." = "तत्काल समीकरण दर्ज करें।";
+
+/* No comment provided by engineer. */
+"Insert into Current Equation" = "वर्तमान समीकरण में डालें";
+
+/* (No Comment) */
+"Introduction Tutorial" = "परिचय ट्यूटोरियल";
+
+/* (No Comment) */
+"Invalid Equation is presented when the textfield contains characters that are not valid in a mathematical equation or not currently supported." = "अवैध समीकरण प्रस्तुत किया जाता है जब टेक्स्टफ़ील्ड में वैध गणितीय समीकरण या वर्तमान में समर्थित नहीं होने वाले अक्षर होते हैं।";
+
+/* No comment provided by engineer. */
+"Last synced: %@" = "अंतिम समक्रित: %@";
+
+/* No comment provided by engineer. */
+"left bracket" = "छोड़ें ब्रैकेट";
+
+/* No comment provided by engineer. */
+"MADE BY VITO SOFTWARE" = "वीटो सॉफ़्टवेयर द्वारा बनाया गया";
+
+/* No comment provided by engineer. */
+"minus" = "घटाना";
+
+/* No comment provided by engineer. */
+"Minus Insert" = "माइनस इन्सर्ट";
+
+/* Word for multiplication operator */
+"multiplied by" = "गुणित कियाे";
+
+/* Word for multiplication operator without spaces */
+"multipliedby" = "से गुणा किया गया";
+
+/* No comment provided by engineer. */
+"multiply" = "गुणा करें।";
+
+/* No comment provided by engineer. */
+"Multiply" = "गुणा करें।";
+
+/* Word for multiplication operator */
+"multiply by" = "से गुणा करें";
+
+/* No comment provided by engineer. */
+"nine" = "नौ";
+
+/* No comment provided by engineer. */
+"No calculation history yet" = "अभी तक कोई गणना इतिहास नहीं है।";
+
+/* No comment provided by engineer. */
+"No favorites yet" = "अबतक कोई पसंद नहीं है।";
+
+/* (No Comment) */
+"Now, time to calculate." = "अब, गणना करने का समय है।";
+
+/* No comment provided by engineer. */
+"OK" = "ठीक है";
+
+/* No comment provided by engineer. */
+"Onboarding screen %lld of %lld" = "ऑनबोर्डिंग स्क्रीन %lld का %lld";
+
+/* No comment provided by engineer. */
+"one" = "एक";
+
+/* (No Comment) */
+"Only **+ - × ÷ %** are supported" = "केवल **+ - × ÷ %** समर्थित हैं";
+
+/* No comment provided by engineer. */
+"open bracket" = "खोलें ब्रैकेट";
+
+/* No comment provided by engineer. */
+"open parenthesis" = "ओपन पैरेंथेस्";
+
+/* No comment provided by engineer. */
+"opening bracket" = "खुला कोष्ठक";
+
+/* No comment provided by engineer. */
+"or" = "या";
+
+/* No comment provided by engineer. */
+"Our Story" = "हमारी कहानी";
+
+/* Word for division operator */
+"over" = "ऊपर";
+
+/* No comment provided by engineer. */
+"percent" = "प्रतिशत";
+
+/* No comment provided by engineer. */
+"plus" = "जोड़ना";
+
+/* (No Comment) */
 "Preferences" = "प्राथमिकताएँ";
 
-//WatchOS
-"Clear Equation" = "समीकरण साफ़ करें";
-"Tip a Coffee" = "एक कॉफी टिप करें";
+/* (No Comment) */
+"Privacy" = "गोपनीयता";
+
+/* No comment provided by engineer. */
+"PRO" = "पेशेवर";
+
+/* No comment provided by engineer. */
+"PRO Mode includes the following features:" = "प्रो मोड में निम्नलिखित विशेषताएँ शामिल हैं:";
+
+/* (No Comment) */
+"Quick Help" = "त्वरित सहायता";
+
+/* (No Comment) */
+"Quick Setup" = "त्वरित सेटअप";
+
+/* No comment provided by engineer. */
+"record" = "रिकॉर्ड";
+
+/* (No Comment) */
 "Record Equation" = "समीकरण रिकॉर्ड करें";
+
+/* No comment provided by engineer. */
+"recording" = "रिकॉर्डिंग";
+
+/* No comment provided by engineer. */
+"Remove from Favorites" = "पसंदीदाओं से हटाएँ";
+
+/* No comment provided by engineer. */
+"Replace" = "बदलें";
+
+/* No comment provided by engineer. */
+"Restore Purchases" = "खरीदारी पुनः स्थापित करें";
+
+/* No comment provided by engineer. */
+"right bracket" = "दाया जमाई";
+
+/* (No Comment) */
+"Settings" = "सेटिंग्स";
+
+/* No comment provided by engineer. */
+"seven" = "सात";
+
+/* English */
+"Simple Voice Calculator" = "Simple Voice Calculator";
+
+/* (No Comment) */
+"Simple Voice Calculator began with a clear purpose: to make math **easier and more accessible** for everyone. Recognizing that typing complex equations or tapping small buttons can be challenging—especially on smaller screens—we developed an intuitive alternative. With easy voice input and instant editing capabilities, Simple Voice Calculator offers a natural and inclusive experience, transforming the way we interact with math in everyday life." = "सिंपल वॉयस कैलकुलेटर एक स्पष्ट उद्देश्य के साथ शुरू हुआ: सभी के लिए गणित को आसान और अधिक सुलभ बनाना। हमने महसूस किया कि जटिल समीकरण टाइप करना या छोटे बटनों को दबाना—खासकर छोटी स्क्रीन पर—कठिन हो सकता है, इसलिए हमने एक सहज विकल्प विकसित किया। आसान आवाज़ इनपुट और तुरंत एडिट करने की सुविधा के साथ, सिंपल वॉयस कैलकुलेटर एक स्वाभाविक और समावेशी अनुभव प्रदान करता है, जो हमारे रोज़मर्रा के जीवन में गणित के साथ बातचीत के तरीके को बदल रहा है।";
+
+/* (No Comment) */
+"Simple Voice Calculator was made by students." = "सरल ध्वनि कैलक्यूलेटर को छात्रों ने बनाया है।";
+
+/* No comment provided by engineer. */
+"six" = "छह";
+
+/* (No Comment) */
+"Skip Introduction" = "परिचय छोड़ें";
+
+/* No comment provided by engineer. */
+"Skips the introduction and goes directly to the calculator" = "परिचय को छोड़ देता है और सीधे कैलकुलेटर पर जाता है";
+
+/* (No Comment) */
+"Start Talking" = "बात करना शुरू करें";
+
+/* No comment provided by engineer. */
+"stop" = "रुको।";
+
+/* (No Comment) */
+"Stop Talking" = "बात करना बंद करें";
+
+/* No comment provided by engineer. */
+"subtract" = "घटाएँ";
+
+/* No comment provided by engineer. */
+"Subtract" = "घटाएँ";
+
+/* No comment provided by engineer. */
+"Swipe left to go to the next screen, or use the buttons below" = "अगली स्क्रीन के लिए लेफ्ट स्वाइप करें, या नीचे दिए गए बटन का उपयोग करें";
+
+/* (No Comment) */
+"Sym" = "चिह्न";
+
+/* No comment provided by engineer. */
+"Sync Across Devices" = "उपकरणों के बीच सिंक्रोनाइज़ेशन";
+
+/* No comment provided by engineer. */
+"Sync Status" = "सिंक स्थिति";
+
+/* No comment provided by engineer. */
+"Tap Any Row for More Options" = "और विकल्प के लिए किसी भी पंक्ति पर टैप करें";
+
+/* No comment provided by engineer. */
+"Tell a Friend" = "एक दोस्त को बताएं।";
+
+/* No comment provided by engineer. */
+"Tell Friends" = "दोस्तों को बताएं";
+
+/* (No Comment) */
+"Thank you for your donation!" = "आपके दान के लिए धन्यवाद!";
+
+/* (No Comment) */
+"The Sym button can be used to insert a desired math symbol where your cursor is placed in the textfield." = "सिम बटन का उपयोग टेक्स्टफ़ील्ड में आपके कर्सर स्थानित होने पर एक चयनित गणितीय प्रतीक डालने के लिए किया जा सकता है।";
+
+/* (No Comment) */
+"This is where the magic happens." = "यहाँ जादू होता है।";
+
+/* No comment provided by engineer. */
+"three" = "तीन";
+
+/* Word for multiplication operator */
+"times" = "गुणा";
+
+/* (No Comment) */
+"Tip a Coffee" = "एक कॉफी टिप करें";
+
+/* No comment provided by engineer. */
+"Tip developer a coffee" = "डेवलपर को एक कॉफी की टिप दें";
+
+/* (No Comment) */
+"Tip Developer a Coffee" = "डेवलपर को एक कॉफी के लिए टिप दें";
+
+/* No comment provided by engineer. */
+"TOTAL" = "कुल";
+
+/* (No Comment) */
+"Total equals" = "कुल योग है %@";
+
+/* No comment provided by engineer. */
+"Total equals %@" = "कुल योग है %@";
+
+/* (No Comment) */
+"TOTAL:" = "कुल:";
+
+/* No comment provided by engineer. */
+"TOTAL: %@" = "कुल: %@";
+
+/* No comment provided by engineer. */
+"Track and reuse your past calculations!" = "अपनी पिछली गणनाएँ ट्रैक और पुनः उपयोग करें!";
+
+/* No comment provided by engineer. */
+"two" = "दो";
+
+/* No comment provided by engineer. */
+"Upgrade to Pro" = "प्रो अपग्रेड करें";
+
+/* No comment provided by engineer. */
+"Upgrade to PRO" = "प्रो में अपग्रेड करें";
+
+/* (No Comment) */
+"Version" = "संस्करण";
+
+/* No comment provided by engineer. */
+"VITO SOFTWARE" = "VITO SOFTWARE";
+
+/* No comment provided by engineer. */
+"Voice Calculator" = "Voice Calculator";
+
+/* No comment provided by engineer. */
+"Voice Calculator Widget" = "Voice Calculator Widget";
+
+/* (No Comment) */
+"Voice Input" = "ध्वनि प्रविष्टि";
+
+/* No comment provided by engineer. */
+"Voice-powered calculations." = "आवाज़ से संचालित गणनाएँ।";
+
+/* No comment provided by engineer. */
+"We value all your feedback. If you have a question not covered here, please feel free to reach out anytime for help or additional information." = "हम आपकी सभी प्रतिक्रिया को महत्व देते हैं। यदि आपका कोई सवाल यहाँ नहीं आया है, तो कृपया हमें कभी भी संपर्क करें, हमारी मदद या अतिरिक्त जानकारी के लिए।";
+
+/* (No Comment) */
+"Welcome to \nSimple Voice Calculator" = "सादा आवाज़ कैलकुलेटर में आपका स्वागत है";
+
+/* (No Comment) */
+"While voice dictation is enabled, you are unable to manually edit the input field." = "जब आवाज़ टाइपिंग सक्षम होती है, तब आप इनपुट फ़ील्ड को मैन्युअल रूप से संपादित नहीं कर सकते हैं।";
+
+/* No comment provided by engineer. */
+"You can cancel your PRO subscription by visiting your App Store subscription settings." = "आप अपनी PRO सब्सक्रिप्शन को रद्द कर सकते हैं अपने ऐप स्टोर सब्सक्रिप्शन सेटिंग्स पर जाकर।";
+
+/* No comment provided by engineer. */
+"You can easily input equations with parentheses simply by saying 'open parenthesis' or 'open bracket' and 'close parenthesis' or 'close bracket' while recording. Always make sure to include a closing parenthesis, or you may end up with an invalid equation." = "आप सहेजते समय बस 'खुली वक्रफलक' या 'खुली कोषिका' और 'बन्द वक्रफलक' या 'बंद कोषिका' कहकर , बस्तृतीमे समीकरण दर्ज कर सकते हैं। हमेशा ध्यान रखें कि एक बंद कोषिका शामिल करें, नहीं तो आप अमान्य समीकरण पर पहुंच सकते हैं।";
+
+/* No comment provided by engineer. */
+"You can edit any component of your equation in the 'Equation Components' section. Just tap you desired components and it will be selected in your textfield. Make sure you do not have voice input enabled (button should say 'Start Talking')." = "आप 'समीकरण घटक' सेक्शन में अपने समीकरण के किसी भी घटक को संपादित कर सकते हैं। बस अपनी चाहिए घटक पर टैप करें और यह आपके पाठ फ़ील्ड में चुन लिया जाएगा। सुनिश्चित करें कि आपके पास आवाज़ इनपुट सक्षम नहीं है (बटन 'बोलना शुरू करना' कहना चाहिए)।";
+
+/* (No Comment) */
+"You can edit any component of your equation in the 'Equation Components' section. Just tap your desired component and it will be selected in your textfield. Make sure you do not have voice input enabled (button should say 'Start Talking')." = "'समीकरण घटक' खंड में आप अपने समीकरण के किसी भी घटक को संपादित कर सकते हैं। बस अपने इच्छित घटकों को टैप करें और यह आपके टेक्स्टफ़ील्ड में चयनित हो जाएगा। सुनिश्चित करें कि आपके पास ध्वनि प्रविष्टि सक्षम नहीं है (बटन पर 'बात करना शुरू करें' लिखा होना चाहिए)।";
+
+/* No comment provided by engineer. */
+"You can replace your current equation or perform math operations with history items." = "आप अपनी वर्तमान समीकरण को पुनः स्थानांतरित कर सकते हैं या इतिहास आइटम के साथ गणित ऑपरेशन कर सकते हैं।";
+
+/* (No Comment) */
+"Your calculation history remains 100% private, stored locally and on Apple iCloud servers. We only collect anonymous usage data to improve the app's performance and user experience." = "आपका गणना इतिहास 100% निजी रहता है और स्थानीय रूप से तथा Apple iCloud सर्वरों पर संग्रहीत होता है। हम केवल गुमनाम उपयोग डेटा एकत्र करते हैं, जिससे ऐप के प्रदर्शन और उपयोगकर्ता अनुभव में सुधार हो सके।";
+
+/* No comment provided by engineer. */
+"Your calculations will appear here" = "आपकी गणनाएँ यहाँ दिखाई देंगी।";
+
+/* No comment provided by engineer. */
+"Your current mode is" = "आपकी वर्तमान मोड है";
+
+/* No comment provided by engineer. */
+"Your favorites will appear here" = "यहां आपके पसंदीदा आएंगे।";
+
+/* No comment provided by engineer. */
+"zero" = "शून्य";
+
+"TODAY" = "आज";
+"YESTERDAY" = "कल";
+"Your subscription renews on " = "आपकी सदस्यता इस तारीख को नवीनीकृत होगी: ";
+"Check out Simple Voice Calculator - the easiest way to perform calculations using your voice!" = "Simple Voice Calculator देखें – अपनी आवाज़ से गणनाएँ करने का सबसे आसान तरीका!";
+"What math operators are supported?" = "कौन-कौन से गणितीय ऑपरेटर समर्थित हैं?";
+"SUBSCRIPTION_RENEWS_ON" = "आपकी सदस्यता %@ को नवीनीकृत होगी";
+"*Speech data is sent to Apple to ensure transcription accuracy" = "*प्रतिलेखन की सटीकता सुनिश्चित करने के लिए वॉइस डेटा Apple को भेजा जाता है";

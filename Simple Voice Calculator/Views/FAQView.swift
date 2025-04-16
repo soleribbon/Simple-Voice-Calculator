@@ -13,7 +13,21 @@ struct FAQView: View {
     // Track which question is expanded
     @State private var expandedIndex: Int? = nil
     
-    
+
+    private func localizedFAQTitle(_ english: String) -> LocalizedStringKey {
+        // 1 exact key?
+        if NSLocalizedString(english, comment: "") != english {
+            return LocalizedStringKey(english)          // found
+        }
+        // 2 try the bolded form
+        let boldKey = "**\(english)**"
+        if NSLocalizedString(boldKey, comment: "") != boldKey {
+            return LocalizedStringKey(boldKey)          // found
+        }
+        // 3 fallback – show the English string
+        return LocalizedStringKey(english)
+    }
+
     private let faqItems: [(question: String, answerView: AnyView)] = [
         (
             "What math operators are supported?",
@@ -129,9 +143,8 @@ struct FAQView: View {
                         DisclosureGroup(
                             isExpanded: Binding(
                                 get: { expandedIndex == index },
-                                set: { newValue in
-                                    expandedIndex = newValue ? index : nil
-                                }
+                                set: { expandedIndex = $0 ? index : nil }
+
                             )
                         ) {
                             // The “answer” (wrapped in AnyView above)
@@ -140,7 +153,7 @@ struct FAQView: View {
                                 .padding(.vertical, 4)
                         } label: {
                             // The “question”
-                            Text(faqItems[index].question)
+                            Text(localizedFAQTitle(faqItems[index].question))
                                 .font(.headline)
                         }
                         .padding(.vertical, 8)

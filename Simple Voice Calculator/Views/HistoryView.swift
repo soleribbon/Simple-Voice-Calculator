@@ -228,7 +228,7 @@ struct HistoryView: View {
         List {
             ForEach(sortedSectionKeys, id: \.self) { section in
                 if let items = historyByDate[section], !items.isEmpty {
-                    Section(header: Text(section)) {
+                    Section(header: Text(LocalizedStringKey(section))) {
                         // Convert items to an array of (index, item) tuples
                         ForEach(Array(items.enumerated()), id: \.element.id) { (index, item) in
                             HistoryORFavRow(

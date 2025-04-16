@@ -1,62 +1,538 @@
-/* Deutsch */
-"Simple Voice Calculator" = "Simple Voice Calculator";
-"TOTAL:" = "GESAMT:";
-"Enter equation" = "Gleichung eingeben";
-"Input Equation" = "Gleichung eingeben";
-"Voice Input" = "Spracheingabe";
-"+ Insert" = "+ Einfügen";
+/* (No Comment) */
 "- Insert" = "- Einfügen";
-"× Insert" = "× Einfügen";
-"÷ Insert" = "÷ Einfügen";
-"Sym" = "Sym";
-"Clear" = "Clear";
-"Start Talking" = "Sprechen beginnen";
-"Stop Talking" = "Sprechen beenden";
-"Equation Components" = "Gleichungskomponenten";
-"Introduction Tutorial" = "Einführungstutorial";
-"Quick Help" = "Schnelle Hilfe";
-"About & Contact" = "Geschichte & Kontakt";
-"About Simple Voice Calculator" = "Über Simple Voice Calculator";
-"Contact Developer" = "Entwickler kontaktieren";
-"Tip Developer a Coffee" = "Entwickler einen Kaffee Spendieren";
-"Simple Voice Calculator was made by students." = "Simple Voice Calculator wurde von Studenten entwickelt.";
-"Privacy" = "Datenschutz";
-"Version" = "Version";
-"Cup" = "Tasse";
-"Cups" = "Tassen";
-"**What math operators are supported?**" = "**Welche mathematischen Operatoren werden unterstützt?**";
-"Currently supported operators:" = "Derzeit unterstützte Operatoren:";
-"**What does 'Invalid Equation' mean?**" = "**Was bedeutet 'Ungültige Gleichung'?**";
-"Invalid Equation is presented when the textfield contains characters that are not valid in a mathematical equation or not currently supported." = "Ungültige Gleichung wird angezeigt, wenn das Textfeld Zeichen enthält, die in einer mathematischen Gleichung nicht gültig sind oder derzeit nicht unterstützt werden.";
-"**What does the 'Sym' button do?**" = "**Was bewirkt die 'Sym' Schaltfläche?**";
-"The Sym button can be used to insert a desired math symbol where your cursor is placed in the textfield." = "Mit der Sym-Schaltfläche können Sie ein gewünschtes mathematisches Symbol an der Stelle einfügen, an der sich Ihr Cursor im Textfeld befindet.";
-"**How do I edit my voice input?**" = "**Wie bearbeite ich meine Spracheingabe?**";
-"You can edit any component of your equation in the 'Equation Components' section. Just tap your desired component and it will be selected in your textfield. Make sure you do not have voice input enabled (button should say 'Start Talking')." = "Sie können jede Komponente Ihrer Gleichung im Abschnitt 'Gleichungskomponenten' bearbeiten. Tippen Sie einfach auf die gewünschten Komponenten, und sie werden in Ihrem Textfeld ausgewählt. Stellen Sie sicher, dass die Spracheingabe nicht aktiviert ist (die Schaltfläche sollte 'Sprechen beginnen' anzeigen).";
-"Simple Voice Calculator began with a clear purpose: to make math **easier and more accessible** for everyone. Recognizing that typing complex equations or tapping small buttons can be challenging—especially on smaller screens—we developed an intuitive alternative. With easy voice input and instant editing capabilities, Simple Voice Calculator offers a natural and inclusive experience, transforming the way we interact with math in everyday life." = "Simple Voice Calculator entstand aus einem klaren Ziel: Mathematik für jeden einfacher und zugänglicher zu machen. Da komplexe Gleichungen einzutippen oder kleine Tasten zu drücken—besonders auf kleineren Bildschirmen—oft schwierig sein kann, haben wir eine intuitive Alternative entwickelt. Mit einfacher Spracheingabe und sofortigen Bearbeitungsmöglichkeiten bietet Simple Voice Calculator ein natürliches und inklusives Nutzererlebnis, das unseren alltäglichen Umgang mit Mathematik verändert.";
-"Thank you for your donation!" = "Vielen Dank für Ihre Spende!";
-"Donation failed..." = "Spende fehlgeschlagen...";
-"Settings" = "Einstellungen";
-"Your calculation history remains 100% private, stored locally and on Apple iCloud servers. We only collect anonymous usage data to improve the app's performance and user experience." = "Ihr Berechnungsverlauf bleibt zu 100 % privat und wird lokal sowie auf Apple iCloud-Servern gespeichert. Wir erfassen nur anonyme Nutzungsdaten, um die Leistung und Nutzererfahrung der App zu verbessern.";
-"Welcome to \nSimple Voice Calculator" = "Willkommen beim \nSimple Voice Calculator";
-"Quick Setup" = "Schnelleinrichtung";
-"This is where the magic happens." = "Hier geschieht die Magie.";
-"Continue" = "Weiter";
-"Easily edit any component of your equation." = "Bearbeiten Sie ganz einfach jede Komponente Ihrer Gleichung.";
-"'Invalid Equation' means your input was invalid. Check your equation." = "'Ungültige Gleichung' bedeutet, dass Ihre Eingabe ungültig war. Überprüfen Sie Ihre Gleichung.";
-"Help is always available." = "Hilfe ist immer verfügbar.";
-"Now, time to calculate." = "Jetzt ist es Zeit zu rechnen.";
-"Get Started" = "Los geht's";
-"Skip Introduction" = "Einführung überspringen";
-"Important Notes" = "Wichtige Hinweise";
-"Only **+ - × ÷ %**  are supported" = "Nur **+ - × ÷ %** werden unterstützt";
-"After pressing 'Stop Talking', your dictated equation will be added to the end of the input field." = "Nachdem Sie 'Sprechen beenden' gedrückt haben, wird Ihre diktierte Gleichung am Ende des Eingabefelds hinzugefügt.";
-"While voice dictation is enabled, you are unable to manually edit the input field." = "Während die Sprachdiktierung aktiviert ist, können Sie das Eingabefeld nicht manuell bearbeiten.";
-"Ensure no alphabetical letters are included in your input." = "Stellen Sie sicher, dass keine Buchstaben in Ihrer Eingabe enthalten sind.";
-"Total equals" = "Gesamtbetrag ist %@";
-"Announce Total" = "Gesamtbetrag Ansagen";
-"Preferences" = "Optionen";
 
-//WatchOS
+/* (No Comment) */
+"'Invalid Equation' means your input was invalid. Check your equation." = "‘Ungültige Gleichung’ bedeutet, dass Ihre Eingabe ungültig war. Überprüfen Sie Ihre Gleichung.";
+
+/* No comment provided by engineer. */
+"(" = "(";
+
+/* No comment provided by engineer. */
+")" = ")";
+
+/* (No Comment) */
+"**How do I edit my voice input?**" = "**Wie bearbeite ich meine Spracheingabe?**";
+
+/* (No Comment) */
+"**What does 'Invalid Equation' mean?**" = "Was bedeutet \"Ungültige Gleichung\"?";
+
+/* (No Comment) */
+"**What does the 'Sym' button do?**" = "**Was macht die 'Sym'-Taste?**";
+
+"**What is PRO Mode?**"                            = "**Was ist der PRO‑Modus?**";
+"**How do I use parentheses in equations?**"       = "**Wie verwende ich Klammern in Gleichungen?**";
+"**How do I cancel my PRO subscription?**"         = "**Wie kündige ich mein PRO‑Abonnement?**";
+"**I have another question...**"                   = "**Ich habe eine weitere Frage...**";
+
+
+/* (No Comment) */
+"**What math operators are supported?**" = "**Welche mathematischen Operatoren werden unterstützt?**";
+
+/* No comment provided by engineer. */
+"%lld equations" = "%lld Gleichungen";
+
+/* No comment provided by engineer. */
+"• **Favorites** – Save your most-used equations for easy retrieval." = "• **Favoriten** - Speichern Sie Ihre am häufigsten verwendeten Gleichungen für einen leichten Zugriff.";
+
+/* No comment provided by engineer. */
+"• **History** – Quickly access and reuse past equations. You can apply past totals to your current equation with any operator." = "• **Geschichte** - Greifen Sie schnell auf vergangene Gleichungen zu und verwenden Sie sie erneut. Sie können vergangene Summen auf Ihre aktuelle Gleichung mit jedem Operator anwenden.";
+
+/* No comment provided by engineer. */
+"• **iCloud Sync** – Keep your equation history and favorites consistent across all devices." = "• **iCloud Sync** - Halten Sie Ihre Gleichungshistorie und Favoriten auf allen Geräten konsistent.";
+
+/* No comment provided by engineer. */
+"• **Siri Support** (coming soon) – Perform accurate calculations with Siri." = "• **Siri Unterstützung** (bald verfügbar) - Führen Sie präzise Berechnungen mit Siri durch.";
+
+/* No comment provided by engineer. */
+"+ - × ÷" = "+ - × ÷";
+
+/* (No Comment) */
+"+ Insert" = "+ Einfügen";
+
+/* (No Comment) */
+"÷ Insert" = "÷ Einfügen";
+
+/* (No Comment) */
+"× Insert" = "× Einfügen";
+
+/* No comment provided by engineer. */
+"=" = "=";
+
+/* No comment provided by engineer. */
+"☕️" = "☕️";
+
+/* No comment provided by engineer. */
+"🎙️" = "🎙️";
+
+/* No comment provided by engineer. */
+"💌" = "💌";
+
+/* No comment provided by engineer. */
+"💎" = "💎";
+
+/* (No Comment) */
+"About & Contact" = "Über & Kontakt";
+
+/* (No Comment) */
+"About Simple Voice Calculator" = "Über den Simple Voice Calculator";
+
+/* No comment provided by engineer. */
+"add" = "addieren";
+
+/* No comment provided by engineer. */
+"Add" = "Addieren";
+
+/* No comment provided by engineer. */
+"Add to Favorites" = "Zu Favoriten hinzufügen";
+
+/* No comment provided by engineer. */
+"Advances to the next screen" = "Gehe zum nächsten Bildschirm";
+
+/* (No Comment) */
+"After pressing 'Stop Talking', your dictated equation will be added to the end of the input field." = "Nachdem Sie auf 'Sprechen stoppen' gedrückt haben, wird Ihre diktierte Gleichung ans Ende des Eingabefelds hinzugefügt werden.";
+
+/* (No Comment) */
+"Announce Total" = "Ankündigen Gesamt";
+
+/* No comment provided by engineer. */
+"Are you sure you want to clear all calculation history?" = "Sind Sie sicher, dass Sie den gesamten Berechnungsverlauf löschen möchten?";
+
+/* No comment provided by engineer. */
+"Are you sure you want to clear all favorites?" = "Sind Sie sicher, dass Sie alle Favoriten löschen möchten?";
+
+/* No comment provided by engineer. */
+"clear" = "clear";
+
+/* (No Comment) */
+"Clear" = "Clear";
+
+/* WatchOS */
 "Clear Equation" = "Gleichung löschen";
-"Tip a Coffee" = "Kaffee spendieren";
-"Record Equation" = "Gleichung aufzeichnen";
+
+/* No comment provided by engineer. */
+"Clear Favorites" = "Favoriten löschen";
+
+/* No comment provided by engineer. */
+"Clear History" = "Verlauf löschen";
+
+/* No comment provided by engineer. */
+"close bracket" = "schließen Klammer";
+
+/* No comment provided by engineer. */
+"close parenthesis" = "Klammer schließen";
+
+/* No comment provided by engineer. */
+"closing bracket" = "schließende Klammer";
+
+/* No comment provided by engineer. */
+"Completes the introduction and opens the calculator" = "Vervollständigt die Einführung und öffnet den Taschenrechner.";
+
+/* (No Comment) */
+"Contact Developer" = "Kontaktiere den Entwickler";
+
+/* (No Comment) */
+"Continue" = "Weiter";
+
+/* (No Comment) */
+"Cup" = "Tasse";
+
+/* (No Comment) */
+"Cups" = "Tassen";
+
+/* (No Comment) */
+"Currently supported operators:" = "Derzeit unterstützte Operatoren:";
+
+/* No comment provided by engineer. */
+"Currently supported operators:\n+ - × ÷ %" = "Derzeit unterstützte Operatoren: + − × ÷ %";
+
+/* No comment provided by engineer. */
+"Delete" = "Löschen";
+
+/* No comment provided by engineer. */
+"divide" = "dividieren";
+
+/* No comment provided by engineer. */
+"Divide" = "Teilen";
+
+/* No comment provided by engineer. */
+"divide by" = "durch teilen";
+
+/* No comment provided by engineer. */
+"divideby" = "Dividiertdurch";
+
+/* Word for division operator */
+"divided by" = "Dividiert durch";
+
+/* Word for division operator without spaces */
+"dividedby" = "geteilt durch";
+
+/* (No Comment) */
+"Donation failed..." = "Spende fehlgeschlagen...";
+
+/* No comment provided by engineer. */
+"done" = "erledigt";
+
+/* (No Comment) */
+"Easily edit any component of your equation." = "Bearbeiten Sie problemlos jede Komponente Ihrer Gleichung.";
+
+/* No comment provided by engineer. */
+"Edit" = "Bearbeiten";
+
+/* No comment provided by engineer. */
+"eight" = "acht";
+
+/* No comment provided by engineer. */
+"Email Developer" = "E-Mail-Entwickler";
+
+/* No comment provided by engineer. */
+"end" = "Ende";
+
+/* (No Comment) */
+"Ensure no alphabetical letters are included in your input." = "Stellen Sie sicher, dass keine alphabetischen Buchstaben in Ihrer Eingabe enthalten sind.";
+
+/* (No Comment) */
+"Enter equation" = "Gib die Gleichung ein";
+
+/* No comment provided by engineer. */
+"equals" = "Ist gleich";
+
+/* (No Comment) */
+"Equation Components" = "Gleichungskomponenten";
+
+/* No comment provided by engineer. */
+"FAQ" = "FAQ";
+
+/* No comment provided by engineer. */
+"Favorites" = "Favoriten";
+
+/* No comment provided by engineer. */
+"Find out more here" = "Erfahren Sie hier mehr";
+
+/* No comment provided by engineer. */
+"finish" = "beenden";
+
+/* No comment provided by engineer. */
+"five" = "fünf";
+
+/* No comment provided by engineer. */
+"four" = "vier";
+
+/* No comment provided by engineer. */
+"Frequent Questions" = "Häufig gestellte Fragen";
+
+/* (No Comment) */
+"Get Started" = "Loslegen";
+
+/* (No Comment) */
+"Help is always available." = "Hilfe ist immer verfügbar.";
+
+/* No comment provided by engineer. */
+"History" = "Verlauf";
+
+/* No comment provided by engineer. */
+"History Limit" = "Verlaufsgrenze";
+
+/* No comment provided by engineer. */
+"History Now Available" = "Geschichte jetzt verfügbar";
+
+/* No comment provided by engineer. */
+"Illustration for %@" = "Illustration für %@";
+
+/* (No Comment) */
+"Important Notes" = "Wichtige Hinweise";
+
+/* (No Comment) */
+"Input Equation" = "Gleichung eingeben";
+
+/* No comment provided by engineer. */
+"Input equations instantly." = "Gleichungen sofort eingeben.";
+
+/* No comment provided by engineer. */
+"Insert into Current Equation" = "Füge in die aktuelle Gleichung ein";
+
+/* (No Comment) */
+"Introduction Tutorial" = "Einführung Tutorial";
+
+/* (No Comment) */
+"Invalid Equation is presented when the textfield contains characters that are not valid in a mathematical equation or not currently supported." = "Ungültige Gleichung wird angezeigt, wenn das Textfeld Zeichen enthält, die in einer mathematischen Gleichung ungültig sind oder derzeit nicht unterstützt werden.";
+
+/* No comment provided by engineer. */
+"Last synced: %@" = "Zuletzt synchronisiert: %@";
+
+/* No comment provided by engineer. */
+"left bracket" = "linke Klammer";
+
+/* No comment provided by engineer. */
+"MADE BY VITO SOFTWARE" = "GEMACHT VON VITO SOFTWARE";
+
+/* No comment provided by engineer. */
+"minus" = "minus";
+
+/* No comment provided by engineer. */
+"Minus Insert" = "Minus einfügen";
+
+/* Word for multiplication operator */
+"multiplied by" = "multipliziert mit";
+
+/* Word for multiplication operator without spaces */
+"multipliedby" = "Multipliziert mit";
+
+/* No comment provided by engineer. */
+"multiply" = "multiplizieren";
+
+/* No comment provided by engineer. */
+"Multiply" = "Multiplizieren";
+
+/* Word for multiplication operator */
+"multiply by" = "multipliziere mit";
+
+/* No comment provided by engineer. */
+"nine" = "neun";
+
+/* No comment provided by engineer. */
+"No calculation history yet" = "Noch keine Berechnungshistorie vorhanden";
+
+/* No comment provided by engineer. */
+"No favorites yet" = "Noch keine Favoriten";
+
+/* (No Comment) */
+"Now, time to calculate." = "Jetzt ist es Zeit zu berechnen.";
+
+/* No comment provided by engineer. */
+"Onboarding screen %lld of %lld" = "Einrichtungsbildschirm %lld von %lld";
+
+/* No comment provided by engineer. */
+"one" = "eins";
+
+/* (No Comment) */
+"Only **+ - × ÷ %** are supported" = "Es werden nur **+ - × ÷ %** unterstützt.";
+
+/* No comment provided by engineer. */
+"open bracket" = "offene Klammer";
+
+/* No comment provided by engineer. */
+"open parenthesis" = "offene Klammer";
+
+/* No comment provided by engineer. */
+"opening bracket" = "öffnende Klammer";
+
+/* No comment provided by engineer. */
+"or" = "oder";
+
+/* No comment provided by engineer. */
+"Our Story" = "Unsere Geschichte";
+
+/* Word for division operator */
+"over" = "über";
+
+/* No comment provided by engineer. */
+"percent" = "Prozent";
+
+/* No comment provided by engineer. */
+"plus" = "plus";
+
+/* (No Comment) */
+"Preferences" = "Präferenzen";
+
+/* (No Comment) */
+"Privacy" = "Datenschutz";
+
+/* No comment provided by engineer. */
+"PRO" = "PRO";
+
+/* No comment provided by engineer. */
+"PRO Mode includes the following features:" = "PRO Modus umfasst die folgenden Funktionen:";
+
+/* (No Comment) */
+"Quick Help" = "Schnelle Hilfe";
+
+/* (No Comment) */
+"Quick Setup" = "Schnelle Einrichtung";
+
+/* No comment provided by engineer. */
+"record" = "Aufzeichnung";
+
+/* (No Comment) */
+"Record Equation" = "Aufzeichnungsgleichung";
+
+/* No comment provided by engineer. */
+"recording" = "Aufnahme";
+
+/* No comment provided by engineer. */
+"Remove from Favorites" = "Entfernen von Favoriten";
+
+/* No comment provided by engineer. */
+"Replace" = "Ersetzen";
+
+/* No comment provided by engineer. */
+"Restore Purchases" = "Wiederherstellen von Käufen";
+
+/* No comment provided by engineer. */
+"right bracket" = "rechte Klammer";
+
+/* (No Comment) */
+"Settings" = "Einstellungen";
+
+/* No comment provided by engineer. */
+"seven" = "sieben";
+
+/* English */
+"Simple Voice Calculator" = "Simple Voice Calculator";
+
+/* (No Comment) */
+"Simple Voice Calculator began with a clear purpose: to make math **easier and more accessible** for everyone. Recognizing that typing complex equations or tapping small buttons can be challenging—especially on smaller screens—we developed an intuitive alternative. With easy voice input and instant editing capabilities, Simple Voice Calculator offers a natural and inclusive experience, transforming the way we interact with math in everyday life." = "Simple Voice Calculator entstand aus einem klaren Ziel: Mathematik für jeden einfacher und zugänglicher zu machen. Da komplexe Gleichungen einzutippen oder kleine Tasten zu drücken—besonders auf kleineren Bildschirmen—oft schwierig sein kann, haben wir eine intuitive Alternative entwickelt. Mit einfacher Spracheingabe und sofortigen Bearbeitungsmöglichkeiten bietet Simple Voice Calculator ein natürliches und inklusives Nutzererlebnis, das unseren alltäglichen Umgang mit Mathematik verändert.";
+
+/* (No Comment) */
+"Simple Voice Calculator was made by students." = "Simple Voice Calculator wurde von Studenten erstellt.";
+
+/* No comment provided by engineer. */
+"six" = "sechs";
+
+/* (No Comment) */
+"Skip Introduction" = "Überspringe Einleitung";
+
+/* No comment provided by engineer. */
+"Skips the introduction and goes directly to the calculator" = "Überspringt die Einleitung und geht direkt zum Taschenrechner.";
+
+/* (No Comment) */
+"Start Talking" = "Anfangen zu reden";
+
+/* No comment provided by engineer. */
+"stop" = "aufhören";
+
+/* (No Comment) */
+"Stop Talking" = "Hör auf zu reden";
+
+/* No comment provided by engineer. */
+"subtract" = "subtrahieren";
+
+/* No comment provided by engineer. */
+"Subtract" = "Subtrahieren";
+
+/* No comment provided by engineer. */
+"Swipe left to go to the next screen, or use the buttons below" = "Wischen Sie nach links, um zum nächsten Bildschirm zu gelangen, oder verwenden Sie die Schaltflächen unten";
+
+/* (No Comment) */
+"Sym" = "Sym";
+
+/* No comment provided by engineer. */
+"Sync Across Devices" = "Synchronisierung über Geräte";
+
+/* No comment provided by engineer. */
+"Sync Status" = "Synchronisierungsstatus";
+
+/* No comment provided by engineer. */
+"Tap Any Row for More Options" = "Tippen Sie auf eine beliebige Zeile für weitere Optionen";
+
+/* No comment provided by engineer. */
+"Tell a Friend" = "Sag es einem Freund";
+
+/* No comment provided by engineer. */
+"Tell Friends" = "Sag es deinen Freunden";
+
+/* (No Comment) */
+"Thank you for your donation!" = "Vielen Dank für Ihre Spende!";
+
+/* (No Comment) */
+"The Sym button can be used to insert a desired math symbol where your cursor is placed in the textfield." = "Die Sym-Taste kann verwendet werden, um ein gewünschtes mathematisches Symbol an der Stelle einzufügen, an der sich Ihr Cursor im Textfeld befindet.";
+
+/* (No Comment) */
+"This is where the magic happens." = "Hier passiert die Magie.";
+
+/* No comment provided by engineer. */
+"three" = "drei";
+
+/* Word for multiplication operator */
+"times" = "Zeiten";
+
+/* (No Comment) */
+"Tip a Coffee" = "Einen Kaffee trinken";
+
+/* No comment provided by engineer. */
+"Tip developer a coffee" = "Dem Entwickler einen Kaffee geben";
+
+/* (No Comment) */
+"Tip Developer a Coffee" = "Tipp den Entwickler einen Kaffee";
+
+/* No comment provided by engineer. */
+"TOTAL" = "GESAMT";
+
+/* (No Comment) */
+"Total equals" = "Insgesamt entspricht %@";
+
+/* No comment provided by engineer. */
+"Total equals %@" = "Insgesamt entspricht %@@";
+
+/* (No Comment) */
+"TOTAL:" = "GESAMT:";
+
+/* No comment provided by engineer. */
+"TOTAL: %@" = "GESAMT: %@";
+
+/* No comment provided by engineer. */
+"Track and reuse your past calculations!" = "Verfolgen und wiederverwenden Sie Ihre vergangenen Berechnungen!";
+
+/* No comment provided by engineer. */
+"two" = "zwei";
+
+/* No comment provided by engineer. */
+"Upgrade to Pro" = "Upgrade auf Pro";
+
+/* No comment provided by engineer. */
+"Upgrade to PRO" = "Upgrade auf PRO";
+
+/* (No Comment) */
+"Version" = "Version";
+
+/* (No Comment) */
+"Voice Input" = "Spracheingabe";
+
+/* No comment provided by engineer. */
+"Voice-powered calculations." = "Stimmenbetriebene Berechnungen.";
+
+/* No comment provided by engineer. */
+"We value all your feedback. If you have a question not covered here, please feel free to reach out anytime for help or additional information." = "Wir schätzen Ihr Feedback sehr. Wenn Sie eine Frage haben, die hier nicht behandelt wird, zögern Sie bitte nicht, sich jederzeit zur Hilfe oder für zusätzliche Informationen an uns zu wenden.";
+
+/* (No Comment) */
+"Welcome to \nSimple Voice Calculator" = "Willkommen beim \nSimple Voice Calculator";
+
+/* (No Comment) */
+"While voice dictation is enabled, you are unable to manually edit the input field." = "Während die Spracheingabe aktiviert ist, können Sie das Eingabefeld nicht manuell bearbeiten.";
+
+/* No comment provided by engineer. */
+"You can cancel your PRO subscription by visiting your App Store subscription settings." = "Sie können Ihr PRO-Abonnement kündigen, indem Sie Ihre App Store-Abonnement-Einstellungen besuchen.";
+
+/* No comment provided by engineer. */
+"You can easily input equations with parentheses simply by saying 'open parenthesis' or 'open bracket' and 'close parenthesis' or 'close bracket' while recording. Always make sure to include a closing parenthesis, or you may end up with an invalid equation." = "Sie können leicht Gleichungen mit Klammern eingeben, indem Sie einfach \"offene Klammer\" oder \"offene Klammer\" und \"schließen Klammer\" oder \"schließen Klammer\" während der Aufzeichnung sagen. Stellen Sie immer sicher, dass Sie eine schließende Klammer einfügen, da Sie sonst eine ungültige Gleichung erhalten könnten.";
+
+/* No comment provided by engineer. */
+"You can edit any component of your equation in the 'Equation Components' section. Just tap you desired components and it will be selected in your textfield. Make sure you do not have voice input enabled (button should say 'Start Talking')." = "Sie können jedes Komponente Ihrer Gleichung im Abschnitt \"Gleichungskomponenten\" bearbeiten. Tippen Sie einfach auf die gewünschten Komponenten und sie werden in Ihren Textfeld ausgewählt. Stellen Sie sicher, dass die Spracheingabe nicht aktiviert ist (die Schaltfläche sollte \"Sprachaufnahme starten\" anzeigen).";
+
+/* (No Comment) */
+"You can edit any component of your equation in the 'Equation Components' section. Just tap your desired component and it will be selected in your textfield. Make sure you do not have voice input enabled (button should say 'Start Talking')." = "Sie können jedes Komponent Ihrer Gleichung im Abschnitt \"Gleichungskomponenten\" bearbeiten. Tippen Sie einfach auf die gewünschte Komponent und sie wird in Ihrem Textfeld ausgewählt. Stellen Sie sicher, dass kein Spracheingabe aktiviert ist (Button sollte \"Start Talking\" sagen).";
+
+/* No comment provided by engineer. */
+"You can replace your current equation or perform math operations with history items." = "Sie können Ihre aktuelle Gleichung ersetzen oder mathematische Operationen mit den Verlaufselementen durchführen.";
+
+/* (No Comment) */
+"Your calculation history remains 100% private, stored locally and on Apple iCloud servers. We only collect anonymous usage data to improve the app's performance and user experience." = "Ihre Berechnungshistorie bleibt zu 100% privat, lokal und auf den Apple iCloud-Servern gespeichert. Wir sammeln nur anonyme Nutzungsdaten, um die Leistung und Benutzererfahrung der App zu verbessern.";
+
+/* No comment provided by engineer. */
+"Your calculations will appear here" = "Ihre Berechnungen werden hier erscheinen";
+
+/* No comment provided by engineer. */
+"Your current mode is" = "Ihr aktueller Modus ist";
+
+/* No comment provided by engineer. */
+"Your favorites will appear here" = "Ihre Favoriten werden hier erscheinen";
+
+/* No comment provided by engineer. */
+"zero" = "null";
+
+/* Extras */
+"TODAY" = "HEUTE";
+"YESTERDAY" = "GESTERN";
+"SUBSCRIPTION_RENEWS_ON" = "Dein Abonnement wird am %@ erneuert";
+"Check out Simple Voice Calculator - the easiest way to perform calculations using your voice!" = "Schau dir den Simple Voice Calculator an – der einfachste Weg, Berechnungen mit deiner Stimme durchzuführen!";
+"What math operators are supported?" = "Welche mathematischen Operatoren werden unterstützt?";
+"*Speech data is sent to Apple to ensure transcription accuracy" = "*Sprachdaten werden an Apple gesendet, um die Transkriptionsgenauigkeit zu gewährleisten";

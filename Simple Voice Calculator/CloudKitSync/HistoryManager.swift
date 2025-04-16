@@ -71,7 +71,7 @@ class HistoryManager: ObservableObject {
     var isRegUser: Bool {
         return !StoreManager.shared.isSubscriptionActive
     }
-
+    
     // Periodically check for sync
     private func setupSyncTimer() {
         syncTimer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { [weak self] _ in
@@ -154,7 +154,6 @@ class HistoryManager: ObservableObject {
             return
         }
         
-        // SIMPLIFIED APPROACH:
         // 1. Get cloud data
         let cloudItems = await CloudKitManager.shared.fetchHistoryItems() ?? []
         
@@ -162,7 +161,7 @@ class HistoryManager: ObservableObject {
         let localItemCount = self.historyItems.count
         let cloudItemCount = cloudItems.count
         
-        // 3. SIMPLIFIED DECISION: If local has fewer items than cloud, there may be new items to merge
+        // 3. If local has fewer items than cloud, there may be new items to merge
         //    If local has more or equal items than cloud, prioritize local (could be offline additions)
         if localItemCount < cloudItemCount {
             print("Cloud has more history items than local - merging new items")

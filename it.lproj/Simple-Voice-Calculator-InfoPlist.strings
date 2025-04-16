@@ -1,0 +1,6 @@
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "Questa app utilizza il tuo microfono per elaborare l'audio in testo.";
+
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Questa app utilizza il riconoscimento vocale come input primario, invece di una tastiera.";
+
